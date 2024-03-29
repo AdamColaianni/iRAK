@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct ProfileView: View {
-    var body: some View {
+  @Environment(\.dismiss) var dismiss
+  var body: some View {
+    NavigationView {
+      VStack {
         Text("Hello, World!")
+      }
+      .toolbar {
+        ToolbarItem(placement: .navigationBarTrailing) {
+          Button {
+            dismiss()
+          } label: {
+            Text("**X**")
+          }
+        }
+      }
     }
+  }
 }
 
-#Preview {
+struct ProfileView_Previews: PreviewProvider {
+  static var previews: some View {
     ProfileView()
+  }
 }
