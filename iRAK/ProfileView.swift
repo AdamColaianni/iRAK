@@ -11,15 +11,19 @@ struct ProfileView: View {
   @Environment(\.dismiss) var dismiss
   var body: some View {
     NavigationView {
-      VStack {
-        Text("Hello, World!")
-      }
-      .toolbar {
-        ToolbarItem(placement: .navigationBarTrailing) {
-          Button {
-            dismiss()
-          } label: {
-            Text("**X**")
+      ZStack {
+        Color("BackgroundColor")
+          .ignoresSafeArea()
+        VStack {
+          Text("Hello, World!")
+        }
+        .toolbar {
+          ToolbarItem(placement: .navigationBarTrailing) {
+            Button {
+              dismiss()
+            } label: {
+              Text("**X**")
+            }
           }
         }
       }
