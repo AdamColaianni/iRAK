@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct iRAKApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
+  @StateObject var csManager = ColorSchemeManager()
+  var body: some Scene {
+    WindowGroup {
+      HomeView()
+        .environmentObject(csManager)
+        .onAppear {
+          csManager.applyColorScheme()
         }
     }
+  }
 }

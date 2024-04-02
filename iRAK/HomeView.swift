@@ -12,6 +12,7 @@ import SwiftUI
 var tabs = ["house", "archivebox", "bell", "message", "mic"]
 
 struct HomeView: View {
+  @EnvironmentObject var csManager: ColorSchemeManager
   @State private var isSettingsPresented = false
   @State private var isProfilePresented = false
   @State var selectedTab = "house"
@@ -62,11 +63,11 @@ struct HomeView: View {
           // Tab view at the bottom
           TabsView(selectedTab: $selectedTab)
         }
-        .sheet(isPresented: $isSettingsPresented) {
-          Text("This is the settings view")
+        .fullScreenCover(isPresented: $isSettingsPresented) {
+          SettingsView()
         }
-        .fullScreenCover(isPresented: $isProfilePresented) {
-          ProfileView()
+        .sheet(isPresented: $isProfilePresented) {
+          Text("This is the profile view")
         }
       }
     }
@@ -234,5 +235,6 @@ struct CustomShape: Shape {
 struct HomeView_Previews: PreviewProvider {
   static var previews: some View {
     HomeView()
+      .environmentObject(ColorSchemeManager())
   }
 }
