@@ -8,19 +8,84 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+  var body: some View {
+    ZStack {
+      Color("BackgroundColor")
+        .ignoresSafeArea()
+      VStack {
+        Button(action: {
+          print("Join Action")
+        }, label: {
+          Text("")
+        })
+        .buttonStyle(PrimaryButtonStyle(image: "figure.2"))
+        HStack {
+          Button(action: {
+            print("Stats")
+          }, label: {
+            Text("Join")
+          })
+          .buttonStyle(PrimaryButtonStyle(image: "play.square.stack"))
+          Button(action: {
+            print("Help")
+          }, label: {
+            Text("Host")
+          })
+          .buttonStyle(PrimaryButtonStyle(image: "house.fill"))
         }
-        .padding()
+        HStack {
+          Button(action: {
+            print("Host")
+          }, label: {
+            Text("Rules")
+          })
+          .buttonStyle(PrimaryButtonStyle(image: "questionmark.diamond.fill"))
+          Button(action: {
+            print("Tee Hee")
+          }, label: {
+            Text("Stats")
+          })
+          .buttonStyle(PrimaryButtonStyle(image: "chart.bar.xaxis"))
+        }
+      }
+      .padding()
     }
+  }
+}
+
+struct PrimaryButtonStyle: ButtonStyle {
+  @State var image: String
+  init(image: String = "") {
+    self.image = image
+  }
+  func makeBody(configuration: Configuration) -> some View {
+    ZStack {
+      ZStack(alignment: .topTrailing) {
+        configuration.label
+          .font(.system(size: 20, weight: .bold))
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
+          .background(configuration.isPressed ? Color("ForegroundColor").opacity(0.5) : Color("ForegroundColor"))
+          .foregroundColor(.primary)
+          .clipShape(Rectangle())
+          .cornerRadius(10)
+          .shadow(radius: 3)
+          .padding(5)
+        Image(systemName: "arrowshape.turn.up.right.fill")
+          .foregroundColor(.primary)
+          .font(.system(size: 15, design: .rounded))
+          .padding()
+      }
+      Image(systemName: image)
+        .resizable()
+        .scaledToFit()
+        .padding()
+        .opacity(0.2)
+    }
+  }
 }
 
 struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+  static var previews: some View {
+    ContentView()
+  }
 }

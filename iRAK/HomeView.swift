@@ -126,7 +126,7 @@ struct TabsView: View {
         ContentView()
           .ignoresSafeArea(.all, edges: .all)
           .tag("archivebox")
-        Color.red
+        Color("BackgroundColor")
           .ignoresSafeArea(.all, edges: .all)
           .tag("bell")
         Color("BackgroundColor")
