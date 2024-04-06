@@ -14,20 +14,20 @@ struct ContentView: View {
         .ignoresSafeArea()
       VStack {
         Button(action: {
-          print("Join Action")
+          print("Label")
         }, label: {
           Text("")
         })
         .buttonStyle(PrimaryButtonStyle(image: "figure.2"))
         HStack {
           Button(action: {
-            print("Stats")
+            print("Join")
           }, label: {
             Text("Join")
           })
-          .buttonStyle(PrimaryButtonStyle(image: "play.square.stack"))
+          .buttonStyle(PrimaryButtonStyle(image: "play.square.stack.fill"))
           Button(action: {
-            print("Help")
+            print("Host")
           }, label: {
             Text("Host")
           })
@@ -35,17 +35,15 @@ struct ContentView: View {
         }
         HStack {
           Button(action: {
-            print("Host")
+            print("Rules")
           }, label: {
             Text("Rules")
               .foregroundStyle(.primary)
           })
           .buttonStyle(PrimaryButtonStyle(image: "questionmark.diamond.fill"))
-          Button(action: {
-            print("Tee Hee")
-          }, label: {
+          NavigationLink(destination: SettingsView()) {
             Text("Stats")
-          })
+          }
           .buttonStyle(PrimaryButtonStyle(image: "chart.bar.xaxis"))
         }
       }
@@ -62,8 +60,7 @@ struct PrimaryButtonStyle: ButtonStyle {
   func makeBody(configuration: Configuration) -> some View {
     ZStack {
       ZStack(alignment: .topTrailing) {
-        configuration.label
-          .font(.system(size: 20, weight: .bold))
+        Text("")
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .background(configuration.isPressed ? Color("ForegroundColor").opacity(0.5) : Color("ForegroundColor"))
           .foregroundColor(.primary)
@@ -81,6 +78,8 @@ struct PrimaryButtonStyle: ButtonStyle {
         .scaledToFit()
         .padding()
         .opacity(0.5))
+      configuration.label
+        .font(.system(size: 20, weight: .bold))
     }
   }
 }
