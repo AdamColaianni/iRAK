@@ -71,6 +71,7 @@ struct HomeView: View {
         }
       }
     }
+    .preferredColorScheme(csManager.selectedTheme)
   }
   
   func getTitle(sheetNum: String) -> String {

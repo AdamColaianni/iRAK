@@ -3,8 +3,6 @@
 //  iRAK
 //
 //  Created by 90310013 on 3/29/24.
-//  Credit to Shameem Reza for some parts of the src code
-//  https://github.com/shameemreza/wordleclone
 //
 
 import SwiftUI
@@ -27,10 +25,11 @@ struct SettingsView: View {
               Text("Change Theme")
               Spacer()
             }
-            Picker("Display Mode", selection: $csManager.colorScheme) {
-              Text("Dark").tag(ColorScheme.dark)
-              Text("Light").tag(ColorScheme.light)
-              Text("System").tag(ColorScheme.unspecified)
+            Picker("Display Mode", selection: $csManager.systemTheme) {
+              ForEach(SchemeType.allCases) { item in
+                Text(item.title)
+                  .tag(item.rawValue)
+              }
             }
           }
           .padding()
@@ -54,10 +53,11 @@ struct SettingsView: View {
           }
       }
     }
+    .preferredColorScheme(csManager.selectedTheme)
   }
 }
 
-struct ProfileView_Previews: PreviewProvider {
+struct SettingsView_Previews: PreviewProvider {
   static var previews: some View {
     SettingsView()
       .environmentObject(ColorSchemeManager())

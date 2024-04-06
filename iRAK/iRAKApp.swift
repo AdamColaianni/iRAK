@@ -14,9 +14,6 @@ struct iRAKApp: App {
     WindowGroup {
       HomeView()
         .environmentObject(csManager)
-        .onAppear {
-          csManager.applyColorScheme()
-        }
     }
   }
 }
