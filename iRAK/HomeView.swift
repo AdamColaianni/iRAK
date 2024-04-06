@@ -111,6 +111,9 @@ struct TabsView: View {
   var body: some View {
     VStack {
       TabView(selection: $selectedTab) {
+        ContentView()
+          .tag("house")
+        
         ZStack {
           Color("BackgroundColor")
             .ignoresSafeArea(.all, edges: .all)
@@ -122,11 +125,8 @@ struct TabsView: View {
           }
           .padding()
         }
-        .tag("house")
-        
-        ContentView()
-          .ignoresSafeArea(.all, edges: .all)
-          .tag("archivebox")
+        .ignoresSafeArea(.all, edges: .all)
+        .tag("archivebox")
         Color("BackgroundColor")
           .ignoresSafeArea(.all, edges: .all)
           .tag("bell")

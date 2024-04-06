@@ -38,6 +38,7 @@ struct ContentView: View {
             print("Host")
           }, label: {
             Text("Rules")
+              .foregroundStyle(.primary)
           })
           .buttonStyle(PrimaryButtonStyle(image: "questionmark.diamond.fill"))
           Button(action: {
@@ -70,16 +71,16 @@ struct PrimaryButtonStyle: ButtonStyle {
           .cornerRadius(10)
           .shadow(radius: 3)
           .padding(5)
-        Image(systemName: "arrowshape.turn.up.right.fill")
+        Text(">")
           .foregroundColor(.primary)
-          .font(.system(size: 15, design: .rounded))
+          .font(.system(size: 15, weight: .bold, design: .rounded))
           .padding()
       }
-      Image(systemName: image)
+      LinearGradient(gradient: Gradient(colors: [.green, .blue]), startPoint: .top, endPoint: .bottom).mask(Image(systemName: image)
         .resizable()
         .scaledToFit()
         .padding()
-        .opacity(0.2)
+        .opacity(0.5))
     }
   }
 }
