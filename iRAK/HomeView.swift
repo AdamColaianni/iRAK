@@ -66,8 +66,8 @@ struct HomeView: View {
         .fullScreenCover(isPresented: $isSettingsPresented) {
           SettingsView()
         }
-        .sheet(isPresented: $isProfilePresented) {
-          Text("This is the profile view")
+        .fullScreenCover(isPresented: $isProfilePresented) {
+          ProfileView()
         }
       }
     }
