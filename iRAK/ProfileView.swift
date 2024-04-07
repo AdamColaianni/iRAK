@@ -21,16 +21,35 @@ struct ProfileView: View {
         VStack {
           // Profile Stack
           VStack {
-            Image(systemName: "questionmark.square.fill")
-              .resizable()
-              .aspectRatio(contentMode: .fit)
-              .frame(width: 100, height: 100)
-              .clipShape(Circle())
-              .overlay(
-                Circle().stroke(Color.primary, lineWidth: 2)
-              )
-              .shadow(radius: 3)
-            
+            Button {
+              print("Replace image")
+            } label: {
+              ZStack {
+                Image(systemName: "questionmark.square.fill")
+                  .resizable()
+                  .aspectRatio(contentMode: .fit)
+                  .frame(width: 100, height: 100)
+                  .clipShape(Circle())
+                  .overlay(
+                    Circle().stroke(Color.primary, lineWidth: 2)
+                  )
+                .shadow(radius: 3)
+                if isEditing {
+                    Image(systemName: "camera.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .foregroundColor(.primary)
+                        .frame(width: 20, height: 20)
+                        .padding(8)
+                        .background(Color("Foreground2Color"))
+                        .clipShape(Circle())
+                        .offset(x: 35, y: 35)
+                        .shadow(radius: 3)
+                }
+              }
+            }
+            .disabled(!isEditing)
+
             if isEditing {
               TextField("Enter name", text: $name, onCommit: {
                 // Save the entered name and toggle back to text display
