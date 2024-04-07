@@ -65,16 +65,18 @@ struct ProfileView: View {
                 .font(.system(size: 30, weight: .bold, design: .rounded))
             }
             
-            Button(isEditing ? "Done" : "Edit Profile") {
+            Button {
               isEditing.toggle()
               nameIsFocused = true
+            } label: {
+              Text(isEditing ? "Done" : "Edit Profile")
+                .font(.system(size: 20, weight: .bold, design: .rounded))
+                .padding(10)
+                .frame(maxWidth: .infinity)
+                .background(Color("Foreground2Color"))
+                .clipShape(Capsule())
+                .shadow(radius: 1)
             }
-            .font(.system(size: 20, weight: .bold, design: .rounded))
-            .padding(10)
-            .frame(maxWidth: .infinity)
-            .background(Color("Foreground2Color"))
-            .clipShape(Capsule())
-            .shadow(radius: 1)
           }
           .padding(30)
           .foregroundColor(.primary)
