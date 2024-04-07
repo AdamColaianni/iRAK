@@ -68,7 +68,7 @@ struct PrimaryButtonStyle: ButtonStyle {
           .cornerRadius(10)
           .shadow(radius: 3)
           .padding(5)
-        Text(">")
+        Image(systemName: "chevron.right")
           .foregroundColor(.primary)
           .font(.system(size: 15, weight: .bold, design: .rounded))
           .padding()
