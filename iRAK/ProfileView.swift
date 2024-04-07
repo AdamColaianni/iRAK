@@ -19,16 +19,18 @@ struct ProfileView: View {
         Color("BackgroundColor")
           .ignoresSafeArea()
         VStack {
+          // Profile Stack
           VStack {
             Image(systemName: "questionmark.square.fill")
               .resizable()
-              .aspectRatio(contentMode: .fill)
+              .aspectRatio(contentMode: .fit)
               .frame(width: 100, height: 100)
               .clipShape(Circle())
               .overlay(
-                Circle().stroke(Color.blue, lineWidth: 2)
+                Circle().stroke(Color.primary, lineWidth: 2)
               )
-              .shadow(radius: 5)
+              .shadow(radius: 3)
+            
             if isEditing {
               TextField("Enter name", text: $name, onCommit: {
                 // Save the entered name and toggle back to text display
@@ -38,11 +40,10 @@ struct ProfileView: View {
               .textFieldStyle(RoundedBorderTextFieldStyle())
               .font(.system(size: 30, weight: .bold, design: .rounded))
               .multilineTextAlignment(.center)
-              .padding()
+              .padding(2)
             } else {
               Text(name)
                 .font(.system(size: 30, weight: .bold, design: .rounded))
-                .padding()
             }
             
             Button(isEditing ? "Done" : "Edit Profile") {
@@ -50,44 +51,66 @@ struct ProfileView: View {
               nameIsFocused = true
             }
             .font(.system(size: 20, weight: .bold, design: .rounded))
-            .frame(width: 250, height: 50)
+            .padding(10)
+            .frame(maxWidth: .infinity)
             .background(Color("Foreground2Color"))
             .clipShape(Capsule())
             .shadow(radius: 1)
           }
-          .frame(maxWidth: 350, maxHeight: 300)
-          .background(Color("ForegroundColor"))
+          .padding(30)
           .foregroundColor(.primary)
-          .clipShape(Rectangle())
-          .cornerRadius(10)
+          .frame(maxWidth: .infinity)
+          .background(Color("ForegroundColor"))
+          .cornerRadius(15)
           .shadow(radius: 3)
           .padding()
-          List {
+          
+          Spacer()
+          
+          // Button Stack
+          VStack {
             NavigationLink(destination: Text("Updates")) {
               HStack {
-                Text("")
                 Image(systemName: "bell")
                 Text("Updates")
+                Spacer()
+                Image(systemName: "chevron.right")
               }
-              .font(.system(size: 20))
+              .padding()
+              .background(Color("ForegroundColor"))
+              .foregroundColor(.primary)
+              .cornerRadius(15)
+              .shadow(radius: 3)
             }
             NavigationLink(destination: Text("About")) {
               HStack {
-                Text("")
                 Image(systemName: "book")
                 Text("About")
+                Spacer()
+                Image(systemName: "chevron.right")
               }
-              .font(.system(size: 20))
+              .padding()
+              .background(Color("ForegroundColor"))
+              .foregroundColor(.primary)
+              .cornerRadius(15)
+              .shadow(radius: 3)
             }
-            NavigationLink(destination: Text("Credit")) {
+            NavigationLink(destination: Text("Info")) {
               HStack {
-                Text("")
                 Image(systemName: "info.circle")
-                Text("Credits")
+                Text("Info")
+                Spacer()
+                Image(systemName: "chevron.right")
               }
-              .font(.system(size: 20))
+              .padding()
+              .background(Color("ForegroundColor"))
+              .foregroundColor(.primary)
+              .cornerRadius(15)
+              .shadow(radius: 3)
             }
           }
+          .padding(.horizontal)
+          .font(.system(size: 20))
         }
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.inline)
