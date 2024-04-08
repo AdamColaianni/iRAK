@@ -18,20 +18,20 @@ struct ContentView: View {
         }, label: {
           Text("")
         })
-        .buttonStyle(PrimaryButtonStyle(image: "figure.2"))
+        .buttonStyle(PrimaryButtonStyle(image: "", topGrade: .gray, bottomGrade: .orange))
         HStack {
           Button(action: {
             print("Join")
           }, label: {
             Text("Join")
           })
-          .buttonStyle(PrimaryButtonStyle(image: "play.square.stack.fill"))
+          .buttonStyle(PrimaryButtonStyle(image: "play.house.fill", topGrade: .gray, bottomGrade: .green))
           Button(action: {
             print("Host")
           }, label: {
             Text("Host")
           })
-          .buttonStyle(PrimaryButtonStyle(image: "house.fill"))
+          .buttonStyle(PrimaryButtonStyle(image: "house.fill", topGrade: .gray, bottomGrade: .pink))
         }
         HStack {
           Button(action: {
@@ -40,11 +40,11 @@ struct ContentView: View {
             Text("Rules")
               .foregroundStyle(.primary)
           })
-          .buttonStyle(PrimaryButtonStyle(image: "questionmark.diamond.fill"))
+          .buttonStyle(PrimaryButtonStyle(image: "questionmark.diamond.fill", topGrade: .gray, bottomGrade: .blue))
           NavigationLink(destination: SettingsView()) {
             Text("Stats")
           }
-          .buttonStyle(PrimaryButtonStyle(image: "chart.bar.xaxis"))
+          .buttonStyle(PrimaryButtonStyle(image: "chart.bar.xaxis", topGrade: .gray, bottomGrade: .purple))
         }
       }
       .padding()
@@ -54,11 +54,15 @@ struct ContentView: View {
 
 struct PrimaryButtonStyle: ButtonStyle {
   @State var image: String
-  init(image: String = "") {
+  @State var topGrade: Color
+  @State var bottomGrade: Color
+  init(image: String = "", topGrade: Color, bottomGrade: Color) {
     self.image = image
+    self.topGrade = topGrade
+    self.bottomGrade = bottomGrade
   }
   func makeBody(configuration: Configuration) -> some View {
-    ZStack {
+    ZStack(alignment: .topLeading) {
       ZStack(alignment: .topTrailing) {
         Text("")
           .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -71,15 +75,16 @@ struct PrimaryButtonStyle: ButtonStyle {
         Image(systemName: "chevron.right")
           .foregroundColor(.primary)
           .font(.system(size: 15, weight: .bold, design: .rounded))
+          .opacity(0.5)
           .padding()
       }
-      LinearGradient(gradient: Gradient(colors: [.green, .blue]), startPoint: .top, endPoint: .bottom).mask(Image(systemName: image)
+      LinearGradient(gradient: Gradient(colors: [topGrade, bottomGrade]), startPoint: .top, endPoint: .bottom).mask(Image(systemName: image)
         .resizable()
         .scaledToFit()
-        .padding()
-        .opacity(0.5))
+        .padding(30))
       configuration.label
         .font(.system(size: 20, weight: .bold))
+        .padding()
     }
   }
 }
