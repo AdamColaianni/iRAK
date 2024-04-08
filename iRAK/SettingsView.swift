@@ -45,7 +45,9 @@ struct SettingsView: View {
               Button {
                 dismiss()
               } label: {
-                Text("X")
+                Image("x-symbol")
+                  .resizable()
+                  .frame(width: 15, height: 15)
                   .font(.system(size: 20, weight: .bold, design: .rounded))
                   .foregroundColor(.primary)
               }
