@@ -56,11 +56,7 @@ struct PrimaryButtonStyle: ButtonStyle {
   @State var image: String
   @State var topGrade: Color
   @State var bottomGrade: Color
-  init(image: String = "", topGrade: Color, bottomGrade: Color) {
-    self.image = image
-    self.topGrade = topGrade
-    self.bottomGrade = bottomGrade
-  }
+
   func makeBody(configuration: Configuration) -> some View {
     ZStack(alignment: .topLeading) {
       ZStack(alignment: .topTrailing) {
