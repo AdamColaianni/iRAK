@@ -98,11 +98,7 @@ struct ProfileView: View {
                 Spacer()
                 Image(systemName: "chevron.right")
               }
-              .padding()
-              .background(Color("ForegroundColor"))
-              .foregroundColor(.primary)
-              .cornerRadius(15)
-              .shadow(radius: 3)
+              .profileButtons()
             }
             NavigationLink(destination: Text("About")) {
               HStack {
@@ -111,11 +107,7 @@ struct ProfileView: View {
                 Spacer()
                 Image(systemName: "chevron.right")
               }
-              .padding()
-              .background(Color("ForegroundColor"))
-              .foregroundColor(.primary)
-              .cornerRadius(15)
-              .shadow(radius: 3)
+              .profileButtons()
             }
             NavigationLink(destination: Text("Info")) {
               HStack {
@@ -124,11 +116,7 @@ struct ProfileView: View {
                 Spacer()
                 Image(systemName: "chevron.right")
               }
-              .padding()
-              .background(Color("ForegroundColor"))
-              .foregroundColor(.primary)
-              .cornerRadius(15)
-              .shadow(radius: 3)
+              .profileButtons()
             }
           }
           .padding(.horizontal)
@@ -145,12 +133,22 @@ struct ProfileView: View {
                 .resizable()
                 .frame(width: 15, height: 15)
                 .font(.system(size: 20, weight: .bold, design: .rounded))
-                .foregroundColor(.primary)
             }
           }
         }
       }
     }
+  }
+}
+
+extension HStack {
+  func profileButtons() -> some View {
+    self
+      .padding()
+      .background(Color("ForegroundColor"))
+      .foregroundColor(.primary)
+      .cornerRadius(15)
+      .shadow(radius: 3)
   }
 }
 

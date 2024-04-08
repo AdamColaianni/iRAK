@@ -34,8 +34,7 @@ struct SettingsView: View {
           }
           .padding()
           .background(Color("ForegroundColor").cornerRadius(10).shadow(radius: 3))
-          
-            .pickerStyle(.segmented)
+          .pickerStyle(.segmented)
           Spacer()
         }.padding()
           .navigationTitle("Options")
@@ -49,7 +48,6 @@ struct SettingsView: View {
                   .resizable()
                   .frame(width: 15, height: 15)
                   .font(.system(size: 20, weight: .bold, design: .rounded))
-                  .foregroundColor(.primary)
               }
             }
           }
