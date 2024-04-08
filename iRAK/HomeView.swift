@@ -34,6 +34,7 @@ struct HomeView: View {
                   .shadow(radius: 3)
                   .frame(width: 40, height: 40)
                 Image(systemName: "gearshape.fill")
+                  .foregroundColor(.primary)
               }
             }
             
@@ -54,6 +55,7 @@ struct HomeView: View {
                   .shadow(radius: 3)
                   .frame(width: 40, height: 40)
                 Image(systemName: "person.circle.fill")
+                  .foregroundColor(.primary)
               }
             }
           }
