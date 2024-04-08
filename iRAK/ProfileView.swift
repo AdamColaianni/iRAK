@@ -92,35 +92,15 @@ struct ProfileView: View {
           // Button Stack
           VStack {
             NavigationLink(destination: Text("Updates")) {
-              HStack {
-                Image(systemName: "bell")
-                Text("Updates")
-                Spacer()
-                Image(systemName: "chevron.right")
-              }
-              .profileButtons()
+              ProfileButtonStyle(imageName: "bell", text: "Updates")
             }
             NavigationLink(destination: Text("About")) {
-              HStack {
-                Image(systemName: "book")
-                Text("About")
-                Spacer()
-                Image(systemName: "chevron.right")
-              }
-              .profileButtons()
+              ProfileButtonStyle(imageName: "book", text: "About")
             }
             NavigationLink(destination: Text("Info")) {
-              HStack {
-                Image(systemName: "info.circle")
-                Text("Info")
-                Spacer()
-                Image(systemName: "chevron.right")
-              }
-              .profileButtons()
+              ProfileButtonStyle(imageName: "info.circle", text: "Info")
             }
           }
-          .padding(.horizontal)
-          .font(.system(size: 20))
         }
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.inline)
@@ -141,14 +121,24 @@ struct ProfileView: View {
   }
 }
 
-extension HStack {
-  func profileButtons() -> some View {
-    self
-      .padding()
-      .background(Color("ForegroundColor"))
-      .foregroundColor(.primary)
-      .cornerRadius(15)
-      .shadow(radius: 3)
+struct ProfileButtonStyle: View {
+  @State var imageName: String
+  @State var text: String
+  
+  var body: some View {
+    HStack {
+      Image(systemName: imageName)
+      Text(text)
+      Spacer()
+      Image(systemName: "chevron.right")
+    }
+    .padding()
+    .background(Color("ForegroundColor"))
+    .foregroundColor(.primary)
+    .cornerRadius(15)
+    .shadow(radius: 3)
+    .padding(.horizontal)
+    .font(.system(size: 20))
   }
 }
 
