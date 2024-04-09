@@ -18,20 +18,20 @@ struct ContentView: View {
         }, label: {
           Text("")
         })
-        .buttonStyle(PrimaryButtonStyle(image: "", topGrade: .gray, bottomGrade: .orange))
+        .buttonStyle(PrimaryButtonStyle(image: "", color: .orange))
         HStack {
           Button(action: {
             print("Join")
           }, label: {
             Text("Join")
           })
-          .buttonStyle(PrimaryButtonStyle(image: "play.house.fill", topGrade: .gray, bottomGrade: .green))
+          .buttonStyle(PrimaryButtonStyle(image: "play.house.fill", color: .green))
           Button(action: {
             print("Host")
           }, label: {
             Text("Host")
           })
-          .buttonStyle(PrimaryButtonStyle(image: "house.fill", topGrade: .gray, bottomGrade: .pink))
+          .buttonStyle(PrimaryButtonStyle(image: "house.fill", color: .pink))
         }
         HStack {
           Button(action: {
@@ -40,11 +40,11 @@ struct ContentView: View {
             Text("Rules")
               .foregroundStyle(.primary)
           })
-          .buttonStyle(PrimaryButtonStyle(image: "questionmark.diamond.fill", topGrade: .gray, bottomGrade: .blue))
+          .buttonStyle(PrimaryButtonStyle(image: "questionmark.diamond.fill", color: .blue))
           NavigationLink(destination: SettingsView()) {
             Text("Stats")
           }
-          .buttonStyle(PrimaryButtonStyle(image: "chart.bar.xaxis", topGrade: .gray, bottomGrade: .purple))
+          .buttonStyle(PrimaryButtonStyle(image: "chart.bar.xaxis", color: .purple))
         }
       }
       .padding()
@@ -55,8 +55,7 @@ struct ContentView: View {
 // Rewrite this
 struct PrimaryButtonStyle: ButtonStyle {
   @State var image: String
-  @State var topGrade: Color
-  @State var bottomGrade: Color
+  @State var color: Color
 
   func makeBody(configuration: Configuration) -> some View {
     ZStack(alignment: .topLeading) {
@@ -75,7 +74,7 @@ struct PrimaryButtonStyle: ButtonStyle {
           .opacity(0.5)
           .padding()
       }
-      LinearGradient(gradient: Gradient(colors: [topGrade, bottomGrade]), startPoint: .top, endPoint: .bottom).mask(Image(systemName: image)
+      LinearGradient(gradient: Gradient(colors: [.gray, color]), startPoint: .top, endPoint: .bottom).mask(Image(systemName: image)
         .resizable()
         .scaledToFit()
         .padding(30))
