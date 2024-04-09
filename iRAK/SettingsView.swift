@@ -17,6 +17,25 @@ struct SettingsView: View {
         Color("BackgroundColor")
           .ignoresSafeArea()
         VStack {
+          ZStack {
+            HStack {
+              Text("Settings")
+                .font(.system(size: 25, weight: .bold))
+              Spacer()
+            }
+            HStack {
+              Spacer()
+              Button {
+                dismiss()
+              } label: {
+                Image("x-symbol")
+                  .resizable()
+                  .frame(width: 18, height: 18)
+              }
+            }
+          }
+          .padding(.leading, 5)
+          .padding(.trailing, 5)
           Toggle("Hard Mode", isOn: $hardMode)
             .padding()
             .background(Color("ForegroundColor").cornerRadius(10).shadow(radius: 3))
@@ -36,21 +55,8 @@ struct SettingsView: View {
           .background(Color("ForegroundColor").cornerRadius(10).shadow(radius: 3))
           .pickerStyle(.segmented)
           Spacer()
-        }.padding()
-          .navigationTitle("Options")
-          .navigationBarTitleDisplayMode(.inline)
-          .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-              Button {
-                dismiss()
-              } label: {
-                Image("x-symbol")
-                  .resizable()
-                  .frame(width: 15, height: 15)
-                  .font(.system(size: 20, weight: .bold, design: .rounded))
-              }
-            }
-          }
+        }
+        .padding()
       }
     }
     .preferredColorScheme(csManager.selectedTheme)
