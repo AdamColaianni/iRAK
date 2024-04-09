@@ -22,9 +22,9 @@ struct ProfileView: View {
           VStack {
             ZStack {
               HStack {
-                Spacer()
                 Text("Profile")
-                  .font(.system(size: 18))
+                  .font(.system(size: 25, weight: .bold))
+                  .padding(.horizontal, 25)
                 Spacer()
               }
               HStack {
@@ -34,8 +34,7 @@ struct ProfileView: View {
                 } label: {
                   Image("x-symbol")
                     .resizable()
-                    .frame(width: 15, height: 15)
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .frame(width: 18, height: 18)
                     .padding()
                 }
               }
