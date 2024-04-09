@@ -52,6 +52,7 @@ struct ContentView: View {
   }
 }
 
+// Rewrite this
 struct PrimaryButtonStyle: ButtonStyle {
   @State var image: String
   @State var topGrade: Color

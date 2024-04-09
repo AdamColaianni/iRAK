@@ -19,6 +19,26 @@ struct ProfileView: View {
         Color("BackgroundColor")
           .ignoresSafeArea()
         VStack {
+          ZStack {
+            HStack {
+              Spacer()
+              Text("Profile")
+                .font(.system(size: 18))
+              Spacer()
+            }
+            HStack {
+              Spacer()
+              Button {
+                dismiss()
+              } label: {
+                Image("x-symbol")
+                  .resizable()
+                  .frame(width: 15, height: 15)
+                  .font(.system(size: 20, weight: .bold, design: .rounded))
+                  .padding()
+              }
+            }
+          }
           // Profile Stack
           VStack {
             Button {
@@ -99,20 +119,6 @@ struct ProfileView: View {
             }
             NavigationLink(destination: Text("Info")) {
               ProfileButtonStyle(imageName: "info.circle", text: "Info")
-            }
-          }
-        }
-        .navigationTitle("Profile")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-          ToolbarItem(placement: .navigationBarTrailing) {
-            Button {
-              dismiss()
-            } label: {
-              Image("x-symbol")
-                .resizable()
-                .frame(width: 15, height: 15)
-                .font(.system(size: 20, weight: .bold, design: .rounded))
             }
           }
         }
