@@ -52,36 +52,34 @@ struct ContentView: View {
   }
 }
 
-// Rewrite this
 struct PrimaryButtonStyle: ButtonStyle {
   @State var image: String
   @State var color: Color
-
+  
   func makeBody(configuration: Configuration) -> some View {
-    ZStack(alignment: .topLeading) {
-      ZStack(alignment: .topTrailing) {
-        Text("")
-          .frame(maxWidth: .infinity, maxHeight: .infinity)
-          .background(configuration.isPressed ? Color("ForegroundColor").opacity(0.5) : Color("ForegroundColor"))
-          .foregroundColor(.primary)
-          .clipShape(Rectangle())
-          .cornerRadius(10)
-          .shadow(radius: 3)
-          .padding(5)
+    VStack {
+      HStack {
+        configuration.label
+          .font(.system(size: 20, weight: .bold))
+        Spacer()
         Image(systemName: "chevron.right")
           .foregroundColor(.primary)
           .font(.system(size: 15, weight: .bold, design: .rounded))
           .opacity(0.5)
-          .padding()
       }
       LinearGradient(gradient: Gradient(colors: [.gray, color]), startPoint: .top, endPoint: .bottom).mask(Image(systemName: image)
         .resizable()
         .scaledToFit()
-        .padding(30))
-      configuration.label
-        .font(.system(size: 20, weight: .bold))
-        .padding()
+        .padding(5))
     }
+    .padding()
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(configuration.isPressed ? Color("ForegroundColor").opacity(0.5) : Color("ForegroundColor"))
+    .foregroundColor(.primary)
+    .clipShape(Rectangle())
+    .cornerRadius(10)
+    .shadow(radius: 3)
+    .padding(5)
   }
 }
 
