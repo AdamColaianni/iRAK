@@ -6,12 +6,18 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct ProfileView: View {
   @Environment(\.dismiss) var dismiss
   @State private var isEditing = false
   @State private var name = "name1"
   @FocusState private var nameIsFocused: Bool
+  
+  @State var selectedPhoto: PhotosPickerItem?
+  @State var selectedPhotoData: Data?
+  @State var isDialogPresented = false
+  @State var buttonDisabledPhoto = false
   
   var body: some View {
     NavigationView {
@@ -41,20 +47,15 @@ struct ProfileView: View {
             }
             // Profile Stack
             VStack {
-              Button {
-                // Code to upload and save image
-                print("Replace image")
-              } label: {
+              PhotosPicker(selection: $selectedPhoto, matching: .images) {
                 ZStack {
-                  Image(systemName: "questionmark.square.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 100, height: 100)
-                    .clipShape(Circle())
-                    .overlay(
-                      Circle().stroke(Color.primary, lineWidth: 2)
-                    )
-                    .shadow(radius: 3)
+                  if let selectedPhotoData, let uiImage = UIImage(data: selectedPhotoData) {
+                    Image(uiImage: uiImage)
+                      .profileImage()
+                  } else {
+                    Image(systemName: "person.circle.fill")
+                      .profileImage()
+                  }
                   if isEditing {
                     Image(systemName: "camera.fill")
                       .resizable()
@@ -70,6 +71,12 @@ struct ProfileView: View {
                 }
               }
               .disabled(!isEditing)
+              .disabled(buttonDisabledPhoto)
+              .simultaneousGesture(LongPressGesture(minimumDuration: 0.5).onEnded({ (b) in
+                if isEditing && selectedPhotoData != nil {
+                  showDialog(true)
+                }
+              }))
               
               if isEditing {
                 TextField("Enter name", text: $name, onCommit: {
@@ -123,8 +130,50 @@ struct ProfileView: View {
             }
           }
         }
+        .onAppear {
+          selectedPhotoData = UserDefaults.standard.data(forKey: "selectedPhotoData")
+        }
+        .task(id: selectedPhoto) {
+          if let data = try? await selectedPhoto?.loadTransferable(type: Data.self) {
+            withAnimation {
+              selectedPhotoData = data
+              UserDefaults.standard.set(data, forKey: "selectedPhotoData")
+            }
+          }
+        }
+        .confirmationDialog("Remove Profile Image", isPresented: $isDialogPresented, actions: {
+          Button("Remove") {
+            withAnimation {
+              selectedPhoto = nil
+              selectedPhotoData = nil
+              UserDefaults.standard.removeObject(forKey: "selectedPhotoData")
+            }
+            showDialog(false)
+          }
+          Button("Cancle", role: .cancel) {
+            showDialog(false)
+          }
+        }, message: {Text("Do you want to remove your profile Image?")})
       }
     }
+  }
+  func showDialog(_ state: Bool) {
+    isDialogPresented = state
+    buttonDisabledPhoto = state
+  }
+}
+
+extension Image {
+  func profileImage() -> some View {
+    self
+      .resizable()
+      .aspectRatio(contentMode: .fill)
+      .frame(width: 100, height: 100)
+      .clipShape(Circle())
+      .overlay(
+        Circle().stroke(Color.primary, lineWidth: 2)
+      )
+      .shadow(radius: 3)
   }
 }
 
