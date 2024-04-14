@@ -43,3 +43,59 @@ func getTitle(sheetNum: String) -> String {
     return "title"
   }
 }
+
+func getFirstColor(tab: String) -> Color {
+  switch tab {
+  case "house":
+    return .blue
+  case "archivebox":
+    return .red
+  case "bell":
+    return .yellow
+  case "message":
+    return .green
+  case "mic":
+    return .red
+  default:
+    return .clear
+  }
+}
+
+func getSecondColor(tab: String) -> Color {
+  switch tab {
+  case "house":
+    return .purple
+  case "archivebox":
+    return .green
+  case "bell":
+    return .purple
+  case "message":
+    return .orange
+  case "mic":
+    return .purple
+  default:
+    return .clear
+  }
+}
+
+func getThirdColor(tab: String) -> Color {
+  switch tab {
+  case "house":
+    return .green
+  case "archivebox":
+    return .blue
+  case "bell":
+    return .cyan
+  case "message":
+    return .blue
+  case "mic":
+    return .yellow
+  default:
+    return .clear
+  }
+}
+
+  
+  
+  
+  
