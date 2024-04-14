@@ -59,7 +59,7 @@ struct SettingsView: View {
         .padding()
       }
     }
-    .preferredColorScheme(csManager.selectedTheme)
+    .preferredColorScheme(csManager.settingsViewTheme)
   }
 }
 
