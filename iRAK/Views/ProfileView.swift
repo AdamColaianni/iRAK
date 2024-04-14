@@ -10,15 +10,14 @@ import PhotosUI
 
 struct ProfileView: View {
   @Environment(\.dismiss) var dismiss
-  @State private var isEditing = false
+  @FocusState private var focusOnTextBox: Bool
   @AppStorage("userName") private var userName = "name"
-  @FocusState private var nameIsFocused: Bool
-  @State private var showingAlert = false
-  
-  @State var selectedPhoto: PhotosPickerItem?
-  @AppStorage("selectedPhotoData") private var selectedPhotoData: Data?
-  @State var isDialogPresented = false
-  @State var buttonDisabledPhoto = false
+  @AppStorage("selectedProfilePhotoData") private var selectedProfilePhotoData: Data?
+  @State private var isEditing = false
+  @State private var showingEmptyNameAlert = false
+  @State var selectedProfilePhoto: PhotosPickerItem?
+  @State var isPhotoDeletionConfirmationPresented = false
+  @State var profilePhotoButtonEnabled = false
   
   var body: some View {
     NavigationView {
@@ -27,6 +26,7 @@ struct ProfileView: View {
           Color("BackgroundColor")
             .ignoresSafeArea()
           VStack {
+            // Header
             ZStack {
               HStack {
                 Text("Profile")
@@ -38,7 +38,7 @@ struct ProfileView: View {
                 Spacer()
                 Button {
                   if isEditing && userName.isEmpty {
-                    showingAlert = true
+                    showingEmptyNameAlert = true
                   } else {
                     isEditing = false
                     dismiss()
@@ -51,11 +51,13 @@ struct ProfileView: View {
                 }
               }
             }
+            
             // Profile Stack
             VStack {
-              PhotosPicker(selection: $selectedPhoto, matching: .images) {
+              // Profile Photo
+              PhotosPicker(selection: $selectedProfilePhoto, matching: .images) {
                 ZStack {
-                  if let selectedPhotoData, let uiImage = UIImage(data: selectedPhotoData) {
+                  if let selectedProfilePhotoData, let uiImage = UIImage(data: selectedProfilePhotoData) {
                     Image(uiImage: uiImage)
                       .profileImage()
                   } else {
@@ -77,23 +79,24 @@ struct ProfileView: View {
                 }
               }
               .disabled(!isEditing)
-              .disabled(buttonDisabledPhoto)
+              .disabled(profilePhotoButtonEnabled)
               .simultaneousGesture(LongPressGesture(minimumDuration: 0.5).onEnded({ (b) in
-                if isEditing && selectedPhotoData != nil {
+                if isEditing && selectedProfilePhotoData != nil {
                   showDialog(true)
                 }
               }))
               
+              // Name or text box
               if isEditing {
                 TextField("Enter name", text: $userName, onCommit: {
                   if userName.isEmpty {
-                    showingAlert = true
-                    nameIsFocused = true
+                    showingEmptyNameAlert = true
+                    focusOnTextBox = true
                   } else {
                     isEditing = false
                   }
                 })
-                .focused($nameIsFocused)
+                .focused($focusOnTextBox)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .font(.system(size: 30, weight: .bold, design: .rounded))
                 .multilineTextAlignment(.center)
@@ -103,12 +106,13 @@ struct ProfileView: View {
                   .font(.system(size: 30, weight: .bold, design: .rounded))
               }
               
+              // Edit profile button
               Button {
                 if isEditing && userName.isEmpty {
-                  showingAlert = true
+                  showingEmptyNameAlert = true
                 } else {
                   isEditing.toggle()
-                  nameIsFocused = true
+                  focusOnTextBox = true
                 }
               } label: {
                 Text(isEditing ? "Done" : "Edit Profile")
@@ -133,32 +137,32 @@ struct ProfileView: View {
             // Button Stack
             VStack {
               NavigationLink(destination: Text("Updates")) {
-                ProfileButtonStyle(imageName: "bell", text: "Updates")
+                ProfileButton(imageName: "bell", text: "Updates")
               }
               NavigationLink(destination: Text("About")) {
-                ProfileButtonStyle(imageName: "book", text: "About")
+                ProfileButton(imageName: "book", text: "About")
               }
               NavigationLink(destination: Text("Info")) {
-                ProfileButtonStyle(imageName: "info.circle", text: "Info")
+                ProfileButton(imageName: "info.circle", text: "Info")
               }
             }
           }
         }
-        .alert(isPresented: $showingAlert) {
+        .alert(isPresented: $showingEmptyNameAlert) {
             Alert(title: Text("Alert"), message: Text("Cannot have an empty user name"), dismissButton: .default(Text("OK")))
         }
-        .task(id: selectedPhoto) {
-          if let data = try? await selectedPhoto?.loadTransferable(type: Data.self) {
+        .task(id: selectedProfilePhoto) {
+          if let data = try? await selectedProfilePhoto?.loadTransferable(type: Data.self) {
             withAnimation {
-              selectedPhotoData = data
+              selectedProfilePhotoData = data
             }
           }
         }
-        .confirmationDialog("Remove Profile Image", isPresented: $isDialogPresented, actions: {
+        .confirmationDialog("Remove Profile Image", isPresented: $isPhotoDeletionConfirmationPresented, actions: {
           Button("Remove") {
             withAnimation {
-              selectedPhoto = nil
-              selectedPhotoData = nil
+              selectedProfilePhoto = nil
+              selectedProfilePhotoData = nil
             }
             showDialog(false)
           }
@@ -169,44 +173,10 @@ struct ProfileView: View {
       }
     }
   }
-  func showDialog(_ state: Bool) {
-    isDialogPresented = state
-    buttonDisabledPhoto = state
-  }
-}
-
-extension Image {
-  func profileImage() -> some View {
-    self
-      .resizable()
-      .aspectRatio(contentMode: .fill)
-      .frame(width: 100, height: 100)
-      .clipShape(Circle())
-      .overlay(
-        Circle().stroke(Color.primary, lineWidth: 2)
-      )
-      .shadow(radius: 3)
-  }
-}
-
-struct ProfileButtonStyle: View {
-  @State var imageName: String
-  @State var text: String
   
-  var body: some View {
-    HStack {
-      Image(systemName: imageName)
-      Text(text)
-      Spacer()
-      Image(systemName: "chevron.right")
-    }
-    .padding()
-    .background(Color("ForegroundColor"))
-    .foregroundColor(.primary)
-    .cornerRadius(15)
-    .shadow(radius: 3)
-    .padding(.horizontal)
-    .font(.system(size: 20))
+  func showDialog(_ state: Bool) {
+    isPhotoDeletionConfirmationPresented = state
+    profilePhotoButtonEnabled = state
   }
 }
 

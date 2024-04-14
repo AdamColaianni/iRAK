@@ -11,8 +11,15 @@
 		1F45870E2BC59AE900CB5562 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45870D2BC59AE900CB5562 /* SettingsView.swift */; };
 		1F4587102BC59AEF00CB5562 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45870F2BC59AEF00CB5562 /* ProfileView.swift */; };
 		1F54FDEA2BA355390063B0C4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54FDE92BA355390063B0C4 /* HomeView.swift */; };
+		1FADC6872BCC71A400706DC1 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6862BCC71A400706DC1 /* ImageExtensions.swift */; };
+		1FADC68A2BCC722500706DC1 /* ProfileButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6892BCC722500706DC1 /* ProfileButtonView.swift */; };
+		1FADC68E2BCC753700706DC1 /* CustomTabShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC68D2BCC753700706DC1 /* CustomTabShape.swift */; };
+		1FADC6932BCC76D900706DC1 /* HomeViewFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6922BCC76D900706DC1 /* HomeViewFunctions.swift */; };
+		1FADC6952BCC781600706DC1 /* TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6942BCC781600706DC1 /* TabsView.swift */; };
+		1FADC69A2BCC7BC400706DC1 /* SchemeTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6992BCC7BC400706DC1 /* SchemeTypeExtension.swift */; };
+		1FADC69D2BCC7E2700706DC1 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */; };
 		E55F6CBA2B9A1F5500E472B8 /* iRAKApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F6CB92B9A1F5500E472B8 /* iRAKApp.swift */; };
-		E55F6CBC2B9A1F5500E472B8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F6CBB2B9A1F5500E472B8 /* ContentView.swift */; };
+		E55F6CBC2B9A1F5500E472B8 /* GameButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F6CBB2B9A1F5500E472B8 /* GameButtonsView.swift */; };
 		E55F6CBE2B9A1F5700E472B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E55F6CBD2B9A1F5700E472B8 /* Assets.xcassets */; };
 		E55F6CC12B9A1F5700E472B8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E55F6CC02B9A1F5700E472B8 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -22,9 +29,16 @@
 		1F45870D2BC59AE900CB5562 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1F45870F2BC59AEF00CB5562 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		1F54FDE92BA355390063B0C4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		1FADC6862BCC71A400706DC1 /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
+		1FADC6892BCC722500706DC1 /* ProfileButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButtonView.swift; sourceTree = "<group>"; };
+		1FADC68D2BCC753700706DC1 /* CustomTabShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabShape.swift; sourceTree = "<group>"; };
+		1FADC6922BCC76D900706DC1 /* HomeViewFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFunctions.swift; sourceTree = "<group>"; };
+		1FADC6942BCC781600706DC1 /* TabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsView.swift; sourceTree = "<group>"; };
+		1FADC6992BCC7BC400706DC1 /* SchemeTypeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemeTypeExtension.swift; sourceTree = "<group>"; };
+		1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		E55F6CB62B9A1F5500E472B8 /* iRAK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iRAK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55F6CB92B9A1F5500E472B8 /* iRAKApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iRAKApp.swift; sourceTree = "<group>"; };
-		E55F6CBB2B9A1F5500E472B8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E55F6CBB2B9A1F5500E472B8 /* GameButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameButtonsView.swift; sourceTree = "<group>"; };
 		E55F6CBD2B9A1F5700E472B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E55F6CC02B9A1F5700E472B8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -40,6 +54,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1FADC6882BCC71AC00706DC1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1FADC6862BCC71A400706DC1 /* ImageExtensions.swift */,
+				1FADC6992BCC7BC400706DC1 /* SchemeTypeExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1FADC68B2BCC727400706DC1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1F54FDE92BA355390063B0C4 /* HomeView.swift */,
+				1F45870F2BC59AEF00CB5562 /* ProfileView.swift */,
+				1FADC6892BCC722500706DC1 /* ProfileButtonView.swift */,
+				1FADC6942BCC781600706DC1 /* TabsView.swift */,
+				E55F6CBB2B9A1F5500E472B8 /* GameButtonsView.swift */,
+				1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */,
+				1F45870D2BC59AE900CB5562 /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1FADC68C2BCC74F000706DC1 /* Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				1FADC68D2BCC753700706DC1 /* CustomTabShape.swift */,
+			);
+			path = Shapes;
+			sourceTree = "<group>";
+		};
+		1FADC69B2BCC7C0300706DC1 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1F45870B2BC59ADC00CB5562 /* ColorSchemeManager.swift */,
+				1FADC6922BCC76D900706DC1 /* HomeViewFunctions.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		E55F6CAD2B9A1F5500E472B8 = {
 			isa = PBXGroup;
 			children = (
@@ -60,11 +114,10 @@
 			isa = PBXGroup;
 			children = (
 				E55F6CB92B9A1F5500E472B8 /* iRAKApp.swift */,
-				E55F6CBB2B9A1F5500E472B8 /* ContentView.swift */,
-				1F54FDE92BA355390063B0C4 /* HomeView.swift */,
-				1F45870F2BC59AEF00CB5562 /* ProfileView.swift */,
-				1F45870D2BC59AE900CB5562 /* SettingsView.swift */,
-				1F45870B2BC59ADC00CB5562 /* ColorSchemeManager.swift */,
+				1FADC69B2BCC7C0300706DC1 /* ViewModels */,
+				1FADC68B2BCC727400706DC1 /* Views */,
+				1FADC6882BCC71AC00706DC1 /* Extensions */,
+				1FADC68C2BCC74F000706DC1 /* Shapes */,
 				E55F6CBD2B9A1F5700E472B8 /* Assets.xcassets */,
 				E55F6CBF2B9A1F5700E472B8 /* Preview Content */,
 			);
@@ -151,9 +204,16 @@
 			files = (
 				1F45870E2BC59AE900CB5562 /* SettingsView.swift in Sources */,
 				1F54FDEA2BA355390063B0C4 /* HomeView.swift in Sources */,
-				E55F6CBC2B9A1F5500E472B8 /* ContentView.swift in Sources */,
+				E55F6CBC2B9A1F5500E472B8 /* GameButtonsView.swift in Sources */,
+				1FADC68E2BCC753700706DC1 /* CustomTabShape.swift in Sources */,
+				1FADC68A2BCC722500706DC1 /* ProfileButtonView.swift in Sources */,
+				1FADC6952BCC781600706DC1 /* TabsView.swift in Sources */,
 				1F45870C2BC59ADC00CB5562 /* ColorSchemeManager.swift in Sources */,
+				1FADC69D2BCC7E2700706DC1 /* PrimaryButtonStyle.swift in Sources */,
 				1F4587102BC59AEF00CB5562 /* ProfileView.swift in Sources */,
+				1FADC69A2BCC7BC400706DC1 /* SchemeTypeExtension.swift in Sources */,
+				1FADC6932BCC76D900706DC1 /* HomeViewFunctions.swift in Sources */,
+				1FADC6872BCC71A400706DC1 /* ImageExtensions.swift in Sources */,
 				E55F6CBA2B9A1F5500E472B8 /* iRAKApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

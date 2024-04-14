@@ -12,19 +12,6 @@ enum SchemeType: Int, Identifiable, CaseIterable {
   case system, light, dark
 }
 
-extension SchemeType {
-  var title: String {
-    switch self {
-    case .system:
-      return "System"
-    case .light:
-      return "Light"
-    case .dark:
-      return "Dark"
-    }
-  }
-}
-
 class ColorSchemeManager: ObservableObject {
   @AppStorage("systemThemeVal") var systemTheme: Int = SchemeType.allCases.first!.rawValue
   var selectedTheme: ColorScheme? {
