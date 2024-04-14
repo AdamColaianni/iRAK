@@ -11,11 +11,12 @@ import PhotosUI
 struct ProfileView: View {
   @Environment(\.dismiss) var dismiss
   @State private var isEditing = false
-  @State private var name = "name1"
+  @AppStorage("userName") private var userName = "name"
   @FocusState private var nameIsFocused: Bool
+  @State private var showingAlert = false
   
   @State var selectedPhoto: PhotosPickerItem?
-  @State var selectedPhotoData: Data?
+  @AppStorage("selectedPhotoData") private var selectedPhotoData: Data?
   @State var isDialogPresented = false
   @State var buttonDisabledPhoto = false
   
@@ -36,7 +37,12 @@ struct ProfileView: View {
               HStack {
                 Spacer()
                 Button {
-                  dismiss()
+                  if isEditing && userName.isEmpty {
+                    showingAlert = true
+                  } else {
+                    isEditing = false
+                    dismiss()
+                  }
                 } label: {
                   Image("x-symbol")
                     .resizable()
@@ -79,9 +85,13 @@ struct ProfileView: View {
               }))
               
               if isEditing {
-                TextField("Enter name", text: $name, onCommit: {
-                  // Save the entered name and toggle back to text display
-                  isEditing = false
+                TextField("Enter name", text: $userName, onCommit: {
+                  if userName.isEmpty {
+                    showingAlert = true
+                    nameIsFocused = true
+                  } else {
+                    isEditing = false
+                  }
                 })
                 .focused($nameIsFocused)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -89,13 +99,17 @@ struct ProfileView: View {
                 .multilineTextAlignment(.center)
                 .padding(2)
               } else {
-                Text(name)
+                Text(userName)
                   .font(.system(size: 30, weight: .bold, design: .rounded))
               }
               
               Button {
-                isEditing.toggle()
-                nameIsFocused = true
+                if isEditing && userName.isEmpty {
+                  showingAlert = true
+                } else {
+                  isEditing.toggle()
+                  nameIsFocused = true
+                }
               } label: {
                 Text(isEditing ? "Done" : "Edit Profile")
                   .font(.system(size: 20, weight: .bold, design: .rounded))
@@ -130,14 +144,13 @@ struct ProfileView: View {
             }
           }
         }
-        .onAppear {
-          selectedPhotoData = UserDefaults.standard.data(forKey: "selectedPhotoData")
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("Alert"), message: Text("Cannot have an empty user name"), dismissButton: .default(Text("OK")))
         }
         .task(id: selectedPhoto) {
           if let data = try? await selectedPhoto?.loadTransferable(type: Data.self) {
             withAnimation {
               selectedPhotoData = data
-              UserDefaults.standard.set(data, forKey: "selectedPhotoData")
             }
           }
         }
@@ -146,7 +159,6 @@ struct ProfileView: View {
             withAnimation {
               selectedPhoto = nil
               selectedPhotoData = nil
-              UserDefaults.standard.removeObject(forKey: "selectedPhotoData")
             }
             showDialog(false)
           }
