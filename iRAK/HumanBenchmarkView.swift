@@ -9,69 +9,48 @@ import SwiftUI
 
 struct HumanBenchmarkView: View {
   var body: some View {
-    NavigationView {
+    ZStack {
+      Color("BackgroundColor")
+        .ignoresSafeArea()
       VStack {
-        // Game UI
-        ZStack {
-          Button(action: {
-            // Action when game view is tapped
-            // Navigate to next screen or perform other action
-          }) {
-            ZStack {
-              Color(red: 0.9, green: 0.3, blue: 0.3) // Red background inside GameView
-                .edgesIgnoringSafeArea(.all)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-              
-              VStack {
-                Text("Wait for green...")
-                  .foregroundColor(.white)
-                  .font(.title)
-                  .padding(.top, 20)
-                
-                Image(systemName: "bolt.fill") // Lightning bolt SF symbol
-                  .font(.system(size: 100))
-                  .foregroundColor(.white)
-                  .padding()
-              }
-              .padding()
-            }
+        Button(action: {
+          // Action when game view is tapped
+        }) {
+          VStack {
+            Text("Wait for green...")
+              .font(.title)
+            Image(systemName: "bolt.fill")
+              .font(.system(size: 100))
           }
-          
-          HStack {
-            Spacer()
-            Spacer()
-          }
+          .padding()
+          .frame(maxWidth: .infinity, maxHeight: .infinity)
+          .background(Color(red: 0.9, green: 0.3, blue: 0.3))
+          .foregroundColor(.white)
+          .cornerRadius(10)
+          .shadow(radius: 3)
+          .padding()
         }
-        .padding()
-        .background(Color(red: 0.95, green: 0.95, blue: 0.95)) // Light gray background outside GameView
-        .clipShape(RoundedRectangle(cornerRadius: 20))
-        .navigationBarHidden(true)
         
         // Leaderboard
-        VStack(alignment: .leading) {
+        VStack {
           Text("Leaderboard")
             .font(.title)
-            .padding(.horizontal)
-          
-          List {
+          ScrollView {
             ForEach(1...10, id: \.self) { index in
               // Replace the dummy data with actual leaderboard data
               Text("\(index). Player \(index): \(Double.random(in: 0.1...1.0), specifier: "%.2f")s")
             }
           }
-          .listStyle(PlainListStyle())
         }
         .padding()
-        .background(Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .frame(maxWidth: .infinity)
         .frame(height: 200)
+        .background(Color("ForegroundColor"))
+        .cornerRadius(10)
+        .shadow(radius: 3)
         .padding()
-        .background(Color(red: 0.95, green: 0.95, blue: 0.95)) // Different gray background
-        .clipShape(RoundedRectangle(cornerRadius: 20))
       }
-      .padding()
     }
-    .accentColor(.black) // Set accent color for navigation items
   }
 }
 
