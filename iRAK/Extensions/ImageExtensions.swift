@@ -31,6 +31,5 @@ extension Image {
       )
       .frame(maxWidth: .infinity, maxHeight: .infinity)
       .shadow(radius: 3)
-      .padding(5)
   }
 }
