@@ -14,7 +14,7 @@ struct GameButtonsView: View {
         .ignoresSafeArea()
       VStack {
         Image("WordBomb")
-          .headerButtonStyle(text: "Word Bomb")
+          .headerButtonStyle()
         HStack {
           Button(action: {
             print("Join")

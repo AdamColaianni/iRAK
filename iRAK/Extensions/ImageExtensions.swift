@@ -20,31 +20,17 @@ extension Image {
       .shadow(radius: 3)
   }
   
-  func headerButtonStyle(text: String) -> some View {
-    ZStack {
-      self
-        .resizable()
-        .scaledToFit()
-        .opacity(0.8)
-        .blur(radius: 1)
-        .overlay(Color(.blue).opacity(0.4))
-        .cornerRadius(10)
-        .overlay(
-          RoundedRectangle(cornerRadius: 10)
-            .stroke(Color.primary, lineWidth: 3)
-        )
-        .shadow(radius: 3)
-//      Text(text)
-//        .font(.system(size: 25, weight: .bold))
-//        .shadow(radius: 10)
-    }
-    .padding(5)
-    .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .background(Color("ForegroundColor"))
-//    .foregroundColor(.green)
-//    .clipShape(Rectangle())
-    .cornerRadius(10)
-    .shadow(radius: 3)
-    .padding(5)
+  func headerButtonStyle() -> some View {
+    self
+      .resizable()
+      .scaledToFit()
+      .cornerRadius(10)
+      .overlay(
+        RoundedRectangle(cornerRadius: 10)
+          .stroke(Color.primary, lineWidth: 3)
+      )
+      .frame(maxWidth: .infinity, maxHeight: .infinity)
+      .shadow(radius: 3)
+      .padding(5)
   }
 }
