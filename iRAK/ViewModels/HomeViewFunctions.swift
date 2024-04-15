@@ -13,13 +13,13 @@ var tabs = ["house", "archivebox", "bell", "message", "mic"]
 func getTabColor(image: String) -> Color {
   switch image {
   case "house":
-    return Color.green
-  case "archivebox":
-    return Color.blue
-  case "bell":
     return Color.red
-  case "message":
+  case "archivebox":
     return Color.yellow
+  case "bell":
+    return Color.green
+  case "message":
+    return Color.blue
   case "mic":
     return Color.purple
   default:
@@ -44,10 +44,10 @@ func getTitle(sheetNum: String) -> String {
   }
 }
 
-func getFirstColor(tab: String) -> Color {
+func getLeftTabColor(tab: String) -> Color {
   switch tab {
   case "house":
-    return .blue
+    return .purple
   case "archivebox":
     return .red
   case "bell":
@@ -55,41 +55,24 @@ func getFirstColor(tab: String) -> Color {
   case "message":
     return .green
   case "mic":
-    return .red
+    return .blue
   default:
     return .clear
   }
 }
 
-func getSecondColor(tab: String) -> Color {
+func getRightTabColor(tab: String) -> Color {
   switch tab {
   case "house":
-    return .purple
-  case "archivebox":
-    return .green
-  case "bell":
-    return .purple
-  case "message":
-    return .orange
-  case "mic":
-    return .purple
-  default:
-    return .clear
-  }
-}
-
-func getThirdColor(tab: String) -> Color {
-  switch tab {
-  case "house":
-    return .green
-  case "archivebox":
-    return .blue
-  case "bell":
-    return .cyan
-  case "message":
-    return .blue
-  case "mic":
     return .yellow
+  case "archivebox":
+    return .green
+  case "bell":
+    return .blue
+  case "message":
+    return .purple
+  case "mic":
+    return .red
   default:
     return .clear
   }

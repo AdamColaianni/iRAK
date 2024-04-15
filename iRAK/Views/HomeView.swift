@@ -22,9 +22,9 @@ struct HomeView: View {
           .ignoresSafeArea()
         GeometryReader { geometry in
           LinearGradient(gradient: Gradient(stops: [
-            Gradient.Stop(color: getFirstColor(tab: selectedTab), location: 0.1),
-            Gradient.Stop(color: getSecondColor(tab: selectedTab), location: 0.5),
-            Gradient.Stop(color: getThirdColor(tab: selectedTab), location: 1),
+            Gradient.Stop(color: getRightTabColor(tab: selectedTab), location: 0.1),
+            Gradient.Stop(color: getTabColor(image: selectedTab), location: 0.5),
+            Gradient.Stop(color: getLeftTabColor(tab: selectedTab), location: 1),
           ]), startPoint: .topTrailing, endPoint: .bottomLeading)
           .frame(height: geometry.size.height / 7)
           .mask(LinearGradient(gradient: Gradient(colors: [Color("BackgroundColor"), .clear]), startPoint: .top, endPoint: .bottom))
