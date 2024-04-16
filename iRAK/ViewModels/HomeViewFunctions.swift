@@ -30,17 +30,17 @@ func getTabColor(image: String) -> Color {
 func getTitle(sheetNum: String) -> String {
   switch sheetNum {
   case "house":
-    return "Game 1 title"
+    return "Word Bomb"
   case "archivebox":
-    return "Game 2 title"
+    return "Trivia Trench"
   case "bell":
-    return "Game 3 title"
+    return "Heads Up!!!"
   case "message":
-    return "Game 4 title"
+    return "War-dle"
   case "mic":
-    return "Game 5 title"
+    return "Sniper Trainer"
   default:
-    return "title"
+    return "Title"
   }
 }
 

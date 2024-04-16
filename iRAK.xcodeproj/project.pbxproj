@@ -11,6 +11,7 @@
 		1F45870E2BC59AE900CB5562 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45870D2BC59AE900CB5562 /* SettingsView.swift */; };
 		1F4587102BC59AEF00CB5562 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45870F2BC59AEF00CB5562 /* ProfileView.swift */; };
 		1F54FDEA2BA355390063B0C4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54FDE92BA355390063B0C4 /* HomeView.swift */; };
+		1F9C63C42BCF1E7400782B3A /* TriviaTrenchHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C63C32BCF1E7400782B3A /* TriviaTrenchHomeView.swift */; };
 		1FADC6872BCC71A400706DC1 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6862BCC71A400706DC1 /* ImageExtensions.swift */; };
 		1FADC68A2BCC722500706DC1 /* ProfileButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6892BCC722500706DC1 /* ProfileButtonView.swift */; };
 		1FADC68E2BCC753700706DC1 /* CustomTabShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC68D2BCC753700706DC1 /* CustomTabShape.swift */; };
@@ -30,6 +31,7 @@
 		1F45870D2BC59AE900CB5562 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1F45870F2BC59AEF00CB5562 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		1F54FDE92BA355390063B0C4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		1F9C63C32BCF1E7400782B3A /* TriviaTrenchHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaTrenchHomeView.swift; sourceTree = "<group>"; };
 		1FADC6862BCC71A400706DC1 /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
 		1FADC6892BCC722500706DC1 /* ProfileButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButtonView.swift; sourceTree = "<group>"; };
 		1FADC68D2BCC753700706DC1 /* CustomTabShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabShape.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				E55F6CBB2B9A1F5500E472B8 /* GameButtonsView.swift */,
+				1F9C63C32BCF1E7400782B3A /* TriviaTrenchHomeView.swift */,
 			);
 			path = GameViews;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 			files = (
 				1F45870E2BC59AE900CB5562 /* SettingsView.swift in Sources */,
 				1F54FDEA2BA355390063B0C4 /* HomeView.swift in Sources */,
+				1F9C63C42BCF1E7400782B3A /* TriviaTrenchHomeView.swift in Sources */,
 				E55F6CBC2B9A1F5500E472B8 /* GameButtonsView.swift in Sources */,
 				1FADC68E2BCC753700706DC1 /* CustomTabShape.swift in Sources */,
 				1FADC68A2BCC722500706DC1 /* ProfileButtonView.swift in Sources */,
