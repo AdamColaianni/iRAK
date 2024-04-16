@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GameButtonsView: View {
+struct WordBombHomeView: View {
   @AppStorage("gradient") var isGradientShown: Bool = true
   @Binding var selectedTab: String
   var body: some View {
@@ -55,6 +55,6 @@ struct GameButtonsView: View {
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    GameButtonsView(selectedTab: .constant("house"))
+    WordBombHomeView(selectedTab: .constant("house"))
   }
 }

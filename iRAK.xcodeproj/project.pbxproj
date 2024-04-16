@@ -24,7 +24,7 @@
 		1FADC69D2BCC7E2700706DC1 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */; };
 		1FF9BD512BCF18480017005D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9BD502BCF18480017005D /* GradientView.swift */; };
 		E55F6CBA2B9A1F5500E472B8 /* iRAKApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F6CB92B9A1F5500E472B8 /* iRAKApp.swift */; };
-		E55F6CBC2B9A1F5500E472B8 /* GameButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F6CBB2B9A1F5500E472B8 /* GameButtonsView.swift */; };
+		E55F6CBC2B9A1F5500E472B8 /* WordBombHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F6CBB2B9A1F5500E472B8 /* WordBombHomeView.swift */; };
 		E55F6CBE2B9A1F5700E472B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E55F6CBD2B9A1F5700E472B8 /* Assets.xcassets */; };
 		E55F6CC12B9A1F5700E472B8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E55F6CC02B9A1F5700E472B8 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -48,7 +48,7 @@
 		1FF9BD502BCF18480017005D /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		E55F6CB62B9A1F5500E472B8 /* iRAK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iRAK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55F6CB92B9A1F5500E472B8 /* iRAKApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iRAKApp.swift; sourceTree = "<group>"; };
-		E55F6CBB2B9A1F5500E472B8 /* GameButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameButtonsView.swift; sourceTree = "<group>"; };
+		E55F6CBB2B9A1F5500E472B8 /* WordBombHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBombHomeView.swift; sourceTree = "<group>"; };
 		E55F6CBD2B9A1F5700E472B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E55F6CC02B9A1F5700E472B8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -78,7 +78,7 @@
 		1F9C63C22BCF1D1500782B3A /* GameViews */ = {
 			isa = PBXGroup;
 			children = (
-				E55F6CBB2B9A1F5500E472B8 /* GameButtonsView.swift */,
+				E55F6CBB2B9A1F5500E472B8 /* WordBombHomeView.swift */,
 				1F9C63C32BCF1E7400782B3A /* TriviaTrenchHomeView.swift */,
 				1F9C63C52BCF1EB400782B3A /* HeadsUpHomeView.swift */,
 				1F9C63C72BCF1EC400782B3A /* WardleHomeView.swift */,
@@ -238,7 +238,7 @@
 				1F9C63C82BCF1EC400782B3A /* WardleHomeView.swift in Sources */,
 				1F9C63C42BCF1E7400782B3A /* TriviaTrenchHomeView.swift in Sources */,
 				1F9C63CA2BCF1ED300782B3A /* SniperTrainerHomeView.swift in Sources */,
-				E55F6CBC2B9A1F5500E472B8 /* GameButtonsView.swift in Sources */,
+				E55F6CBC2B9A1F5500E472B8 /* WordBombHomeView.swift in Sources */,
 				1FADC68E2BCC753700706DC1 /* CustomTabShape.swift in Sources */,
 				1FADC68A2BCC722500706DC1 /* ProfileButtonView.swift in Sources */,
 				1FADC6952BCC781600706DC1 /* TabsView.swift in Sources */,

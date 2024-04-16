@@ -26,27 +26,18 @@ struct TabsView: View {
   var body: some View {
     VStack {
       TabView(selection: $selectedTab) {
-        GameButtonsView(selectedTab: $selectedTab)
+        WordBombHomeView(selectedTab: $selectedTab)
           .tag("house")
-        GameButtonsView(selectedTab: $selectedTab)
+        TriviaTrenchHomeView(selectedTab: $selectedTab)
           .ignoresSafeArea(.all, edges: .all)
           .tag("archivebox")
-        GameButtonsView(selectedTab: $selectedTab)
+        HeadsUpHomeView(selectedTab: $selectedTab)
           .ignoresSafeArea(.all, edges: .all)
           .tag("bell")
-        GameButtonsView(selectedTab: $selectedTab)
+        WardleHomeView(selectedTab: $selectedTab)
           .ignoresSafeArea(.all, edges: .all)
           .tag("message")
-        ZStack {
-          Color("BackgroundColor")
-            .ignoresSafeArea(.all, edges: .all)
-          VStack {
-            NavigationLink(destination: GameButtonsView(selectedTab: $selectedTab)) {
-              Text("Go to another view")
-            }
-          }
-          .padding()
-        }
+        SniperTrainerHomeView(selectedTab: $selectedTab)
         .tag("mic")
       }
       HStack(spacing: 0) {
