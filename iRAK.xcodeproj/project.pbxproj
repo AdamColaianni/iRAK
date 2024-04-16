@@ -56,6 +56,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F9C63C12BCF1CB200782B3A /* HelperViews */ = {
+			isa = PBXGroup;
+			children = (
+				1FADC6942BCC781600706DC1 /* TabsView.swift */,
+				1FADC6892BCC722500706DC1 /* ProfileButtonView.swift */,
+				1FF9BD502BCF18480017005D /* GradientView.swift */,
+				1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */,
+			);
+			path = HelperViews;
+			sourceTree = "<group>";
+		};
+		1F9C63C22BCF1D1500782B3A /* GameViews */ = {
+			isa = PBXGroup;
+			children = (
+				E55F6CBB2B9A1F5500E472B8 /* GameButtonsView.swift */,
+			);
+			path = GameViews;
+			sourceTree = "<group>";
+		};
 		1FADC6882BCC71AC00706DC1 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -70,12 +89,9 @@
 			children = (
 				1F54FDE92BA355390063B0C4 /* HomeView.swift */,
 				1F45870F2BC59AEF00CB5562 /* ProfileView.swift */,
-				1FADC6892BCC722500706DC1 /* ProfileButtonView.swift */,
-				1FADC6942BCC781600706DC1 /* TabsView.swift */,
-				E55F6CBB2B9A1F5500E472B8 /* GameButtonsView.swift */,
-				1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */,
 				1F45870D2BC59AE900CB5562 /* SettingsView.swift */,
-				1FF9BD502BCF18480017005D /* GradientView.swift */,
+				1F9C63C22BCF1D1500782B3A /* GameViews */,
+				1F9C63C12BCF1CB200782B3A /* HelperViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
