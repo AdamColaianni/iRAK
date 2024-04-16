@@ -37,3 +37,10 @@ struct PrimaryButtonStyle: ButtonStyle {
     .padding(5)
   }
 }
+
+#Preview {
+  Button(action: {}, label: {
+    Text("Button")
+  })
+  .buttonStyle(PrimaryButtonStyle(image: "play.house.fill", color: .green))
+}

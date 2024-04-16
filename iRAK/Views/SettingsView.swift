@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
   @EnvironmentObject var csManager: ColorSchemeManager
-  @State var hardMode: Bool = false
+  @AppStorage("gradient") var isGradientShown: Bool = true
   @Environment(\.dismiss) var dismiss
   var body: some View {
     NavigationView {
@@ -36,7 +36,7 @@ struct SettingsView: View {
           }
           .padding(.leading, 5)
           .padding(.trailing, 5)
-          Toggle("Hard Mode", isOn: $hardMode)
+          Toggle("Background Gradient", isOn: $isGradientShown)
             .padding()
             .background(Color("ForegroundColor").cornerRadius(10).shadow(radius: 3))
           VStack {

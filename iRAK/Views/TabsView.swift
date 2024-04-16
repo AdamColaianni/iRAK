@@ -26,33 +26,22 @@ struct TabsView: View {
   var body: some View {
     VStack {
       TabView(selection: $selectedTab) {
-        GameButtonsView()
+        GameButtonsView(selectedTab: $selectedTab)
           .tag("house")
-        
-        ZStack {
-          Color("BackgroundColor")
-            .ignoresSafeArea(.all, edges: .all)
-          VStack {
-            Image(systemName: "globe")
-              .imageScale(.large)
-              .foregroundColor(.accentColor)
-            Text("Hello, world!")
-          }
-          .padding()
-        }
-        .ignoresSafeArea(.all, edges: .all)
-        .tag("archivebox")
-        Color("BackgroundColor")
+        GameButtonsView(selectedTab: $selectedTab)
+          .ignoresSafeArea(.all, edges: .all)
+          .tag("archivebox")
+        GameButtonsView(selectedTab: $selectedTab)
           .ignoresSafeArea(.all, edges: .all)
           .tag("bell")
-        Color("BackgroundColor")
+        GameButtonsView(selectedTab: $selectedTab)
           .ignoresSafeArea(.all, edges: .all)
           .tag("message")
         ZStack {
           Color("BackgroundColor")
             .ignoresSafeArea(.all, edges: .all)
           VStack {
-            NavigationLink(destination: GameButtonsView()) {
+            NavigationLink(destination: GameButtonsView(selectedTab: $selectedTab)) {
               Text("Go to another view")
             }
           }

@@ -8,10 +8,15 @@
 import SwiftUI
 
 struct GameButtonsView: View {
+  @AppStorage("gradient") var isGradientShown: Bool = true
+  @Binding var selectedTab: String
   var body: some View {
     ZStack {
       Color("BackgroundColor")
         .ignoresSafeArea()
+      if isGradientShown {
+        GradientView(selectedTab: $selectedTab)
+      }
       VStack {
         Image("WordBomb")
           .headerButtonStyle()
@@ -50,6 +55,6 @@ struct GameButtonsView: View {
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    GameButtonsView()
+    GameButtonsView(selectedTab: .constant("house"))
   }
 }
