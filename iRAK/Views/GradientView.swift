@@ -52,5 +52,6 @@ struct TopGradientView: View {
 }
 
 #Preview {
-  TopGradientView(selectedTab: .constant("house"))
+  GradientView(selectedTab: .constant("house"))
+    .environmentObject(ColorSchemeManager())
 }
