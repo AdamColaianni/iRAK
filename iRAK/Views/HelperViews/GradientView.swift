@@ -10,6 +10,7 @@ import SwiftUI
 struct GradientView: View {
   @Binding var selectedTab: String
   @EnvironmentObject var csManager: ColorSchemeManager
+  @Environment(\.colorScheme) var cs
   var body: some View {
     GeometryReader { geometry in
       LinearGradient(gradient: Gradient(stops: [
@@ -22,7 +23,7 @@ struct GradientView: View {
       .opacity(0.7)
       .mask(
         Color("BackgroundColor")
-          .opacity((csManager.selectedTheme == .dark || (csManager.selectedTheme == nil && UITraitCollection.current.userInterfaceStyle == .dark)) ? 0.5 : 1)
+          .opacity((cs == .dark) ? 0.5 : 1)
       )
       .ignoresSafeArea()
     }
@@ -33,6 +34,7 @@ struct GradientView: View {
 struct TopGradientView: View {
   @Binding var selectedTab: String
   @EnvironmentObject var csManager: ColorSchemeManager
+  @Environment(\.colorScheme) var cs
   var body: some View {
     GeometryReader { geometry in
       LinearGradient(gradient: Gradient(stops: [
@@ -44,7 +46,7 @@ struct TopGradientView: View {
       .opacity(0.7)
       .mask(
         Color("BackgroundColor")
-          .opacity((csManager.selectedTheme == .dark || (csManager.selectedTheme == nil && UITraitCollection.current.userInterfaceStyle == .dark)) ? 0.5 : 1)
+          .opacity((cs == .dark) ? 0.5 : 1)
       )
       .ignoresSafeArea()
     }

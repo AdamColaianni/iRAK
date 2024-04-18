@@ -14,6 +14,7 @@ struct HomeView: View {
   @State private var isSettingsPresented = false
   @State private var isProfilePresented = false
   @State var selectedTab = "house"
+  @State var selectedGradientTab = "house"
   @AppStorage("gradient") var isGradientShown: Bool = true
   @AppStorage("selectedProfilePhotoData") private var selectedProfilePhotoData: Data?
   
@@ -23,7 +24,7 @@ struct HomeView: View {
         Color("BackgroundColor")
           .ignoresSafeArea()
         if isGradientShown {
-          TopGradientView(selectedTab: $selectedTab)
+          TopGradientView(selectedTab: $selectedGradientTab)
         }
         VStack {
           // Buttons on top
@@ -71,8 +72,7 @@ struct HomeView: View {
           .dynamicTypeSize(.xxxLarge)
           
           // Tab view at the bottom
-          TabsView(selectedTab: $selectedTab)
-            .animation(.spring(), value: selectedTab)
+          TabsView(selectedTab: $selectedTab, selectedGradientTab: $selectedGradientTab)
         }
         .fullScreenCover(isPresented: $isSettingsPresented) {
           SettingsView()

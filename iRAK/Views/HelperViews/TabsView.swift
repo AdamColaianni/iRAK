@@ -9,11 +9,13 @@ import SwiftUI
 
 struct TabsView: View {
   @Binding var selectedTab: String
+  @Binding var selectedGradientTab: String
   var bottomPadding: CGFloat = 0
   
-  init(selectedTab: Binding<String>) {
+  init(selectedTab: Binding<String>, selectedGradientTab: Binding<String>) {
     UITabBar.appearance().isHidden = true
     _selectedTab = selectedTab
+    _selectedGradientTab = selectedGradientTab
     if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
        let safeAreaInsetsBottom = windowScene.windows.first?.safeAreaInsets.bottom {
       bottomPadding = safeAreaInsetsBottom
@@ -26,18 +28,18 @@ struct TabsView: View {
   var body: some View {
     VStack {
       TabView(selection: $selectedTab) {
-        WordBombHomeView(selectedTab: $selectedTab)
+        WordBombHomeView(selectedTab: $selectedGradientTab)
           .tag("house")
-        TriviaTrenchHomeView(selectedTab: $selectedTab)
+        TriviaTrenchHomeView(selectedTab: $selectedGradientTab)
           .ignoresSafeArea(.all, edges: .all)
           .tag("archivebox")
-        HeadsUpHomeView(selectedTab: $selectedTab)
+        HeadsUpHomeView(selectedTab: $selectedGradientTab)
           .ignoresSafeArea(.all, edges: .all)
           .tag("bell")
-        WardleHomeView(selectedTab: $selectedTab)
+        WardleHomeView(selectedTab: $selectedGradientTab)
           .ignoresSafeArea(.all, edges: .all)
           .tag("message")
-        SniperTrainerHomeView(selectedTab: $selectedTab)
+        SniperTrainerHomeView(selectedTab: $selectedGradientTab)
         .tag("mic")
       }
       HStack(spacing: 0) {
@@ -48,6 +50,7 @@ struct TabsView: View {
                 selectedTab = image
                 xAxis = reader.frame(in: .global).minX
               }
+              selectedGradientTab = image
             }, label: {
               Image(systemName: image)
                 .resizable()
@@ -81,5 +84,5 @@ struct TabsView: View {
 }
 
 #Preview {
-  TabsView(selectedTab: .constant("house"))
+  TabsView(selectedTab: .constant("house"), selectedGradientTab: .constant("house"))
 }
