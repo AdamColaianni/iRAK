@@ -51,13 +51,18 @@ struct HomeView: View {
             Button(action: {
               self.isProfilePresented.toggle()
             }) {
-              ZStack {
-                Circle()
-                  .fill(Color("ForegroundColor"))
-                  .shadow(radius: 3)
-                  .frame(width: 40, height: 40)
-                Image(systemName: "person.circle.fill")
-                  .foregroundColor(.primary)
+              if let selectedProfilePhotoData, let uiImage = UIImage(data: selectedProfilePhotoData) {
+                Image(uiImage: uiImage)
+                  .profileImageStyle(width: 40, height: 40)
+              } else {
+                ZStack {
+                  Circle()
+                    .fill(Color("ForegroundColor"))
+                    .shadow(radius: 3)
+                    .frame(width: 40, height: 40)
+                  Image(systemName: "person.circle.fill")
+                    .foregroundColor(.primary)
+                }
               }
             }
           }

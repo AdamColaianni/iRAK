@@ -59,10 +59,10 @@ struct ProfileView: View {
                 ZStack {
                   if let selectedProfilePhotoData, let uiImage = UIImage(data: selectedProfilePhotoData) {
                     Image(uiImage: uiImage)
-                      .profileImage()
+                      .profileImageStyle(width: 100, height: 100)
                   } else {
                     Image(systemName: "person.circle.fill")
-                      .profileImage()
+                      .profileImageStyle(width: 100, height: 100)
                   }
                   if isEditing {
                     Image(systemName: "camera.fill")

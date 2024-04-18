@@ -8,11 +8,11 @@
 import SwiftUI
 
 extension Image {
-  func profileImage() -> some View {
+  func profileImageStyle(width: CGFloat, height: CGFloat) -> some View {
     self
       .resizable()
       .aspectRatio(contentMode: .fill)
-      .frame(width: 100, height: 100)
+      .frame(width: width, height: height)
       .clipShape(Circle())
       .overlay(
         Circle().stroke(Color.primary, lineWidth: 2)
