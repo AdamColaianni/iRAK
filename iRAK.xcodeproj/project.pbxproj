@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F45870C2BC59ADC00CB5562 /* ColorSchemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45870B2BC59ADC00CB5562 /* ColorSchemeManager.swift */; };
 		1F45870E2BC59AE900CB5562 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45870D2BC59AE900CB5562 /* SettingsView.swift */; };
 		1F4587102BC59AEF00CB5562 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45870F2BC59AEF00CB5562 /* ProfileView.swift */; };
 		1F54FDEA2BA355390063B0C4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54FDE92BA355390063B0C4 /* HomeView.swift */; };
@@ -15,12 +14,12 @@
 		1F9C63C62BCF1EB400782B3A /* HeadsUpHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C63C52BCF1EB400782B3A /* HeadsUpHomeView.swift */; };
 		1F9C63C82BCF1EC400782B3A /* WardleHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C63C72BCF1EC400782B3A /* WardleHomeView.swift */; };
 		1F9C63CA2BCF1ED300782B3A /* SniperTrainerHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C63C92BCF1ED300782B3A /* SniperTrainerHomeView.swift */; };
+		1F9C63CC2BD04CCA00782B3A /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9C63CB2BD04CCA00782B3A /* Settings.swift */; };
 		1FADC6872BCC71A400706DC1 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6862BCC71A400706DC1 /* ImageExtensions.swift */; };
 		1FADC68A2BCC722500706DC1 /* ProfileButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6892BCC722500706DC1 /* ProfileButtonView.swift */; };
 		1FADC68E2BCC753700706DC1 /* CustomTabShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC68D2BCC753700706DC1 /* CustomTabShape.swift */; };
 		1FADC6932BCC76D900706DC1 /* HomeViewFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6922BCC76D900706DC1 /* HomeViewFunctions.swift */; };
 		1FADC6952BCC781600706DC1 /* TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6942BCC781600706DC1 /* TabsView.swift */; };
-		1FADC69A2BCC7BC400706DC1 /* SchemeTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6992BCC7BC400706DC1 /* SchemeTypeExtension.swift */; };
 		1FADC69D2BCC7E2700706DC1 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */; };
 		1FF9BD512BCF18480017005D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9BD502BCF18480017005D /* GradientView.swift */; };
 		E55F6CBA2B9A1F5500E472B8 /* iRAKApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F6CB92B9A1F5500E472B8 /* iRAKApp.swift */; };
@@ -30,7 +29,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1F45870B2BC59ADC00CB5562 /* ColorSchemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSchemeManager.swift; sourceTree = "<group>"; };
 		1F45870D2BC59AE900CB5562 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1F45870F2BC59AEF00CB5562 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		1F54FDE92BA355390063B0C4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -38,12 +36,12 @@
 		1F9C63C52BCF1EB400782B3A /* HeadsUpHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadsUpHomeView.swift; sourceTree = "<group>"; };
 		1F9C63C72BCF1EC400782B3A /* WardleHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardleHomeView.swift; sourceTree = "<group>"; };
 		1F9C63C92BCF1ED300782B3A /* SniperTrainerHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SniperTrainerHomeView.swift; sourceTree = "<group>"; };
+		1F9C63CB2BD04CCA00782B3A /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		1FADC6862BCC71A400706DC1 /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
 		1FADC6892BCC722500706DC1 /* ProfileButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButtonView.swift; sourceTree = "<group>"; };
 		1FADC68D2BCC753700706DC1 /* CustomTabShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabShape.swift; sourceTree = "<group>"; };
 		1FADC6922BCC76D900706DC1 /* HomeViewFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFunctions.swift; sourceTree = "<group>"; };
 		1FADC6942BCC781600706DC1 /* TabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsView.swift; sourceTree = "<group>"; };
-		1FADC6992BCC7BC400706DC1 /* SchemeTypeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemeTypeExtension.swift; sourceTree = "<group>"; };
 		1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		1FF9BD502BCF18480017005D /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		E55F6CB62B9A1F5500E472B8 /* iRAK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iRAK.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				1FADC6862BCC71A400706DC1 /* ImageExtensions.swift */,
-				1FADC6992BCC7BC400706DC1 /* SchemeTypeExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -119,8 +116,8 @@
 		1FADC69B2BCC7C0300706DC1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				1F45870B2BC59ADC00CB5562 /* ColorSchemeManager.swift */,
 				1FADC6922BCC76D900706DC1 /* HomeViewFunctions.swift */,
+				1F9C63CB2BD04CCA00782B3A /* Settings.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -242,15 +239,14 @@
 				1FADC68E2BCC753700706DC1 /* CustomTabShape.swift in Sources */,
 				1FADC68A2BCC722500706DC1 /* ProfileButtonView.swift in Sources */,
 				1FADC6952BCC781600706DC1 /* TabsView.swift in Sources */,
-				1F45870C2BC59ADC00CB5562 /* ColorSchemeManager.swift in Sources */,
 				1FADC69D2BCC7E2700706DC1 /* PrimaryButtonStyle.swift in Sources */,
 				1F4587102BC59AEF00CB5562 /* ProfileView.swift in Sources */,
-				1FADC69A2BCC7BC400706DC1 /* SchemeTypeExtension.swift in Sources */,
 				1FADC6932BCC76D900706DC1 /* HomeViewFunctions.swift in Sources */,
 				1FADC6872BCC71A400706DC1 /* ImageExtensions.swift in Sources */,
 				1FF9BD512BCF18480017005D /* GradientView.swift in Sources */,
 				1F9C63C62BCF1EB400782B3A /* HeadsUpHomeView.swift in Sources */,
 				E55F6CBA2B9A1F5500E472B8 /* iRAKApp.swift in Sources */,
+				1F9C63CC2BD04CCA00782B3A /* Settings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

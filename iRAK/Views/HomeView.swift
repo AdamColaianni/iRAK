@@ -10,7 +10,6 @@
 import SwiftUI
 
 struct HomeView: View {
-  @EnvironmentObject var csManager: ColorSchemeManager
   @State private var isSettingsPresented = false
   @State private var isProfilePresented = false
   @State var selectedTab = "house"
@@ -82,13 +81,11 @@ struct HomeView: View {
         }
       }
     }
-    .preferredColorScheme(csManager.selectedTheme)
   }
 }
 
 struct HomeView_Previews: PreviewProvider {
   static var previews: some View {
     HomeView()
-      .environmentObject(ColorSchemeManager())
   }
 }

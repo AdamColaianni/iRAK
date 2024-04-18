@@ -9,7 +9,6 @@ import SwiftUI
 
 struct GradientView: View {
   @Binding var selectedTab: String
-  @EnvironmentObject var csManager: ColorSchemeManager
   @Environment(\.colorScheme) var cs
   var body: some View {
     GeometryReader { geometry in
@@ -33,7 +32,6 @@ struct GradientView: View {
 
 struct TopGradientView: View {
   @Binding var selectedTab: String
-  @EnvironmentObject var csManager: ColorSchemeManager
   @Environment(\.colorScheme) var cs
   var body: some View {
     GeometryReader { geometry in
@@ -55,5 +53,4 @@ struct TopGradientView: View {
 
 #Preview {
   GradientView(selectedTab: .constant("house"))
-    .environmentObject(ColorSchemeManager())
 }

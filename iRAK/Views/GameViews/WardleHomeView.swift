@@ -21,9 +21,9 @@ struct WardleHomeView: View {
         Image("Wardle")
           .headerButtonStyle()
         Button(action: {
-          print("Join")
+          print("Play")
         }, label: {
-          Text("Join")
+          Text("Play")
         })
         .buttonStyle(PrimaryButtonStyle(image: "play.house.fill", color: .green))
         HStack {

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SettingsView: View {
-  @EnvironmentObject var csManager: ColorSchemeManager
   @AppStorage("gradient") var isGradientShown: Bool = true
   @Environment(\.dismiss) var dismiss
   var body: some View {
@@ -41,14 +40,14 @@ struct SettingsView: View {
             .background(Color("ForegroundColor").cornerRadius(10).shadow(radius: 3))
           VStack {
             HStack {
-              Text("Change Theme")
+              Text("Enable Gradient")
               Spacer()
             }
-            Picker("Display Mode", selection: $csManager.systemTheme) {
-              ForEach(SchemeType.allCases) { item in
-                Text(item.title)
-                  .tag(item.rawValue)
-              }
+            Picker("Gradient Mode", selection: $isGradientShown) {
+              Text("Yes")
+                .tag(true)
+              Text("No")
+                .tag(false)
             }
           }
           .padding()
@@ -59,13 +58,11 @@ struct SettingsView: View {
         .padding()
       }
     }
-    .preferredColorScheme(csManager.settingsViewTheme)
   }
 }
 
 struct SettingsView_Previews: PreviewProvider {
   static var previews: some View {
     SettingsView()
-      .environmentObject(ColorSchemeManager())
   }
 }
