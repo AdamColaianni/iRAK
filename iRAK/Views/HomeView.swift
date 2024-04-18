@@ -15,6 +15,7 @@ struct HomeView: View {
   @State private var isProfilePresented = false
   @State var selectedTab = "house"
   @AppStorage("gradient") var isGradientShown: Bool = true
+  @AppStorage("selectedProfilePhotoData") private var selectedProfilePhotoData: Data?
   
   var body: some View {
     NavigationView {
