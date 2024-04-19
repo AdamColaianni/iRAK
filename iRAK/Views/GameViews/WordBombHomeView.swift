@@ -12,7 +12,7 @@ struct WordBombHomeView: View {
   @Binding var selectedTab: String
   var body: some View {
     ZStack {
-      Color("BackgroundColor")
+      Color.backgroundColor
         .ignoresSafeArea()
       if settings.isGradientShown {
         GradientView(selectedTab: $selectedTab)

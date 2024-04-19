@@ -29,7 +29,7 @@ struct PrimaryButtonStyle: ButtonStyle {
     }
     .padding()
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .background(configuration.isPressed ? Color("ForegroundColor").opacity(0.5) : Color("ForegroundColor"))
+    .background(configuration.isPressed ? Color.midgroundColor.opacity(0.5) : Color.midgroundColor)
     .foregroundColor(.primary)
     .clipShape(Rectangle())
     .cornerRadius(10)

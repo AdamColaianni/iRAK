@@ -22,7 +22,7 @@ struct ProfileView: View {
     NavigationView {
       GeometryReader { _ in
         ZStack {
-          Color("BackgroundColor")
+          Color.backgroundColor
             .ignoresSafeArea()
           VStack {
             // Header
@@ -70,7 +70,7 @@ struct ProfileView: View {
                       .foregroundColor(.primary)
                       .frame(width: 20, height: 20)
                       .padding(8)
-                      .background(Color("Foreground2Color"))
+                      .background(Color.foregroundColor)
                       .clipShape(Circle())
                       .offset(x: 35, y: 35)
                       .shadow(radius: 3)
@@ -118,7 +118,7 @@ struct ProfileView: View {
                   .font(.system(size: 20, weight: .bold, design: .rounded))
                   .padding(10)
                   .frame(maxWidth: .infinity)
-                  .background(Color("Foreground2Color"))
+                  .background(Color.foregroundColor)
                   .clipShape(Capsule())
                   .shadow(radius: 1)
               }
@@ -126,7 +126,7 @@ struct ProfileView: View {
             .padding(30)
             .foregroundColor(.primary)
             .frame(maxWidth: .infinity)
-            .background(Color("ForegroundColor"))
+            .background(Color.midgroundColor)
             .cornerRadius(15)
             .shadow(radius: 3)
             .padding()

@@ -13,7 +13,7 @@ struct SettingsView: View {
   var body: some View {
     NavigationView {
       ZStack {
-        Color("BackgroundColor")
+        Color.backgroundColor
           .ignoresSafeArea()
         VStack {
           ZStack {
@@ -38,7 +38,7 @@ struct SettingsView: View {
           .padding(.bottom, 25)
           Toggle("Background Gradient", isOn: $settings.isGradientShown)
             .padding()
-            .background(Color("ForegroundColor").cornerRadius(10).shadow(radius: 3))
+            .background(Color.midgroundColor.cornerRadius(10).shadow(radius: 3))
           VStack {
             HStack {
               Text("Enable Gradient")
@@ -52,7 +52,7 @@ struct SettingsView: View {
             }
           }
           .padding()
-          .background(Color("ForegroundColor").cornerRadius(10).shadow(radius: 3))
+          .background(Color.midgroundColor.cornerRadius(10).shadow(radius: 3))
           .pickerStyle(.segmented)
           Spacer()
         }

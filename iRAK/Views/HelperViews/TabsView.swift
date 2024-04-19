@@ -40,10 +40,10 @@ struct TabsView: View {
           .ignoresSafeArea(.all, edges: .all)
           .tag("message")
         SniperTrainerHomeView(selectedTab: $selectedGradientTab)
-        .tag("mic")
+          .tag("mic")
       }
       HStack(spacing: 0) {
-        ForEach(tabs, id: \.self) {image in
+        ForEach(tabs, id: \.self) { image in
           GeometryReader { reader in
             Button(action: {
               withAnimation(.spring()) {
@@ -59,7 +59,7 @@ struct TabsView: View {
                 .frame(width: 25, height: 25)
                 .foregroundColor(selectedTab == image ? getTabColor(image: image) : Color.gray)
                 .padding(selectedTab == image ? 15 : 0)
-                .background(Color("ForegroundColor").opacity(selectedTab == image ? 1 : 0).clipShape(Circle()).shadow(radius: 3)).offset(x: selectedTab == image ? -14 : 0)
+                .background(Color.midgroundColor.opacity(selectedTab == image ? 1 : 0).clipShape(Circle()).shadow(radius: 3)).offset(x: selectedTab == image ? -14 : 0)
                 .matchedGeometryEffect(id: image, in: animation)
                 .offset(x: reader.frame(in: .global).minX - reader.frame(in: .global).midX + 14, y: selectedTab == image ? -50 : 0)
             })
@@ -75,7 +75,7 @@ struct TabsView: View {
       }
       .padding(.horizontal, 30)
       .padding(.vertical)
-      .background(Color("ForegroundColor").clipShape(CustomTabShape(xAxis: xAxis)).cornerRadius(12).shadow(radius: 3))
+      .background(Color.midgroundColor.clipShape(CustomTabShape(xAxis: xAxis)).cornerRadius(12).shadow(radius: 3))
       .padding(.horizontal)
       .padding(.bottom, bottomPadding)
     }

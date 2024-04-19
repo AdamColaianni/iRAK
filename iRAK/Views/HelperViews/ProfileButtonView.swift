@@ -19,7 +19,7 @@ struct ProfileButton: View {
       Image(systemName: "chevron.right")
     }
     .padding()
-    .background(Color("ForegroundColor"))
+    .background(Color.midgroundColor)
     .foregroundColor(.primary)
     .cornerRadius(15)
     .shadow(radius: 3)

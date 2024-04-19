@@ -19,7 +19,7 @@ struct HomeView: View {
   var body: some View {
     NavigationView {
       ZStack {
-        Color("BackgroundColor")
+        Color.backgroundColor
           .ignoresSafeArea()
         if settings.isGradientShown {
           TopGradientView(selectedTab: $selectedGradientTab)
@@ -32,7 +32,7 @@ struct HomeView: View {
             }) {
               ZStack {
                 Circle()
-                  .fill(Color("ForegroundColor"))
+                  .fill(Color.midgroundColor)
                   .shadow(radius: 3)
                   .frame(width: 40, height: 40)
                 Image(systemName: "gearshape.fill")
@@ -57,7 +57,7 @@ struct HomeView: View {
               } else {
                 ZStack {
                   Circle()
-                    .fill(Color("ForegroundColor"))
+                    .fill(Color.midgroundColor)
                     .shadow(radius: 3)
                     .frame(width: 40, height: 40)
                   Image(systemName: "person.circle.fill")
