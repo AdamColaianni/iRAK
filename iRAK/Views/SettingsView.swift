@@ -35,6 +35,7 @@ struct SettingsView: View {
           }
           .padding(.leading, 5)
           .padding(.trailing, 5)
+          .padding(.bottom, 25)
           Toggle("Background Gradient", isOn: $isGradientShown)
             .padding()
             .background(Color("ForegroundColor").cornerRadius(10).shadow(radius: 3))
