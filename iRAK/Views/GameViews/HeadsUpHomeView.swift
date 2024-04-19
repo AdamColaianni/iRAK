@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct HeadsUpHomeView: View {
-  @AppStorage("gradient") var isGradientShown: Bool = true
+  @EnvironmentObject var settings: Settings
   @Binding var selectedTab: String
   var body: some View {
     ZStack {
       Color("BackgroundColor")
         .ignoresSafeArea()
-      if isGradientShown {
+      if settings.isGradientShown {
         GradientView(selectedTab: $selectedTab)
       }
       VStack {
@@ -47,4 +47,5 @@ struct HeadsUpHomeView: View {
 
 #Preview {
   HeadsUpHomeView(selectedTab: .constant("bell"))
+    .environmentObject(Settings())
 }

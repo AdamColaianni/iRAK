@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct TriviaTrenchHomeView: View {
-  @AppStorage("gradient") var isGradientShown: Bool = true
+  @EnvironmentObject var settings: Settings
   @Binding var selectedTab: String
   var body: some View {
     ZStack {
       Color("BackgroundColor")
         .ignoresSafeArea()
-      if isGradientShown {
+      if settings.isGradientShown {
         GradientView(selectedTab: $selectedTab)
       }
       VStack {
@@ -55,4 +55,5 @@ struct TriviaTrenchHomeView: View {
 
 #Preview {
   TriviaTrenchHomeView(selectedTab: .constant("archivebox"))
+    .environmentObject(Settings())
 }

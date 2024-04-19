@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct WordBombHomeView: View {
-  @AppStorage("gradient") var isGradientShown: Bool = true
+  @EnvironmentObject var settings: Settings
   @Binding var selectedTab: String
   var body: some View {
     ZStack {
       Color("BackgroundColor")
         .ignoresSafeArea()
-      if isGradientShown {
+      if settings.isGradientShown {
         GradientView(selectedTab: $selectedTab)
       }
       VStack {
@@ -56,5 +56,6 @@ struct WordBombHomeView: View {
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
     WordBombHomeView(selectedTab: .constant("house"))
+      .environmentObject(Settings())
   }
 }

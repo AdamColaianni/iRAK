@@ -9,15 +9,14 @@ import SwiftUI
 import PhotosUI
 
 struct ProfileView: View {
+  @EnvironmentObject var settings: Settings
   @Environment(\.dismiss) var dismiss
   @FocusState private var focusOnTextBox: Bool
-  @AppStorage("userName") private var userName = "name"
-  @AppStorage("selectedProfilePhotoData") private var selectedProfilePhotoData: Data?
   @State private var isEditing = false
   @State private var showingEmptyNameAlert = false
-  @State var selectedProfilePhoto: PhotosPickerItem?
-  @State var isPhotoDeletionConfirmationPresented = false
-  @State var profilePhotoButtonEnabled = false
+  @State private var selectedProfilePhoto: PhotosPickerItem?
+  @State private var isPhotoDeletionConfirmationPresented = false
+  @State private var profilePhotoButtonEnabled = false
   
   var body: some View {
     NavigationView {
@@ -37,7 +36,7 @@ struct ProfileView: View {
               HStack {
                 Spacer()
                 Button {
-                  if isEditing && userName.isEmpty {
+                  if isEditing && settings.userName.isEmpty {
                     showingEmptyNameAlert = true
                   } else {
                     isEditing = false
@@ -57,7 +56,7 @@ struct ProfileView: View {
               // Profile Photo
               PhotosPicker(selection: $selectedProfilePhoto, matching: .images) {
                 ZStack {
-                  if let selectedProfilePhotoData, let uiImage = UIImage(data: selectedProfilePhotoData) {
+                  if let imageData = settings.selectedProfilePhotoData, let uiImage = UIImage(data: imageData) {
                     Image(uiImage: uiImage)
                       .profileImageStyle(width: 100, height: 100)
                   } else {
@@ -81,15 +80,15 @@ struct ProfileView: View {
               .disabled(!isEditing)
               .disabled(profilePhotoButtonEnabled)
               .simultaneousGesture(LongPressGesture(minimumDuration: 0.5).onEnded({ (b) in
-                if isEditing && selectedProfilePhotoData != nil {
+                if isEditing && settings.selectedProfilePhotoData != nil {
                   showDialog(true)
                 }
               }))
               
               // Name or text box
               if isEditing {
-                TextField("Enter name", text: $userName, onCommit: {
-                  if userName.isEmpty {
+                TextField("Enter name", text: $settings.userName, onCommit: {
+                  if settings.userName.isEmpty {
                     showingEmptyNameAlert = true
                     focusOnTextBox = true
                   } else {
@@ -102,13 +101,13 @@ struct ProfileView: View {
                 .multilineTextAlignment(.center)
                 .padding(2)
               } else {
-                Text(userName)
+                Text(settings.userName)
                   .font(.system(size: 30, weight: .bold, design: .rounded))
               }
               
               // Edit profile button
               Button {
-                if isEditing && userName.isEmpty {
+                if isEditing && settings.userName.isEmpty {
                   showingEmptyNameAlert = true
                 } else {
                   isEditing.toggle()
@@ -154,7 +153,7 @@ struct ProfileView: View {
         .task(id: selectedProfilePhoto) {
           if let data = try? await selectedProfilePhoto?.loadTransferable(type: Data.self) {
             withAnimation {
-              selectedProfilePhotoData = data
+              settings.selectedProfilePhotoData = data
             }
           }
         }
@@ -162,7 +161,7 @@ struct ProfileView: View {
           Button("Remove") {
             withAnimation {
               selectedProfilePhoto = nil
-              selectedProfilePhotoData = nil
+              settings.selectedProfilePhotoData = nil
             }
             showDialog(false)
           }
@@ -182,4 +181,5 @@ struct ProfileView: View {
 
 #Preview {
   ProfileView()
+    .environmentObject(Settings())
 }

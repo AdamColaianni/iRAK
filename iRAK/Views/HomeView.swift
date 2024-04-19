@@ -10,19 +10,18 @@
 import SwiftUI
 
 struct HomeView: View {
+  @EnvironmentObject var settings: Settings
   @State private var isSettingsPresented = false
   @State private var isProfilePresented = false
   @State var selectedTab = "house"
   @State var selectedGradientTab = "house"
-  @AppStorage("gradient") var isGradientShown: Bool = true
-  @AppStorage("selectedProfilePhotoData") private var selectedProfilePhotoData: Data?
   
   var body: some View {
     NavigationView {
       ZStack {
         Color("BackgroundColor")
           .ignoresSafeArea()
-        if isGradientShown {
+        if settings.isGradientShown {
           TopGradientView(selectedTab: $selectedGradientTab)
         }
         VStack {
@@ -52,7 +51,7 @@ struct HomeView: View {
             Button(action: {
               self.isProfilePresented.toggle()
             }) {
-              if let selectedProfilePhotoData, let uiImage = UIImage(data: selectedProfilePhotoData) {
+              if let imageData = settings.selectedProfilePhotoData, let uiImage = UIImage(data: imageData) {
                 Image(uiImage: uiImage)
                   .profileImageStyle(width: 40, height: 40)
               } else {
@@ -87,5 +86,6 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
   static var previews: some View {
     HomeView()
+      .environmentObject(Settings())
   }
 }
