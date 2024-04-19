@@ -8,19 +8,36 @@
 import Foundation
 import SwiftUI
 
-var tabs = ["house", "archivebox", "bell", "message", "mic"]
+var tabs = ["bomb", "trench", "headsup", "wardle", "training"]
+
+func getTabImage(tab: String) -> Image {
+  switch tab {
+  case "bomb":
+    return Image("bomb-symbol")
+  case "trench":
+    return Image("question-symbol")
+  case "headsup":
+    return Image("fire-symbol")
+  case "wardle":
+    return Image("text-symbol")
+  case "training":
+    return Image("clock-symbol")
+  default:
+    return Image("")
+  }
+}
 
 func getTabColor(image: String) -> Color {
   switch image {
-  case "house":
+  case "bomb":
     return Color.red
-  case "archivebox":
+  case "trench":
     return Color.yellow
-  case "bell":
+  case "headsup":
     return Color.green
-  case "message":
+  case "wardle":
     return Color.blue
-  case "mic":
+  case "training":
     return Color.purple
   default:
     return Color.gray
@@ -29,15 +46,15 @@ func getTabColor(image: String) -> Color {
 
 func getTitle(sheetNum: String) -> String {
   switch sheetNum {
-  case "house":
+  case "bomb":
     return "Word Bomb"
-  case "archivebox":
+  case "trench":
     return "Trivia Trench"
-  case "bell":
+  case "headsup":
     return "Heads Up!!!"
-  case "message":
+  case "wardle":
     return "War-dle"
-  case "mic":
+  case "training":
     return "Sniper Trainer"
   default:
     return "Title"
@@ -46,15 +63,15 @@ func getTitle(sheetNum: String) -> String {
 
 func getLeftTabColor(tab: String) -> Color {
   switch tab {
-  case "house":
+  case "bomb":
     return .purple
-  case "archivebox":
+  case "trench":
     return .red
-  case "bell":
+  case "headsup":
     return .yellow
-  case "message":
+  case "wardle":
     return .green
-  case "mic":
+  case "training":
     return .blue
   default:
     return .clear
@@ -63,22 +80,17 @@ func getLeftTabColor(tab: String) -> Color {
 
 func getRightTabColor(tab: String) -> Color {
   switch tab {
-  case "house":
+  case "bomb":
     return .yellow
-  case "archivebox":
+  case "trench":
     return .green
-  case "bell":
+  case "headsup":
     return .blue
-  case "message":
+  case "wardle":
     return .purple
-  case "mic":
+  case "training":
     return .red
   default:
     return .clear
   }
 }
-
-  
-  
-  
-  

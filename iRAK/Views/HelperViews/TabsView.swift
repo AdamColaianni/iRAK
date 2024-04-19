@@ -29,18 +29,18 @@ struct TabsView: View {
     VStack {
       TabView(selection: $selectedTab) {
         WordBombHomeView(selectedTab: $selectedGradientTab)
-          .tag("house")
+          .tag("bomb")
         TriviaTrenchHomeView(selectedTab: $selectedGradientTab)
           .ignoresSafeArea(.all, edges: .all)
-          .tag("archivebox")
+          .tag("trench")
         HeadsUpHomeView(selectedTab: $selectedGradientTab)
           .ignoresSafeArea(.all, edges: .all)
-          .tag("bell")
+          .tag("headsup")
         WardleHomeView(selectedTab: $selectedGradientTab)
           .ignoresSafeArea(.all, edges: .all)
-          .tag("message")
+          .tag("wardle")
         SniperTrainerHomeView(selectedTab: $selectedGradientTab)
-          .tag("mic")
+          .tag("training")
       }
       HStack(spacing: 0) {
         ForEach(tabs, id: \.self) { image in
@@ -52,7 +52,7 @@ struct TabsView: View {
               }
               selectedGradientTab = image
             }, label: {
-              Image(systemName: image)
+              getTabImage(tab: image)
                 .resizable()
                 .renderingMode(.template)
                 .aspectRatio(contentMode: .fit)
@@ -84,5 +84,5 @@ struct TabsView: View {
 }
 
 #Preview {
-  TabsView(selectedTab: .constant("house"), selectedGradientTab: .constant("house"))
+  TabsView(selectedTab: .constant("bomb"), selectedGradientTab: .constant("bomb"))
 }

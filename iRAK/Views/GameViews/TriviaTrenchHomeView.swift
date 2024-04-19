@@ -54,6 +54,6 @@ struct TriviaTrenchHomeView: View {
 }
 
 #Preview {
-  TriviaTrenchHomeView(selectedTab: .constant("archivebox"))
+  TriviaTrenchHomeView(selectedTab: .constant("trench"))
     .environmentObject(Settings())
 }

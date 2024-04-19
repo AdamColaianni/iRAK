@@ -46,6 +46,6 @@ struct HeadsUpHomeView: View {
 }
 
 #Preview {
-  HeadsUpHomeView(selectedTab: .constant("bell"))
+  HeadsUpHomeView(selectedTab: .constant("headsup"))
     .environmentObject(Settings())
 }

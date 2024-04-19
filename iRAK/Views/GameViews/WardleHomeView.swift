@@ -46,6 +46,6 @@ struct WardleHomeView: View {
 }
 
 #Preview {
-  WardleHomeView(selectedTab: .constant("message"))
+  WardleHomeView(selectedTab: .constant("wardle"))
     .environmentObject(Settings())
 }

@@ -52,5 +52,5 @@ struct TopGradientView: View {
 }
 
 #Preview {
-  GradientView(selectedTab: .constant("house"))
+  GradientView(selectedTab: .constant("bomb"))
 }

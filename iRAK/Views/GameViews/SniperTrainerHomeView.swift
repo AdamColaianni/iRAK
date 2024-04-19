@@ -54,6 +54,6 @@ struct SniperTrainerHomeView: View {
 }
 
 #Preview {
-  SniperTrainerHomeView(selectedTab: .constant("mic"))
+  SniperTrainerHomeView(selectedTab: .constant("training"))
     .environmentObject(Settings())
 }

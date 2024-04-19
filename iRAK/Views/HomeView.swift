@@ -13,8 +13,8 @@ struct HomeView: View {
   @EnvironmentObject var settings: Settings
   @State private var isSettingsPresented = false
   @State private var isProfilePresented = false
-  @State var selectedTab = "house"
-  @State var selectedGradientTab = "house"
+  @State var selectedTab = "bomb"
+  @State var selectedGradientTab = "bomb"
   
   var body: some View {
     NavigationView {

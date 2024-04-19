@@ -55,7 +55,7 @@ struct WordBombHomeView: View {
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    WordBombHomeView(selectedTab: .constant("house"))
+    WordBombHomeView(selectedTab: .constant("bomb"))
       .environmentObject(Settings())
   }
 }

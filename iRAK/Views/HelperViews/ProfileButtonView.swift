@@ -29,5 +29,5 @@ struct ProfileButton: View {
 }
 
 #Preview {
-  ProfileButton(imageName: "bell", text: "Updates")
+  ProfileButton(imageName: "headsup", text: "Updates")
 }
