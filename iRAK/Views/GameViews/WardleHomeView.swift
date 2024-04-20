@@ -12,21 +12,16 @@ struct WardleHomeView: View {
     VStack {
       Image("Wardle")
         .headerButtonStyle()
-      Button(action: {
-        print("Play")
-      }, label: {
+      NavigationLink(destination: Text("Play")) {
         Text("Play")
-      })
+      }
       .buttonStyle(PrimaryButtonStyle(image: "play.house.fill", color: .green))
       HStack {
-        Button(action: {
-          print("Rules")
-        }, label: {
+        NavigationLink(destination: Text("Rules")) {
           Text("Rules")
-            .foregroundStyle(.primary)
-        })
+        }
         .buttonStyle(PrimaryButtonStyle(image: "questionmark.diamond.fill", color: .blue))
-        NavigationLink(destination: SettingsView()) {
+        NavigationLink(destination: Text("Stats")) {
           Text("Stats")
         }
         .buttonStyle(PrimaryButtonStyle(image: "chart.bar.xaxis", color: .purple))

@@ -13,28 +13,21 @@ struct WordBombHomeView: View {
       Image("WordBomb")
         .headerButtonStyle()
       HStack {
-        Button(action: {
-          print("Join")
-        }, label: {
+        NavigationLink(destination: Text("Join")) {
           Text("Join")
-        })
+        }
         .buttonStyle(PrimaryButtonStyle(image: "play.house.fill", color: .green))
-        Button(action: {
-          print("Host")
-        }, label: {
+        NavigationLink(destination: Text("Host")){
           Text("Host")
-        })
+        }
         .buttonStyle(PrimaryButtonStyle(image: "house.fill", color: .pink))
       }
       HStack {
-        Button(action: {
-          print("Rules")
-        }, label: {
+        NavigationLink(destination: Text("Rules")){
           Text("Rules")
-            .foregroundStyle(.primary)
-        })
+        }
         .buttonStyle(PrimaryButtonStyle(image: "questionmark.diamond.fill", color: .blue))
-        NavigationLink(destination: SettingsView()) {
+        NavigationLink(destination: Text("Stats")) {
           Text("Stats")
         }
         .buttonStyle(PrimaryButtonStyle(image: "chart.bar.xaxis", color: .purple))
