@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct iRAKApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+  @StateObject var settings: Settings = Settings()
+  var body: some Scene {
+    WindowGroup {
+      HomeView()
+        .environmentObject(settings)
     }
+  }
 }
