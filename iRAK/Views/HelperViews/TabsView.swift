@@ -9,13 +9,11 @@ import SwiftUI
 
 struct TabsView: View {
   @Binding var selectedTab: String
-  @Binding var selectedGradientTab: String
   var bottomPadding: CGFloat = 0
   
-  init(selectedTab: Binding<String>, selectedGradientTab: Binding<String>) {
+  init(selectedTab: Binding<String>) {
     UITabBar.appearance().isHidden = true
     _selectedTab = selectedTab
-    _selectedGradientTab = selectedGradientTab
     if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
        let safeAreaInsetsBottom = windowScene.windows.first?.safeAreaInsets.bottom {
       bottomPadding = safeAreaInsetsBottom
@@ -28,18 +26,20 @@ struct TabsView: View {
   var body: some View {
     VStack {
       TabView(selection: $selectedTab) {
-        WordBombHomeView(selectedTab: $selectedGradientTab)
+        WordBombHomeView()
+          .background(TransparentHelper())
           .tag("bomb")
-        TriviaTrenchHomeView(selectedTab: $selectedGradientTab)
-          .ignoresSafeArea(.all, edges: .all)
+        TriviaTrenchHomeView()
+          .background(TransparentHelper())
           .tag("trench")
-        HeadsUpHomeView(selectedTab: $selectedGradientTab)
-          .ignoresSafeArea(.all, edges: .all)
+        HeadsUpHomeView()
+          .background(TransparentHelper())
           .tag("headsup")
-        WardleHomeView(selectedTab: $selectedGradientTab)
-          .ignoresSafeArea(.all, edges: .all)
+        WardleHomeView()
+          .background(TransparentHelper())
           .tag("wardle")
-        SniperTrainerHomeView(selectedTab: $selectedGradientTab)
+        SniperTrainerHomeView()
+          .background(TransparentHelper())
           .tag("training")
       }
       HStack(spacing: 0) {
@@ -50,7 +50,6 @@ struct TabsView: View {
                 selectedTab = image
                 xAxis = reader.frame(in: .global).minX
               }
-              selectedGradientTab = image
             }, label: {
               getTabImage(tab: image)
                 .resizable()
@@ -84,5 +83,5 @@ struct TabsView: View {
 }
 
 #Preview {
-  TabsView(selectedTab: .constant("bomb"), selectedGradientTab: .constant("bomb"))
+  TabsView(selectedTab: .constant("bomb"))
 }

@@ -22,6 +22,7 @@
 		1FADC6952BCC781600706DC1 /* TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6942BCC781600706DC1 /* TabsView.swift */; };
 		1FADC69D2BCC7E2700706DC1 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */; };
 		1FF296E32BD2D9290011C598 /* ColorExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF296E22BD2D9290011C598 /* ColorExtentions.swift */; };
+		1FF296E92BD368E50011C598 /* TransparentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF296E82BD368E50011C598 /* TransparentHelper.swift */; };
 		1FF9BD512BCF18480017005D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9BD502BCF18480017005D /* GradientView.swift */; };
 		E55F6CBA2B9A1F5500E472B8 /* iRAKApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F6CB92B9A1F5500E472B8 /* iRAKApp.swift */; };
 		E55F6CBC2B9A1F5500E472B8 /* WordBombHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F6CBB2B9A1F5500E472B8 /* WordBombHomeView.swift */; };
@@ -45,6 +46,7 @@
 		1FADC6942BCC781600706DC1 /* TabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsView.swift; sourceTree = "<group>"; };
 		1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		1FF296E22BD2D9290011C598 /* ColorExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtentions.swift; sourceTree = "<group>"; };
+		1FF296E82BD368E50011C598 /* TransparentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentHelper.swift; sourceTree = "<group>"; };
 		1FF9BD502BCF18480017005D /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		E55F6CB62B9A1F5500E472B8 /* iRAK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iRAK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55F6CB92B9A1F5500E472B8 /* iRAKApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iRAKApp.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				1FADC6892BCC722500706DC1 /* ProfileButtonView.swift */,
 				1FF9BD502BCF18480017005D /* GradientView.swift */,
 				1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */,
+				1FF296E82BD368E50011C598 /* TransparentHelper.swift */,
 			);
 			path = HelperViews;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				1FADC6872BCC71A400706DC1 /* ImageExtensions.swift in Sources */,
 				1FF9BD512BCF18480017005D /* GradientView.swift in Sources */,
 				1F9C63C62BCF1EB400782B3A /* HeadsUpHomeView.swift in Sources */,
+				1FF296E92BD368E50011C598 /* TransparentHelper.swift in Sources */,
 				E55F6CBA2B9A1F5500E472B8 /* iRAKApp.swift in Sources */,
 				1FF296E32BD2D9290011C598 /* ColorExtentions.swift in Sources */,
 				1F9C63CC2BD04CCA00782B3A /* Settings.swift in Sources */,

@@ -14,7 +14,6 @@ struct HomeView: View {
   @State private var isSettingsPresented = false
   @State private var isProfilePresented = false
   @State var selectedTab = "bomb"
-  @State var selectedGradientTab = "bomb"
   
   var body: some View {
     NavigationView {
@@ -22,7 +21,7 @@ struct HomeView: View {
         Color.backgroundColor
           .ignoresSafeArea()
         if settings.isGradientShown {
-          TopGradientView(selectedTab: $selectedGradientTab)
+          GradientView(selectedTab: $selectedTab)
         }
         VStack {
           // Buttons on top
@@ -70,7 +69,8 @@ struct HomeView: View {
           .dynamicTypeSize(.xxxLarge)
           
           // Tab view at the bottom
-          TabsView(selectedTab: $selectedTab, selectedGradientTab: $selectedGradientTab)
+          TabsView(selectedTab: $selectedTab)
+            .background(Color.clear)
         }
         .fullScreenCover(isPresented: $isSettingsPresented) {
           SettingsView()
