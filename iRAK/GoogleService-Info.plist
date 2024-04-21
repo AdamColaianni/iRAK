@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAY1XJySsyBk0QTVOhWLc1NXD1m-prXA2U</string>
+	<key>GCM_SENDER_ID</key>
+	<string>314844420611</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>Eden-Prairie-Schools.iRAK</string>
+	<key>PROJECT_ID</key>
+	<string>irak-7a54f</string>
+	<key>STORAGE_BUCKET</key>
+	<string>irak-7a54f.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:314844420611:ios:af7756ac643c44b54f8c36</string>
+</dict>
+</plist>
