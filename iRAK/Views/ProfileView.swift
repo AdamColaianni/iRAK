@@ -17,6 +17,7 @@ struct ProfileView: View {
   @State private var selectedProfilePhoto: PhotosPickerItem?
   @State private var isPhotoDeletionConfirmationPresented = false
   @State private var profilePhotoButtonEnabled = false
+  @State private var showingDeleteConfirmation = false
   
   var body: some View {
     NavigationView {
@@ -144,9 +145,38 @@ struct ProfileView: View {
               NavigationLink(destination: Text("Info")) {
                 ProfileButton(imageName: "info.circle", text: "Info")
               }
+              Button(action: {
+                showingDeleteConfirmation = true
+              }) {
+                HStack {
+                  Image(systemName: "trash")
+                  Text("Reset Account")
+                  Spacer()
+                  Image(systemName: "chevron.right")
+                }
+                .padding()
+                .background(Color.midgroundColor)
+                .foregroundColor(.red)
+                .cornerRadius(15)
+                .shadow(radius: 3)
+                .padding(.horizontal)
+                .font(.system(size: 20))
+              }
             }
           }
         }
+        .confirmationDialog("Confirmation", isPresented: $showingDeleteConfirmation, actions: {
+          Button("Delete", role: .destructive) {
+            Task {
+              do {
+                try await AuthenticationManager.shared.delete()
+                try await AuthenticationManager.shared.signInAnonymous()
+              } catch {
+                print(error)
+              }
+            }
+          }
+        }, message: {Text("Do you want to reset your account?")})
         .alert(isPresented: $showingEmptyNameAlert) {
             Alert(title: Text("Alert"), message: Text("Cannot have an empty user name"), dismissButton: .default(Text("OK")))
         }

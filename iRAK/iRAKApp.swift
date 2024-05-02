@@ -9,8 +9,7 @@ import SwiftUI
 import FirebaseCore
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(_ application: UIApplication,
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     FirebaseApp.configure()
     return true
   }
@@ -20,6 +19,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct iRAKApp: App {
   @StateObject var settings: Settings = Settings()
   @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+  
+  init() {
+    Task {
+      do {
+        try await AuthenticationManager.shared.signInAnonymous()
+      } catch {
+        print(error)
+      }
+    }
+  }
   
   var body: some Scene {
     WindowGroup {

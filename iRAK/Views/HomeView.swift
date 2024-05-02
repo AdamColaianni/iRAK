@@ -80,6 +80,11 @@ struct HomeView: View {
         }
       }
     }
+//    .onAppear {
+//      if (try? AuthenticationManager.shared.getAuthenticatedUser()) != nil {
+//        print("THERE IS A USER!")
+//      }
+//    }
   }
 }
 
