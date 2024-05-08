@@ -1,8 +1,8 @@
 //
-//  WordBombView.swift
+//  WordBombViewModel.swift
 //  iRAK
 //
-//  Created by 90310013 on 5/3/24.
+//  Created by 90310013 on 5/7/24.
 //
 
 import SwiftUI
@@ -19,6 +19,24 @@ class WordBombViewModel: ObservableObject {
   }
   
   deinit {
+    cleanUp()
+  }
+  
+  func generateCode() -> String {
+    let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    let randomString = String((0..<4).map{ _ in letters.randomElement()! })
+    return randomString
+  }
+  
+  func cleanUp() {
+    let gameRoomRef = ref.parent! // parent not needed when I don't have .child("gameRoom").child("word") in the class vars
+    gameRoomRef.removeValue { error, _ in
+      if let error = error {
+        print("Failed to delete gameRoom node: \(error.localizedDescription)")
+      } else {
+        print("gameRoom node deleted successfully.")
+      }
+    }
     ref.removeObserver(withHandle: refHandle!)
   }
   
@@ -35,28 +53,4 @@ class WordBombViewModel: ObservableObject {
       }
     }
   }
-}
-
-
-struct WordBombView: View {
-  @StateObject private var viewModel = WordBombViewModel()
-  @State var typedWord: String = ""
-  var body: some View {
-    VStack {
-      TextField("Type the word here", text: $typedWord)
-        .textFieldStyle(RoundedBorderTextFieldStyle())
-        .padding()
-        .onChange(of: typedWord) { newValue in
-          viewModel.updateWord(word: newValue)
-        }
-      
-      Text("Word: \(viewModel.word)")
-        .padding()
-      
-    }
-  }
-}
-
-#Preview {
-  WordBombView()
 }
