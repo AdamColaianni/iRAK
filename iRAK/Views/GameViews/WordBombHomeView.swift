@@ -13,7 +13,7 @@ struct WordBombHomeView: View {
       Image("WordBomb")
         .headerButtonStyle()
       HStack {
-        NavigationLink(destination: Text("Join")) {
+        NavigationLink(destination: WordBombView()) {
           Text("Join")
         }
         .buttonStyle(PrimaryButtonStyle(image: "play.house.fill", color: .green))

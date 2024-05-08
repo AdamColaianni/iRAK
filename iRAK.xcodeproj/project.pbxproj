@@ -38,6 +38,7 @@
 		1F45870E2BC59AE900CB5562 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45870D2BC59AE900CB5562 /* SettingsView.swift */; };
 		1F4587102BC59AEF00CB5562 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45870F2BC59AEF00CB5562 /* ProfileView.swift */; };
 		1F54FDEA2BA355390063B0C4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54FDE92BA355390063B0C4 /* HomeView.swift */; };
+		1F6177C12BE58A6B0038BD17 /* WordBombView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6177C02BE58A6B0038BD17 /* WordBombView.swift */; };
 		1F7CF1D22BE2A26F00EC9E67 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1F7CF1D12BE2A26F00EC9E67 /* FirebaseAnalytics */; };
 		1F7CF1D42BE2A26F00EC9E67 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 1F7CF1D32BE2A26F00EC9E67 /* FirebaseAnalyticsOnDeviceConversion */; };
 		1F7CF1D62BE2A26F00EC9E67 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 1F7CF1D52BE2A26F00EC9E67 /* FirebaseAnalyticsSwift */; };
@@ -69,6 +70,7 @@
 		1F45870D2BC59AE900CB5562 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1F45870F2BC59AEF00CB5562 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		1F54FDE92BA355390063B0C4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		1F6177C02BE58A6B0038BD17 /* WordBombView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordBombView.swift; sourceTree = "<group>"; };
 		1F9C63C32BCF1E7400782B3A /* TriviaTrenchHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriviaTrenchHomeView.swift; sourceTree = "<group>"; };
 		1F9C63C52BCF1EB400782B3A /* HeadsUpHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadsUpHomeView.swift; sourceTree = "<group>"; };
 		1F9C63C72BCF1EC400782B3A /* WardleHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardleHomeView.swift; sourceTree = "<group>"; };
@@ -134,6 +136,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F6177C22BEB0E220038BD17 /* WordBomb */ = {
+			isa = PBXGroup;
+			children = (
+				1F6177C02BE58A6B0038BD17 /* WordBombView.swift */,
+			);
+			path = WordBomb;
+			sourceTree = "<group>";
+		};
 		1F9C63C12BCF1CB200782B3A /* HelperViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +159,7 @@
 		1F9C63C22BCF1D1500782B3A /* GameViews */ = {
 			isa = PBXGroup;
 			children = (
+				1F6177C22BEB0E220038BD17 /* WordBomb */,
 				E55F6CBB2B9A1F5500E472B8 /* WordBombHomeView.swift */,
 				1F9C63C32BCF1E7400782B3A /* TriviaTrenchHomeView.swift */,
 				1F9C63C52BCF1EB400782B3A /* HeadsUpHomeView.swift */,
@@ -359,6 +370,7 @@
 				1F9C63CA2BCF1ED300782B3A /* SniperTrainerHomeView.swift in Sources */,
 				E55F6CBC2B9A1F5500E472B8 /* WordBombHomeView.swift in Sources */,
 				1FADC68E2BCC753700706DC1 /* CustomTabShape.swift in Sources */,
+				1F6177C12BE58A6B0038BD17 /* WordBombView.swift in Sources */,
 				1FADC68A2BCC722500706DC1 /* ProfileButtonView.swift in Sources */,
 				1FADC6952BCC781600706DC1 /* TabsView.swift in Sources */,
 				1FADC69D2BCC7E2700706DC1 /* PrimaryButtonStyle.swift in Sources */,
