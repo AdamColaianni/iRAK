@@ -8,9 +8,9 @@
 import SwiftUI
 import Firebase
 
-class WordBombViewModel: ObservableObject {
+class WordBombHostViewModel: ObservableObject {
   var currentUser = try? AuthenticationManager.shared.getAuthenticatedUser()
-  private let ref = Database.database().reference().child("gameRoom").child("word")
+  private let ref = Database.database().reference()
   private var refHandle: DatabaseHandle?
   @Published var word: String = ""
   
@@ -27,6 +27,8 @@ class WordBombViewModel: ObservableObject {
     let randomString = String((0..<4).map{ _ in letters.randomElement()! })
     return randomString
   }
+  
+//    .child("gameRoom").child("word")
   
   func cleanUp() {
     let gameRoomRef = ref.parent! // parent not needed when I don't have .child("gameRoom").child("word") in the class vars

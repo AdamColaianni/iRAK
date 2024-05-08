@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WordBombHostView: View {
-  @StateObject private var viewModel = WordBombViewModel()
+  @StateObject private var wordBomb = WordBombHostViewModel()
   @State var typedWord: String = ""
   
   var body: some View {
@@ -17,14 +17,14 @@ struct WordBombHostView: View {
         .textFieldStyle(RoundedBorderTextFieldStyle())
         .padding()
         .onChange(of: typedWord) { newValue in
-          viewModel.updateWord(word: newValue)
+          wordBomb.updateWord(word: newValue)
         }
       
-      Text("Word: \(viewModel.word)")
+      Text("Word: \(wordBomb.word)")
         .padding()
     }
     .onDisappear {
-      viewModel.cleanUp()
+      wordBomb.cleanUp()
     }
   }
 }
