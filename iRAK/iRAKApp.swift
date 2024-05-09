@@ -17,7 +17,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct iRAKApp: App {
-  @StateObject var settings: Settings = Settings()
   @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
   
   init() {
@@ -33,7 +32,6 @@ struct iRAKApp: App {
   var body: some Scene {
     WindowGroup {
       HomeView()
-        .environmentObject(settings)
     }
   }
 }

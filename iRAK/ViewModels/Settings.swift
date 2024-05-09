@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-@MainActor
 final class Settings: ObservableObject {
-  @AppStorage("gradient") var isGradientShown: Bool = true
-  @AppStorage("selectedProfilePhotoData") var selectedProfilePhotoData: Data?
-  @AppStorage("userName") var userName = "name"
+  @AppStorage("gradient") static var isGradientShown: Bool = true
+  @AppStorage("selectedProfilePhotoData") static var selectedProfilePhotoData: Data?
+  @AppStorage("userName") static var userName = "name"
 }

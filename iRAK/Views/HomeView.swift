@@ -10,7 +10,6 @@
 import SwiftUI
 
 struct HomeView: View {
-  @EnvironmentObject var settings: Settings
   @State private var isSettingsPresented = false
   @State private var isProfilePresented = false
   @State var selectedTab = "bomb"
@@ -20,7 +19,7 @@ struct HomeView: View {
       ZStack {
         Color.backgroundColor
           .ignoresSafeArea()
-        if settings.isGradientShown {
+        if Settings.isGradientShown {
           GradientView(selectedTab: $selectedTab)
         }
         VStack {
@@ -50,7 +49,7 @@ struct HomeView: View {
             Button(action: {
               self.isProfilePresented.toggle()
             }) {
-              if let imageData = settings.selectedProfilePhotoData, let uiImage = UIImage(data: imageData) {
+              if let imageData = Settings.selectedProfilePhotoData, let uiImage = UIImage(data: imageData) {
                 Image(uiImage: uiImage)
                   .profileImageStyle(width: 40, height: 40)
               } else {
@@ -91,6 +90,5 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
   static var previews: some View {
     HomeView()
-      .environmentObject(Settings())
   }
 }
