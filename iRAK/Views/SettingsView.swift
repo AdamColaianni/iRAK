@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
+  @EnvironmentObject var settings: Settings
   @Environment(\.dismiss) var dismiss
   var body: some View {
     NavigationView {
@@ -35,7 +36,7 @@ struct SettingsView: View {
           .padding(.leading, 5)
           .padding(.trailing, 5)
           .padding(.bottom, 25)
-          Toggle("Background Gradient", isOn: Settings.$isGradientShown)
+          Toggle("Background Gradient", isOn: $settings.isGradientShown)
             .padding()
             .background(Color.midgroundColor.cornerRadius(10).shadow(radius: 3))
           VStack {
@@ -43,7 +44,7 @@ struct SettingsView: View {
               Text("Enable Gradient")
               Spacer()
             }
-            Picker("Gradient Mode", selection: Settings.$isGradientShown) {
+            Picker("Gradient Mode", selection: $settings.isGradientShown) {
               Text("Yes")
                 .tag(true)
               Text("No")
