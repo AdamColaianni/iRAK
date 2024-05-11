@@ -97,6 +97,7 @@ struct ProfileView: View {
                   }
                 })
                 .focused($focusOnTextBox)
+                .disableAutocorrection(true)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .font(.system(size: 30, weight: .bold, design: .rounded))
                 .multilineTextAlignment(.center)
@@ -188,7 +189,7 @@ struct ProfileView: View {
           }
         }
         .confirmationDialog("Remove Profile Image", isPresented: $isPhotoDeletionConfirmationPresented, actions: {
-          Button("Remove") {
+          Button("Remove", role: .destructive) {
             withAnimation {
               selectedProfilePhoto = nil
               settings.selectedProfilePhotoData = nil
