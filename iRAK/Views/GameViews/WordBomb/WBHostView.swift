@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct WordBombHostView: View {
+  @Environment(\.dismiss) var dismiss
   @StateObject private var wordBomb = WordBombHostViewModel()
   @State var typedWord: String = ""
   
   var body: some View {
     VStack {
+      Text("Code: \(wordBomb.gameRoomCode)")
       TextField("Type the word here", text: $typedWord)
         .textFieldStyle(RoundedBorderTextFieldStyle())
         .padding()
@@ -24,7 +26,12 @@ struct WordBombHostView: View {
         .padding()
     }
     .onDisappear {
-      wordBomb.cleanUp()
+      wordBomb.deleteRoom() // MEHHH
+    }
+    .onReceive(wordBomb.$gameRoomCode) { gameRoomCode in
+      if gameRoomCode == "" {
+        dismiss()
+      }
     }
   }
 }

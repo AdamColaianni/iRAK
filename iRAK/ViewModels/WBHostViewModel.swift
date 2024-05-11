@@ -12,27 +12,60 @@ class WordBombHostViewModel: ObservableObject {
   var currentUser = try? AuthenticationManager.shared.getAuthenticatedUser()
   private let ref = Database.database().reference()
   private var refHandle: DatabaseHandle?
+  @Published var gameRoomCode: String = generateCode()
+  @AppStorage("userName") var userName = "name"
+  // Vars synced with database
   @Published var word: String = ""
   
   init() {
-    observeWord()
+    createGameRoom()
   }
   
   deinit {
-    cleanUp()
+    deleteRoom()
   }
   
-  func generateCode() -> String {
-    let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    let randomString = String((0..<4).map{ _ in letters.randomElement()! })
-    return randomString
+  private func createGameRoom(recursionDepth: Int = 0) {
+    guard recursionDepth < 15 else {
+      // Stop recursion after 15 attempts
+      print("Game room code not found within 15 tries")
+      self.gameRoomCode = ""
+      return
+    }
+    gameRoomExists(code: self.gameRoomCode) { exists in
+      if !exists {
+        // Set player and word
+        self.ref.child(self.gameRoomCode).child("players").setValue([self.currentUser?.uid: self.userName])
+        self.ref.child(self.gameRoomCode).child("word").setValue("")
+        
+        self.observeRoom()
+      } else {
+        self.gameRoomCode = WordBombHostViewModel.generateCode()
+        self.createGameRoom(recursionDepth: recursionDepth + 1)
+      }
+    }
   }
   
-//    .child("gameRoom").child("word")
+  private func observeRoom() {
+    refHandle = ref.child(self.gameRoomCode).child("word").observe(.value) { snapshot in
+      if let word = snapshot.value/*(forKey: "word")*/ as? String {
+        self.word = word
+      }
+      // observe players as well
+    }
+  }
   
-  func cleanUp() {
-    let gameRoomRef = ref.parent! // parent not needed when I don't have .child("gameRoom").child("word") in the class vars
-    gameRoomRef.removeValue { error, _ in
+  private func gameRoomExists(code: String, completion: @escaping (Bool) -> Void) {
+    ref.child(self.gameRoomCode).observeSingleEvent(of: .value, with: { snapshot in
+      completion(snapshot.exists())
+    })
+  }
+  
+  func deleteRoom() {
+    if self.gameRoomCode == "" {
+      return
+    }
+    ref.child(self.gameRoomCode).removeValue { error, _ in
       if let error = error {
         print("Failed to delete gameRoom node: \(error.localizedDescription)")
       } else {
@@ -42,17 +75,12 @@ class WordBombHostViewModel: ObservableObject {
     ref.removeObserver(withHandle: refHandle!)
   }
   
-  // Function to update the word in the database
   func updateWord(word: String) {
-    ref.setValue(word)
+    ref.child(self.gameRoomCode).child("word").setValue(word)
   }
   
-  // Function to observe changes to the word in the database
-  private func observeWord() {
-    refHandle = ref.observe(.value) { snapshot in
-      if let word = snapshot.value as? String {
-        self.word = word
-      }
-    }
+  static private func generateCode() -> String {
+    let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    return String((0..<4).map{ _ in letters.randomElement()! })
   }
 }

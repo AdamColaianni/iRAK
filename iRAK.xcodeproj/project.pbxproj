@@ -57,6 +57,7 @@
 		1FADC6932BCC76D900706DC1 /* HomeViewFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6922BCC76D900706DC1 /* HomeViewFunctions.swift */; };
 		1FADC6952BCC781600706DC1 /* TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6942BCC781600706DC1 /* TabsView.swift */; };
 		1FADC69D2BCC7E2700706DC1 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */; };
+		1FC088D62BED730D00B72EBB /* WBJoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC088D52BED730D00B72EBB /* WBJoinViewModel.swift */; };
 		1FED8A9E2BDAB6C300D70801 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FED8A9D2BDAB6C300D70801 /* AuthenticationManager.swift */; };
 		1FF296E32BD2D9290011C598 /* ColorExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF296E22BD2D9290011C598 /* ColorExtentions.swift */; };
 		1FF296E92BD368E50011C598 /* TransparentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF296E82BD368E50011C598 /* TransparentHelper.swift */; };
@@ -86,6 +87,7 @@
 		1FADC6922BCC76D900706DC1 /* HomeViewFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFunctions.swift; sourceTree = "<group>"; };
 		1FADC6942BCC781600706DC1 /* TabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsView.swift; sourceTree = "<group>"; };
 		1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
+		1FC088D52BED730D00B72EBB /* WBJoinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBJoinViewModel.swift; sourceTree = "<group>"; };
 		1FED8A9D2BDAB6C300D70801 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		1FF296E22BD2D9290011C598 /* ColorExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtentions.swift; sourceTree = "<group>"; };
 		1FF296E82BD368E50011C598 /* TransparentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentHelper.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				1FADC6922BCC76D900706DC1 /* HomeViewFunctions.swift */,
 				1F9C63CB2BD04CCA00782B3A /* Settings.swift */,
 				1F6177C32BEB152C0038BD17 /* WBHostViewModel.swift */,
+				1FC088D52BED730D00B72EBB /* WBJoinViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				1F6177C42BEB152C0038BD17 /* WBHostViewModel.swift in Sources */,
 				1F9C63C82BCF1EC400782B3A /* WardleHomeView.swift in Sources */,
 				1F9C63C42BCF1E7400782B3A /* TriviaTrenchHomeView.swift in Sources */,
+				1FC088D62BED730D00B72EBB /* WBJoinViewModel.swift in Sources */,
 				1F9C63CA2BCF1ED300782B3A /* SniperTrainerHomeView.swift in Sources */,
 				E55F6CBC2B9A1F5500E472B8 /* WBHomeView.swift in Sources */,
 				1FADC68E2BCC753700706DC1 /* CustomTabShape.swift in Sources */,
