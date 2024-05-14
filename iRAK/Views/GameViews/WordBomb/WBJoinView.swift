@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct WordBombJoinView: View {
+  @Environment(\.dismiss) var dismiss
   @StateObject private var wordBomb = WordBombJoinViewModel()
   @State var gameRoomCode: String = ""
-  @State private var isOverlayPresented = true
+  @State private var isJoinPresented = true
   @State private var isCodeWrong = false
+  @FocusState var focusOnCodeTextBox: Bool
+  @FocusState var focusOnMessageTextBox: Bool
   // Vars synced with database
   @State var typedWord: String = ""
 
@@ -20,10 +23,16 @@ struct WordBombJoinView: View {
       Color.backgroundColor
         .ignoresSafeArea()
       VStack {
+        
+        ForEach(wordBomb.players.sorted(by: <), id: \.key) { id, name in
+            Text("\(id): \(name)")
+        }
+        
         Text(wordBomb.gameRoomCode)
           .padding()
         
         TextField("Type the word here", text: $typedWord)
+          .focused($focusOnMessageTextBox)
           .textFieldStyle(RoundedBorderTextFieldStyle())
           .padding()
           .onChange(of: typedWord) { newValue in
@@ -33,10 +42,10 @@ struct WordBombJoinView: View {
         Text("Word: \(wordBomb.word)")
           .padding()
       }
-      .disabled(isOverlayPresented)
-      .blur(radius: isOverlayPresented ? 3 : 0)
+      .disabled(isJoinPresented || wordBomb.hasRoomEnded)
+      .blur(radius: (isJoinPresented || wordBomb.hasRoomEnded) ? 3 : 0)
       
-      if isOverlayPresented {
+      if isJoinPresented {
         ZStack {
           Color.black.opacity(0.2)
             .edgesIgnoringSafeArea(.all)
@@ -53,12 +62,16 @@ struct WordBombJoinView: View {
             TextField("Enter code", text: $gameRoomCode) {
               joinRoom()
             }
+            .focused($focusOnCodeTextBox)
             .autocapitalization(.allCharacters)
             .disableAutocorrection(true)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .padding()
             .onChange(of: gameRoomCode) { _ in
               isCodeWrong = false
+              if gameRoomCode.count > 4 {
+                gameRoomCode = String(gameRoomCode.prefix(4))
+              }
             }
             
             Button(action: {
@@ -83,6 +96,40 @@ struct WordBombJoinView: View {
           .padding(5)
         }
       }
+      
+      if wordBomb.hasRoomEnded {
+        ZStack {
+          Color.black.opacity(0.2)
+            .edgesIgnoringSafeArea(.all)
+          VStack {
+            Text("Game has ended")
+              .font(.system(size: 30, weight: .bold, design: .rounded))
+            
+            Button(action: {
+              dismiss()
+            }) {
+              Text("Leave game")
+                .font(.system(size: 20, weight: .bold, design: .rounded))
+                .padding(10)
+                .frame(maxWidth: .infinity)
+                .background(Color.foregroundColor)
+                .clipShape(Capsule())
+                .shadow(radius: 1)
+            }
+          }
+          .padding()
+          .frame(maxWidth: 300, maxHeight: 300)
+          .background(Color.midgroundColor)
+          .foregroundColor(.primary)
+          .clipShape(Rectangle())
+          .cornerRadius(50)
+          .shadow(radius: 3)
+          .padding()
+        }
+      }
+    }
+    .onAppear {
+      focusOnCodeTextBox = true
     }
     .onDisappear {
       wordBomb.leaveRoom()
@@ -95,7 +142,8 @@ struct WordBombJoinView: View {
         if roomExists {
           withAnimation {
             // Game room exists, perform further actions
-            self.isOverlayPresented = false
+            self.isJoinPresented = false
+            focusOnMessageTextBox = true
           }
         } else {
           withAnimation {

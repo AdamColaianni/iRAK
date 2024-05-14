@@ -12,10 +12,12 @@ class WordBombHostViewModel: ObservableObject {
   var currentUser = try? AuthenticationManager.shared.getAuthenticatedUser()
   private let ref = Database.database().reference()
   private var refHandle: DatabaseHandle?
+  private var playerRefHandle: DatabaseHandle?
   @Published var gameRoomCode: String = generateCode()
   @AppStorage("userName") var userName = "name"
   // Vars synced with database
   @Published var word: String = ""
+  @Published var players: [String: String] = [:]
   
   init() {
     createGameRoom()
@@ -39,7 +41,9 @@ class WordBombHostViewModel: ObservableObject {
         self.ref.child(self.gameRoomCode).child("word").setValue("")
         
         self.observeRoom()
+        print("gameRoom node successfully created")
       } else {
+        print("Duplicated code found, trying again . . .")
         self.gameRoomCode = WordBombHostViewModel.generateCode()
         self.createGameRoom(recursionDepth: recursionDepth + 1)
       }
@@ -48,10 +52,14 @@ class WordBombHostViewModel: ObservableObject {
   
   private func observeRoom() {
     refHandle = ref.child(self.gameRoomCode).child("word").observe(.value) { snapshot in
-      if let word = snapshot.value/*(forKey: "word")*/ as? String {
+      if let word = snapshot.value as? String {
         self.word = word
       }
-      // observe players as well
+    }
+    playerRefHandle = self.ref.child(self.gameRoomCode).child("players").observe(.value) { snapshot in
+      if let playersDictionary = snapshot.value as? [String: String] {
+        self.players = playersDictionary
+      }
     }
   }
   
@@ -72,6 +80,7 @@ class WordBombHostViewModel: ObservableObject {
         print("gameRoom node deleted successfully.")
       }
     }
+    ref.removeObserver(withHandle: playerRefHandle!)
     ref.removeObserver(withHandle: refHandle!)
   }
   

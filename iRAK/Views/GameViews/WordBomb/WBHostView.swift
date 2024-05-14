@@ -11,11 +11,17 @@ struct WordBombHostView: View {
   @Environment(\.dismiss) var dismiss
   @StateObject private var wordBomb = WordBombHostViewModel()
   @State var typedWord: String = ""
+  @FocusState var focusOnTextBox: Bool
   
   var body: some View {
     VStack {
-      Text("Code: \(wordBomb.gameRoomCode)")
+      ForEach(wordBomb.players.sorted(by: <), id: \.key) { id, name in
+          Text("\(id): \(name)")
+      }
+      
+      Text("You are the host. Code: \(wordBomb.gameRoomCode)")
       TextField("Type the word here", text: $typedWord)
+        .focused($focusOnTextBox)
         .textFieldStyle(RoundedBorderTextFieldStyle())
         .padding()
         .onChange(of: typedWord) { newValue in
@@ -25,8 +31,12 @@ struct WordBombHostView: View {
       Text("Word: \(wordBomb.word)")
         .padding()
     }
+    .onAppear {
+      focusOnTextBox = true
+    }
     .onDisappear {
       wordBomb.deleteRoom() // MEHHH
+      focusOnTextBox = false
     }
     .onReceive(wordBomb.$gameRoomCode) { gameRoomCode in
       if gameRoomCode == "" {

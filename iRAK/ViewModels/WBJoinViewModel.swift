@@ -12,10 +12,13 @@ class WordBombJoinViewModel: ObservableObject {
   var currentUser = try? AuthenticationManager.shared.getAuthenticatedUser()
   @AppStorage("userName") var userName = "name"
   @Published var gameRoomCode: String = ""
+  @Published var hasRoomEnded: Bool = false
   private let ref = Database.database().reference()
   private var refHandle: DatabaseHandle?
+  private var playerRefHandle: DatabaseHandle?
   // Vars synced with database
   @Published var word: String = ""
+  @Published var players: [String: String] = [:]
   
   deinit {
     leaveRoom()
@@ -28,21 +31,28 @@ class WordBombJoinViewModel: ObservableObject {
         
         self.addUserToRoom()
         self.observeRoomChanges()
-        
+        print("User joined room successfully")
         completion(true)
       } else {
+        print("User failed to join room")
         completion(false)
       }
     }
   }
   
   private func observeRoomChanges() {
-    self.refHandle = self.ref.child(self.gameRoomCode).child("word").observe(.value) { snapshot in
-      if let word = snapshot.value/*(forKey: "word")*/ as? String {
+    refHandle = self.ref.child(self.gameRoomCode).child("word").observe(.value) { snapshot in
+      if let word = snapshot.value as? String {
         self.word = word
       }
-      // if there is no current player data in a listener , leave the room and dismiss the view on other phones. This is so that if the hoster ends the room everyone leaves
-      // observe players as well
+    }
+    playerRefHandle = self.ref.child(self.gameRoomCode).child("players").observe(.value) { snapshot in
+      if let playersDictionary = snapshot.value as? [String: String] {
+        self.players = playersDictionary
+      } else {
+        // Ran when there is no longer detected data (aka the room has ended)
+        self.hasRoomEnded = true
+      }
     }
   }
   
@@ -53,7 +63,7 @@ class WordBombJoinViewModel: ObservableObject {
         players[self.currentUser?.uid ?? ""] = self.userName
         self.ref.child(self.gameRoomCode).child("players").setValue(players)
       } else {
-        // If there are no players yet, create a new dictionary with the new player
+        // If there are no players yet, create a new dictionary with the new player. This should never happen though
         let players = [self.currentUser?.uid ?? "": self.userName]
         self.ref.child(self.gameRoomCode).child("players").setValue(players)
       }
@@ -76,6 +86,7 @@ class WordBombJoinViewModel: ObservableObject {
         }
       }
       ref.removeObserver(withHandle: refHandle!)
+      ref.removeObserver(withHandle: playerRefHandle!)
     }
   }
   

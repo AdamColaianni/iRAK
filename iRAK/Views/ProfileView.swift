@@ -102,6 +102,11 @@ struct ProfileView: View {
                 .font(.system(size: 30, weight: .bold, design: .rounded))
                 .multilineTextAlignment(.center)
                 .padding(2)
+                .onChange(of: settings.userName) { newValue in
+                  if newValue.count > 11 {
+                    settings.userName = String(newValue.prefix(11))
+                  }
+                }
               } else {
                 Text(settings.userName)
                   .font(.system(size: 30, weight: .bold, design: .rounded))
@@ -137,9 +142,6 @@ struct ProfileView: View {
             
             // Button Stack
             VStack {
-              NavigationLink(destination: Text("Updates")) {
-                ProfileButton(imageName: "bell", text: "Updates")
-              }
               NavigationLink(destination: Text("About")) {
                 ProfileButton(imageName: "book", text: "About")
               }
