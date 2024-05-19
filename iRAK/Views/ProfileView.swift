@@ -7,11 +7,13 @@
 
 import SwiftUI
 import PhotosUI
+import SwiftfulLoadingIndicators
 
 struct ProfileView: View {
   @EnvironmentObject var settings: Settings
   @Environment(\.dismiss) var dismiss
   @FocusState private var focusOnTextBox: Bool
+  @StateObject private var viewModel: ProfilePicViewModel = ProfilePicViewModel(userId: try! AuthenticationManager.shared.getAuthenticatedUser().uid)
   @State private var isEditing = false
   @State private var showingEmptyNameAlert = false
   @State private var selectedProfilePhoto: PhotosPickerItem?
@@ -37,8 +39,10 @@ struct ProfileView: View {
               HStack {
                 Spacer()
                 Button {
-                  if isEditing && settings.userName.isEmpty {
+                  if (isEditing && settings.userName.isEmpty) {
                     showingEmptyNameAlert = true
+                  } else if viewModel.isLoading {
+                    // say no no
                   } else {
                     isEditing = false
                     dismiss()
@@ -172,8 +176,17 @@ struct ProfileView: View {
           Button("Delete", role: .destructive) {
             Task {
               do {
+                if settings.selectedProfilePhotoData != nil {
+                  viewModel.deleteProfilePic()
+                }
+                
                 try await AuthenticationManager.shared.delete()
                 try await AuthenticationManager.shared.signInAnonymous()
+                
+                viewModel.updateUserId(userId: try! AuthenticationManager.shared.getAuthenticatedUser().uid)
+                if settings.selectedProfilePhotoData != nil {
+                  viewModel.uploadProfilePic(data: settings.selectedProfilePhotoData!)
+                }
               } catch {
                 print(error)
               }
@@ -185,14 +198,24 @@ struct ProfileView: View {
         }
         .task(id: selectedProfilePhoto) {
           if let data = try? await selectedProfilePhoto?.loadTransferable(type: Data.self) {
+            guard data.count <= 3 * 1024 * 1024 else {
+              // Handle the error for file size exceeding limit
+              viewModel.error = NSError(domain: "", code: 413, userInfo: [NSLocalizedDescriptionKey: "File size exceeds the 3 MB limit."])
+              DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                viewModel.error = nil
+              }
+              return
+            }
             withAnimation {
               settings.selectedProfilePhotoData = data
+              viewModel.uploadProfilePic(data: data)
             }
           }
         }
         .confirmationDialog("Remove Profile Image", isPresented: $isPhotoDeletionConfirmationPresented, actions: {
           Button("Remove", role: .destructive) {
             withAnimation {
+              viewModel.deleteProfilePic()
               selectedProfilePhoto = nil
               settings.selectedProfilePhotoData = nil
             }
@@ -202,6 +225,23 @@ struct ProfileView: View {
             showDialog(false)
           }
         }, message: {Text("Do you want to remove your profile Image?")})
+      }
+    }
+    .overlay(alignment: .top) {
+      if viewModel.isLoading {
+        LoadingIndicator(animation: .text)
+          .offset(y: 20)
+      }
+      if let error = viewModel.error {
+        Text(error.localizedDescription)
+          .padding()
+          .background(Color.midgroundColor)
+          .foregroundColor(.red)
+          .cornerRadius(15)
+          .shadow(radius: 3)
+          .font(.system(size: 15))
+          .padding()
+          .offset(y: 20)
       }
     }
   }

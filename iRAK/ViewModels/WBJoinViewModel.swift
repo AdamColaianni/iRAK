@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Firebase
+import FirebaseStorage
 
 class WordBombJoinViewModel: ObservableObject {
   var currentUser = try? AuthenticationManager.shared.getAuthenticatedUser()
@@ -16,9 +17,11 @@ class WordBombJoinViewModel: ObservableObject {
   private let ref = Database.database().reference()
   private var refHandle: DatabaseHandle?
   private var playerRefHandle: DatabaseHandle?
+  private let storage = Storage.storage()
   // Vars synced with database
   @Published var word: String = ""
   @Published var players: [String: String] = [:]
+  @Published var profilePictures: [String:Data] = [:]
   
   deinit {
     leaveRoom()
@@ -48,10 +51,52 @@ class WordBombJoinViewModel: ObservableObject {
     }
     playerRefHandle = self.ref.child(self.gameRoomCode).child("players").observe(.value) { snapshot in
       if let playersDictionary = snapshot.value as? [String: String] {
-        self.players = playersDictionary
+        if self.players != playersDictionary {
+          self.players = playersDictionary
+          self.updateProfilePictues()
+        }
       } else {
         // Ran when there is no longer detected data (aka the room has ended)
         self.hasRoomEnded = true
+      }
+    }
+  }
+  
+  private func updateProfilePictues() {
+    // If the user is no longer in the room
+    for key in profilePictures.keys {
+      if players[key] == nil {
+        profilePictures.removeValue(forKey: key)
+      }
+    }
+    
+    for (userId, name) in players {
+      // if the user is already in the room doesn't redownload the pic
+      if userId == currentUser?.uid || profilePictures[userId] != nil {
+        continue
+      }
+      downloadProfilePic(userId: userId) { profilePic in
+        if let profilePic = profilePic {
+          self.profilePictures[name] = profilePic
+          print("Successfully added the profile picture to the list")
+        } else {
+          if let placeholderImage = UIImage(named: "x-symbol") {
+            self.profilePictures[name] = placeholderImage.pngData()!
+            print("added placeholder")
+          }
+        }
+      }
+    }
+  }
+  
+  func downloadProfilePic(userId: String, completion: @escaping (Data?) -> Void) {
+    let storageRef = storage.reference().child("profile_pics/\(userId).jpg")
+    storageRef.getData(maxSize: 3 * 1024 * 1024) { data, error in
+      if let error = error {
+        print(error)
+        completion(nil)
+      } else {
+        completion(data)
       }
     }
   }

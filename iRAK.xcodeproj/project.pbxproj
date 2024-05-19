@@ -57,10 +57,14 @@
 		1FADC6932BCC76D900706DC1 /* HomeViewFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6922BCC76D900706DC1 /* HomeViewFunctions.swift */; };
 		1FADC6952BCC781600706DC1 /* TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC6942BCC781600706DC1 /* TabsView.swift */; };
 		1FADC69D2BCC7E2700706DC1 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */; };
+		1FB876CA2BF7CBD8003658D7 /* ProfilePictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB876C92BF7CBD8003658D7 /* ProfilePictureView.swift */; };
+		1FB876CC2BF7CBE9003658D7 /* ProfilePicturesScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB876CB2BF7CBE9003658D7 /* ProfilePicturesScrollView.swift */; };
+		1FB876CF2BFA6A27003658D7 /* SwiftfulLoadingIndicators in Frameworks */ = {isa = PBXBuildFile; productRef = 1FB876CE2BFA6A27003658D7 /* SwiftfulLoadingIndicators */; };
 		1FC088D62BED730D00B72EBB /* WBJoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC088D52BED730D00B72EBB /* WBJoinViewModel.swift */; };
 		1FED8A9E2BDAB6C300D70801 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FED8A9D2BDAB6C300D70801 /* AuthenticationManager.swift */; };
 		1FF296E32BD2D9290011C598 /* ColorExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF296E22BD2D9290011C598 /* ColorExtentions.swift */; };
 		1FF296E92BD368E50011C598 /* TransparentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF296E82BD368E50011C598 /* TransparentHelper.swift */; };
+		1FF5501B2BF2E2D40099A435 /* ProfilePicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF5501A2BF2E2D40099A435 /* ProfilePicViewModel.swift */; };
 		1FF9BD512BCF18480017005D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9BD502BCF18480017005D /* GradientView.swift */; };
 		E55F6CBA2B9A1F5500E472B8 /* iRAKApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F6CB92B9A1F5500E472B8 /* iRAKApp.swift */; };
 		E55F6CBC2B9A1F5500E472B8 /* WBHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F6CBB2B9A1F5500E472B8 /* WBHomeView.swift */; };
@@ -87,10 +91,13 @@
 		1FADC6922BCC76D900706DC1 /* HomeViewFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFunctions.swift; sourceTree = "<group>"; };
 		1FADC6942BCC781600706DC1 /* TabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsView.swift; sourceTree = "<group>"; };
 		1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
+		1FB876C92BF7CBD8003658D7 /* ProfilePictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureView.swift; sourceTree = "<group>"; };
+		1FB876CB2BF7CBE9003658D7 /* ProfilePicturesScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePicturesScrollView.swift; sourceTree = "<group>"; };
 		1FC088D52BED730D00B72EBB /* WBJoinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WBJoinViewModel.swift; sourceTree = "<group>"; };
 		1FED8A9D2BDAB6C300D70801 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		1FF296E22BD2D9290011C598 /* ColorExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtentions.swift; sourceTree = "<group>"; };
 		1FF296E82BD368E50011C598 /* TransparentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentHelper.swift; sourceTree = "<group>"; };
+		1FF5501A2BF2E2D40099A435 /* ProfilePicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePicViewModel.swift; sourceTree = "<group>"; };
 		1FF9BD502BCF18480017005D /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		E55F6CB62B9A1F5500E472B8 /* iRAK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iRAK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55F6CB92B9A1F5500E472B8 /* iRAKApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iRAKApp.swift; sourceTree = "<group>"; };
@@ -115,6 +122,7 @@
 				1F36F3842BD4C84000DB1D31 /* FirebaseAppCheck in Frameworks */,
 				1F36F3822BD4C84000DB1D31 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				1F36F3882BD4C84000DB1D31 /* FirebaseAuth in Frameworks */,
+				1FB876CF2BFA6A27003658D7 /* SwiftfulLoadingIndicators in Frameworks */,
 				1F36F38C2BD4C84000DB1D31 /* FirebaseCrashlytics in Frameworks */,
 				1F36F3AC2BD4C84000DB1D31 /* FirebaseRemoteConfigSwift in Frameworks */,
 				1F7CF1D42BE2A26F00EC9E67 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
@@ -160,6 +168,8 @@
 				1FF9BD502BCF18480017005D /* GradientView.swift */,
 				1FADC69C2BCC7E2700706DC1 /* PrimaryButtonStyle.swift */,
 				1FF296E82BD368E50011C598 /* TransparentHelper.swift */,
+				1FB876C92BF7CBD8003658D7 /* ProfilePictureView.swift */,
+				1FB876CB2BF7CBE9003658D7 /* ProfilePicturesScrollView.swift */,
 			);
 			path = HelperViews;
 			sourceTree = "<group>";
@@ -210,6 +220,7 @@
 			children = (
 				1FADC6922BCC76D900706DC1 /* HomeViewFunctions.swift */,
 				1F9C63CB2BD04CCA00782B3A /* Settings.swift */,
+				1FF5501A2BF2E2D40099A435 /* ProfilePicViewModel.swift */,
 				1F6177C32BEB152C0038BD17 /* WBHostViewModel.swift */,
 				1FC088D52BED730D00B72EBB /* WBJoinViewModel.swift */,
 			);
@@ -313,6 +324,7 @@
 				1F7CF1D52BE2A26F00EC9E67 /* FirebaseAnalyticsSwift */,
 				1F7CF1D72BE2A26F00EC9E67 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				1F7CF1D92BE2A26F00EC9E67 /* FirebaseAppCheck */,
+				1FB876CE2BFA6A27003658D7 /* SwiftfulLoadingIndicators */,
 			);
 			productName = iRAK;
 			productReference = E55F6CB62B9A1F5500E472B8 /* iRAK.app */;
@@ -344,6 +356,7 @@
 			mainGroup = E55F6CAD2B9A1F5500E472B8;
 			packageReferences = (
 				1F36F37A2BD4C84000DB1D31 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				1FB876CD2BFA6A27003658D7 /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */,
 			);
 			productRefGroup = E55F6CB72B9A1F5500E472B8 /* Products */;
 			projectDirPath = "";
@@ -377,15 +390,18 @@
 				1F6177C42BEB152C0038BD17 /* WBHostViewModel.swift in Sources */,
 				1F9C63C82BCF1EC400782B3A /* WardleHomeView.swift in Sources */,
 				1F9C63C42BCF1E7400782B3A /* TriviaTrenchHomeView.swift in Sources */,
+				1FB876CC2BF7CBE9003658D7 /* ProfilePicturesScrollView.swift in Sources */,
 				1FC088D62BED730D00B72EBB /* WBJoinViewModel.swift in Sources */,
 				1F9C63CA2BCF1ED300782B3A /* SniperTrainerHomeView.swift in Sources */,
 				E55F6CBC2B9A1F5500E472B8 /* WBHomeView.swift in Sources */,
 				1FADC68E2BCC753700706DC1 /* CustomTabShape.swift in Sources */,
 				1F6177C12BE58A6B0038BD17 /* WBHostView.swift in Sources */,
+				1FF5501B2BF2E2D40099A435 /* ProfilePicViewModel.swift in Sources */,
 				1FADC68A2BCC722500706DC1 /* ProfileButtonView.swift in Sources */,
 				1FADC6952BCC781600706DC1 /* TabsView.swift in Sources */,
 				1F6177C62BEB15D20038BD17 /* WBJoinView.swift in Sources */,
 				1FADC69D2BCC7E2700706DC1 /* PrimaryButtonStyle.swift in Sources */,
+				1FB876CA2BF7CBD8003658D7 /* ProfilePictureView.swift in Sources */,
 				1F4587102BC59AEF00CB5562 /* ProfileView.swift in Sources */,
 				1FADC6932BCC76D900706DC1 /* HomeViewFunctions.swift in Sources */,
 				1FADC6872BCC71A400706DC1 /* ImageExtensions.swift in Sources */,
@@ -620,6 +636,14 @@
 				minimumVersion = 10.24.0;
 			};
 		};
+		1FB876CD2BFA6A27003658D7 /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftfulThinking/SwiftfulLoadingIndicators.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -782,6 +806,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1F36F37A2BD4C84000DB1D31 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAppCheck;
+		};
+		1FB876CE2BFA6A27003658D7 /* SwiftfulLoadingIndicators */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1FB876CD2BFA6A27003658D7 /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */;
+			productName = SwiftfulLoadingIndicators;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

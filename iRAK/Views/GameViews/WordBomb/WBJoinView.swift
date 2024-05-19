@@ -24,9 +24,10 @@ struct WordBombJoinView: View {
         .ignoresSafeArea()
       VStack {
         
-        ForEach(wordBomb.players.sorted(by: <), id: \.key) { id, name in
-            Text("\(id): \(name)")
-        }
+//        ForEach(wordBomb.players.sorted(by: <), id: \.key) { id, name in
+//            Text("\(id): \(name)")
+//        }
+        ProfilePicturesScrollView(profilePictures: $wordBomb.profilePictures)
         
         Text(wordBomb.gameRoomCode)
           .padding()
