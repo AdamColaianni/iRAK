@@ -114,6 +114,21 @@ class WordBombHostViewModel: ObservableObject {
     })
   }
   
+  func startGame() {
+    // delete players node to alert other players
+    ref.child(self.gameRoomCode).child("players").removeValue { error, _ in
+      if let error = error {
+        print("Failed to delete players from room: \(error.localizedDescription)")
+      } else {
+        print("Players deleted successfully.")
+      }
+    }
+    // let other know to observe letters, word, and current player (newly written)
+    // add code to stop joins after start (cuz players is gone)
+    // host keeps track of turns and lives
+    // time is set by key value, and checking is done by host
+  }
+  
   func deleteRoom() {
     if self.gameRoomCode == "" {
       return

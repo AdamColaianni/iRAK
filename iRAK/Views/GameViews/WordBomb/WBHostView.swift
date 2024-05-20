@@ -20,6 +20,19 @@ struct WordBombHostView: View {
       VStack {
         ProfilePicturesScrollView(profilePictures: $wordBomb.profilePictures)
         
+        Button {
+          wordBomb.startGame()
+        } label: {
+          Text("Start Game")
+            .padding()
+            .background(Color.midgroundColor)
+            .foregroundColor(.primary)
+            .cornerRadius(15)
+            .shadow(radius: 3)
+            .font(.system(size: 15))
+            .padding()
+        }
+        
         Text("You are the host. Code: \(wordBomb.gameRoomCode)")
         TextField("Type the word here", text: $typedWord)
           .focused($focusOnTextBox)

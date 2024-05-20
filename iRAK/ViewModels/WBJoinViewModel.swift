@@ -32,10 +32,16 @@ class WordBombJoinViewModel: ObservableObject {
       if exists {
         self.gameRoomCode = code
         
-        self.addUserToRoom()
-        self.observeRoomChanges()
-        print("User joined room successfully")
-        completion(true)
+        self.addUserToRoom { success in
+          if success {
+            self.observeRoomChanges()
+            print("User joined room successfully")
+            completion(true)
+          } else {
+            print("Room has already started")
+            completion(false)
+          }
+        }
       } else {
         print("User failed to join room")
         completion(false)
@@ -47,6 +53,9 @@ class WordBombJoinViewModel: ObservableObject {
     refHandle = self.ref.child(self.gameRoomCode).child("word").observe(.value) { snapshot in
       if let word = snapshot.value as? String {
         self.word = word
+      } else {
+        // Ran when there is no longer detected data (aka the room has ended)
+        self.hasRoomEnded = true
       }
     }
     playerRefHandle = self.ref.child(self.gameRoomCode).child("players").observe(.value) { snapshot in
@@ -55,9 +64,6 @@ class WordBombJoinViewModel: ObservableObject {
           self.players = playersDictionary
           self.updateProfilePictues()
         }
-      } else {
-        // Ran when there is no longer detected data (aka the room has ended)
-        self.hasRoomEnded = true
       }
     }
   }
@@ -101,16 +107,18 @@ class WordBombJoinViewModel: ObservableObject {
     }
   }
   
-  private func addUserToRoom() {
+  private func addUserToRoom(completion: @escaping (Bool) -> Void) {
     self.ref.child(self.gameRoomCode).child("players").observeSingleEvent(of: .value, with: { snapshot in
       if var players = snapshot.value as? [String: Any] {
         // If there are already players, add the new player to the dictionary
         players[self.currentUser?.uid ?? ""] = self.userName
-        self.ref.child(self.gameRoomCode).child("players").setValue(players)
+        self.ref.child(self.gameRoomCode).child("players").setValue(players) { error, _ in
+          // Call the completion handler with false if the player was added successfully
+          completion(error == nil)
+        }
       } else {
-        // If there are no players yet, create a new dictionary with the new player. This should never happen though
-        let players = [self.currentUser?.uid ?? "": self.userName]
-        self.ref.child(self.gameRoomCode).child("players").setValue(players)
+        // This should be executed when the game is in session, so don't let them join
+        completion(false)
       }
     })
   }
