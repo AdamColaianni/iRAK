@@ -73,13 +73,13 @@ struct StatisticsView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: geometry.size.width * 0.03) {
+            VStack(spacing: geometry.size.width * 0.01) {
                 Text("Human Benchmark")
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
-                    .padding(.top, geometry.size.width * 0.05)
+                    .padding(.top, geometry.size.width * 0.1) // Adjusted padding
                 
                 Text("Statistics")
                     .font(.title)
@@ -89,8 +89,8 @@ struct StatisticsView: View {
                 
                 Spacer()
                 
-                VStack(spacing: geometry.size.width * 0.03) {
-                    HStack(spacing: geometry.size.width * 0.03) {
+                VStack(spacing: geometry.size.width * 0.01) {
+                    HStack(spacing: geometry.size.width * 0.01) {
                         Button(action: {}) {
                             VStack {
                                 Text(constantStats[0].title)
@@ -104,7 +104,7 @@ struct StatisticsView: View {
                             }
                         }
                         .buttonStyle(PrimaryButtonStyle(image: "gear", color: .blue))
-                        .frame(width: (geometry.size.width - 3 * (geometry.size.width * 0.03)) / 2, height: (geometry.size.width - 3 * (geometry.size.width * 0.03)) / 2)
+                        .frame(width: (geometry.size.width - 3 * (geometry.size.width * 0.01)) / 2, height: (geometry.size.width - 3 * (geometry.size.width * 0.01)) / 2)
                         
                         Button(action: {}) {
                             VStack {
@@ -119,10 +119,10 @@ struct StatisticsView: View {
                             }
                         }
                         .buttonStyle(PrimaryButtonStyle(image: "gear", color: .blue))
-                        .frame(width: (geometry.size.width - 3 * (geometry.size.width * 0.03)) / 2, height: (geometry.size.width - 3 * (geometry.size.width * 0.03)) / 2)
+                        .frame(width: (geometry.size.width - 3 * (geometry.size.width * 0.01)) / 2, height: (geometry.size.width - 3 * (geometry.size.width * 0.01)) / 2)
                     }
                     
-                    HStack(spacing: geometry.size.width * 0.03) {
+                    HStack(spacing: geometry.size.width * 0.01) {
                         Button(action: {}) {
                             VStack {
                                 Text(constantStats[2].title)
@@ -136,7 +136,7 @@ struct StatisticsView: View {
                             }
                         }
                         .buttonStyle(PrimaryButtonStyle(image: "gear", color: .blue))
-                        .frame(width: (geometry.size.width - 3 * (geometry.size.width * 0.03)) / 2, height: (geometry.size.width - 3 * (geometry.size.width * 0.03)) / 2)
+                        .frame(width: (geometry.size.width - 3 * (geometry.size.width * 0.01)) / 2, height: (geometry.size.width - 3 * (geometry.size.width * 0.01)) / 2)
                         
                         Button(action: {}) {
                             VStack {
@@ -151,7 +151,7 @@ struct StatisticsView: View {
                             }
                         }
                         .buttonStyle(PrimaryButtonStyle(image: "gearshape.fill", color: .blue))
-                        .frame(width: (geometry.size.width - 3 * (geometry.size.width * 0.03)) / 2, height: (geometry.size.width - 3 * (geometry.size.width * 0.03)) / 2)
+                        .frame(width: (geometry.size.width - 3 * (geometry.size.width * 0.01)) / 2, height: (geometry.size.width - 3 * (geometry.size.width * 0.01)) / 2)
                     }
                 }
                 
@@ -174,6 +174,7 @@ struct StatisticsView: View {
         }
     }
 }
+
 
 
 
