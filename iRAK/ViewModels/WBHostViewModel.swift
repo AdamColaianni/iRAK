@@ -115,18 +115,45 @@ class WordBombHostViewModel: ObservableObject {
   }
   
   func startGame() {
-    // delete players node to alert other players
-    ref.child(self.gameRoomCode).child("players").removeValue { error, _ in
-      if let error = error {
-        print("Failed to delete players from room: \(error.localizedDescription)")
-      } else {
-        print("Players deleted successfully.")
+    // write letters, word, and current player
+    whoseTurn(setPlayer: "hello")
+    writeLetters(letters: "gg")
+    
+    // Give each player 2 lives
+    ref.child(self.gameRoomCode).child("players").observeSingleEvent(of: .value, with: { snapshot in
+      if var players = snapshot.value as? [String: Any] {
+        for (key, value) in players {
+          players[key] = [value, 2]
+        }
+        self.ref.child(self.gameRoomCode).child("players").setValue(players) { error, _ in
+        }
       }
-    }
-    // let other know to observe letters, word, and current player (newly written)
-    // add code to stop joins after start (cuz players is gone)
-    // host keeps track of turns and lives
-    // time is set by key value, and checking is done by host
+    })
+  }
+  
+  // Write code to switch players one by one every 5-10 seconds
+  // if the user doesn't get it by the time you need to switch decrease their lives
+  // if your at zero, your out.
+  
+  private func whoseTurn(setPlayer: String/*, completion: @escaping (Bool) -> Void*/) {
+    print(self.players)
+    self.ref.child(self.gameRoomCode).child("cplayer").observeSingleEvent(of: .value, with: { snapshot in
+      self.ref.child(self.gameRoomCode).child("cplayer").setValue(setPlayer) { error, _ in
+        if error != nil {
+          print(error!.localizedDescription)
+        }
+      }
+    })
+  }
+  
+  private func writeLetters(letters: String/*, completion: @escaping (Bool) -> Void*/) {
+    self.ref.child(self.gameRoomCode).child("letters").observeSingleEvent(of: .value, with: { snapshot in
+      self.ref.child(self.gameRoomCode).child("letters").setValue(letters) { error, _ in
+        if error != nil {
+          print(error!.localizedDescription)
+        }
+      }
+    })
   }
   
   func deleteRoom() {

@@ -106,7 +106,7 @@ struct ProfileView: View {
                 .font(.system(size: 30, weight: .bold, design: .rounded))
                 .multilineTextAlignment(.center)
                 .padding(2)
-                .onChange(of: settings.userName) { newValue in
+                .onChange(of: settings.userName) { _, newValue in
                   if newValue.count > 11 {
                     settings.userName = String(newValue.prefix(11))
                   }

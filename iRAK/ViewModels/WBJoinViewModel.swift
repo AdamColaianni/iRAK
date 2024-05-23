@@ -14,9 +14,12 @@ class WordBombJoinViewModel: ObservableObject {
   @AppStorage("userName") var userName = "name"
   @Published var gameRoomCode: String = ""
   @Published var hasRoomEnded: Bool = false
+  @Published var isItMyTurn: Bool = false
+  @Published var letters: String = ""
   private let ref = Database.database().reference()
   private var refHandle: DatabaseHandle?
   private var playerRefHandle: DatabaseHandle?
+  private var letterRefHandle: DatabaseHandle?
   private let storage = Storage.storage()
   // Vars synced with database
   @Published var word: String = ""
@@ -64,6 +67,23 @@ class WordBombJoinViewModel: ObservableObject {
           self.players = playersDictionary
           self.updateProfilePictues()
         }
+      } else {
+        // game has begun
+        print("game has begun")
+        self.playerRefHandle = self.ref.child(self.gameRoomCode).child("cplayer").observe(.value) { snapshot in
+          if let currentPlayer = snapshot.value as? String {
+            if currentPlayer == self.currentUser?.uid {
+              self.isItMyTurn = true
+            } else {
+              self.isItMyTurn = false
+            }
+          }
+        }
+        self.letterRefHandle = self.ref.child(self.gameRoomCode).child("letters").observe(.value) { snapshot in
+          if let letters = snapshot.value as? String {
+            self.letters = letters
+          }
+        }
       }
     }
   }
@@ -108,17 +128,23 @@ class WordBombJoinViewModel: ObservableObject {
   }
   
   private func addUserToRoom(completion: @escaping (Bool) -> Void) {
-    self.ref.child(self.gameRoomCode).child("players").observeSingleEvent(of: .value, with: { snapshot in
-      if var players = snapshot.value as? [String: Any] {
-        // If there are already players, add the new player to the dictionary
-        players[self.currentUser?.uid ?? ""] = self.userName
-        self.ref.child(self.gameRoomCode).child("players").setValue(players) { error, _ in
-          // Call the completion handler with false if the player was added successfully
-          completion(error == nil)
-        }
-      } else {
+    self.ref.child(self.gameRoomCode).child("cplayer").observeSingleEvent(of: .value, with: { snapshot in
+      if snapshot.exists() {
         // This should be executed when the game is in session, so don't let them join
+        print("Can't join room, game is in session")
         completion(false)
+      } else {
+        // Only proceed if the game is not in session
+        self.ref.child(self.gameRoomCode).child("players").observeSingleEvent(of: .value, with: { snapshot in
+          if var players = snapshot.value as? [String: Any] {
+            // If there are already players, add the new player to the dictionary
+            players[self.currentUser?.uid ?? ""] = self.userName
+            self.ref.child(self.gameRoomCode).child("players").setValue(players) { error, _ in
+              // Call the completion handler with true if the player was added successfully
+              completion(error == nil)
+            }
+          }
+        })
       }
     })
   }
@@ -140,6 +166,9 @@ class WordBombJoinViewModel: ObservableObject {
       }
       ref.removeObserver(withHandle: refHandle!)
       ref.removeObserver(withHandle: playerRefHandle!)
+      if letterRefHandle != nil {
+        ref.removeObserver(withHandle: letterRefHandle!)
+      }
     }
   }
   

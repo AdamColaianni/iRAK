@@ -24,10 +24,14 @@ struct WordBombJoinView: View {
         .ignoresSafeArea()
       VStack {
         
-//        ForEach(wordBomb.players.sorted(by: <), id: \.key) { id, name in
-//            Text("\(id): \(name)")
-//        }
         ProfilePicturesScrollView(profilePictures: $wordBomb.profilePictures)
+        
+        Text("Letters: \(wordBomb.letters)")
+          .padding()
+        
+        if wordBomb.isItMyTurn {
+          Text("IT'S YOUR TURN!!!")
+        }
         
         Text(wordBomb.gameRoomCode)
           .padding()
@@ -36,7 +40,7 @@ struct WordBombJoinView: View {
           .focused($focusOnMessageTextBox)
           .textFieldStyle(RoundedBorderTextFieldStyle())
           .padding()
-          .onChange(of: typedWord) { newValue in
+          .onChange(of: typedWord) { _, newValue in
             wordBomb.updateWord(word: newValue)
           }
         
@@ -68,7 +72,7 @@ struct WordBombJoinView: View {
             .disableAutocorrection(true)
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .padding()
-            .onChange(of: gameRoomCode) { _ in
+            .onChange(of: gameRoomCode) { _, _ in
               isCodeWrong = false
               if gameRoomCode.count > 4 {
                 gameRoomCode = String(gameRoomCode.prefix(4))
