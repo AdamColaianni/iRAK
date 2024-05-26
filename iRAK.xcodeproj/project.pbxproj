@@ -64,6 +64,7 @@
 		1FED8A9E2BDAB6C300D70801 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FED8A9D2BDAB6C300D70801 /* AuthenticationManager.swift */; };
 		1FF296E32BD2D9290011C598 /* ColorExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF296E22BD2D9290011C598 /* ColorExtentions.swift */; };
 		1FF296E92BD368E50011C598 /* TransparentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF296E82BD368E50011C598 /* TransparentHelper.swift */; };
+		1FF2A4012C02A2D30032EFBE /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF2A4002C02A2D30032EFBE /* Globals.swift */; };
 		1FF5501B2BF2E2D40099A435 /* ProfilePicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF5501A2BF2E2D40099A435 /* ProfilePicViewModel.swift */; };
 		1FF9BD512BCF18480017005D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9BD502BCF18480017005D /* GradientView.swift */; };
 		E55F6CBA2B9A1F5500E472B8 /* iRAKApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55F6CB92B9A1F5500E472B8 /* iRAKApp.swift */; };
@@ -97,6 +98,7 @@
 		1FED8A9D2BDAB6C300D70801 /* AuthenticationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		1FF296E22BD2D9290011C598 /* ColorExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtentions.swift; sourceTree = "<group>"; };
 		1FF296E82BD368E50011C598 /* TransparentHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentHelper.swift; sourceTree = "<group>"; };
+		1FF2A4002C02A2D30032EFBE /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		1FF5501A2BF2E2D40099A435 /* ProfilePicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePicViewModel.swift; sourceTree = "<group>"; };
 		1FF9BD502BCF18480017005D /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		E55F6CB62B9A1F5500E472B8 /* iRAK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iRAK.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -231,6 +233,7 @@
 			isa = PBXGroup;
 			children = (
 				1FED8A9D2BDAB6C300D70801 /* AuthenticationManager.swift */,
+				1FF2A4002C02A2D30032EFBE /* Globals.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				1FADC68E2BCC753700706DC1 /* CustomTabShape.swift in Sources */,
 				1F6177C12BE58A6B0038BD17 /* WBHostView.swift in Sources */,
 				1FF5501B2BF2E2D40099A435 /* ProfilePicViewModel.swift in Sources */,
+				1FF2A4012C02A2D30032EFBE /* Globals.swift in Sources */,
 				1FADC68A2BCC722500706DC1 /* ProfileButtonView.swift in Sources */,
 				1FADC6952BCC781600706DC1 /* TabsView.swift in Sources */,
 				1F6177C62BEB15D20038BD17 /* WBJoinView.swift in Sources */,

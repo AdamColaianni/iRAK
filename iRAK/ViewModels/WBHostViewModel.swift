@@ -9,18 +9,37 @@ import SwiftUI
 import Firebase
 import FirebaseStorage
 
+struct PlayerData: Identifiable, Equatable {
+  var id: String { uid }
+  var uid: String
+  var name: String
+  var lives: Int
+  var profileImageData: Data
+  static func == (lhs: PlayerData, rhs: PlayerData) -> Bool {
+    return lhs.uid == rhs.uid
+  }
+}
+
 class WordBombHostViewModel: ObservableObject {
   var currentUser = try? AuthenticationManager.shared.getAuthenticatedUser()
+  private let storage = Storage.storage()
   private let ref = Database.database().reference()
-  private var refHandle: DatabaseHandle?
-  private var playerRefHandle: DatabaseHandle?
+  private var wordRefHandle: DatabaseHandle?
+  private var lettersRefHandle: DatabaseHandle?
+  private var cplayerRefHandle: DatabaseHandle?
+  private var playersChanRefHandle: DatabaseHandle?
+  private var playersAddedRefHandle: DatabaseHandle?
+  private var playersDelRefHandle: DatabaseHandle?
+  @Published var yourTurn: Bool = false
   @Published var gameRoomCode: String = generateCode()
   @AppStorage("userName") var userName = "name"
-  private let storage = Storage.storage()
+  @AppStorage("selectedProfilePhotoData") var selectedProfilePhotoData: Data?
+  var timer: Timer?
   // Vars synced with database
   @Published var word: String = ""
-  @Published var players: [String: String] = [:]
-  @Published var profilePictures: [String:Data] = [:]
+  @Published var letters: String = ""
+  @Published var cplayer: String = ""
+  @Published var players: [PlayerData] = []
   
   init() {
     createGameRoom()
@@ -40,7 +59,7 @@ class WordBombHostViewModel: ObservableObject {
     gameRoomExists(code: self.gameRoomCode) { exists in
       if !exists {
         // Set player and word
-        self.ref.child(self.gameRoomCode).child("players").setValue([self.currentUser?.uid: self.userName])
+        self.ref.child(self.gameRoomCode).child("players").setValue([self.currentUser?.uid: [self.userName, 2]])
         self.ref.child(self.gameRoomCode).child("word").setValue("")
         
         self.observeRoom()
@@ -54,43 +73,75 @@ class WordBombHostViewModel: ObservableObject {
   }
   
   private func observeRoom() {
-    refHandle = ref.child(self.gameRoomCode).child("word").observe(.value) { snapshot in
+    // Word observer
+    wordRefHandle = ref.child(self.gameRoomCode).child("word").observe(.value) { snapshot in
       if let word = snapshot.value as? String {
         self.word = word
       }
     }
-    playerRefHandle = self.ref.child(self.gameRoomCode).child("players").observe(.value) { snapshot in
-      if let playersDictionary = snapshot.value as? [String: String] {
-        if self.players != playersDictionary {
-          self.players = playersDictionary
-          self.updateProfilePictues()
+    
+    playersAddedRefHandle = ref.child(self.gameRoomCode).child("players").observe(.childAdded) { snapshot in
+      if let playerData = snapshot.value as? [Any],
+         playerData.count == 2,
+         let name = playerData[0] as? String,
+         let lives = playerData[1] as? Int {
+        
+        // Set profile image
+        var data: Data = Data()
+        if snapshot.key != self.currentUser?.uid {
+          self.downloadProfilePic(userId: snapshot.key) { profilePic in
+            if let profilePic = profilePic {
+              data = profilePic
+            } else {
+              if let placeholderImage = UIImage(named: "x-symbol") {
+                data = placeholderImage.pngData()!
+              }
+            }
+            let player = PlayerData(uid: snapshot.key, name: name, lives: lives, profileImageData: data)
+            self.players.append(player)
+            print("ADDED PLAYER")
+            print(player)
+          }
+        } else {
+          if self.selectedProfilePhotoData != nil {
+            data = self.selectedProfilePhotoData!
+            let player = PlayerData(uid: snapshot.key, name: name, lives: lives, profileImageData: data)
+            self.players.append(player)
+            print("ADDED PLAYER")
+            print(player)
+          }
         }
       }
     }
-  }
-  
-  private func updateProfilePictues() {
-    // If the user is no longer in the room
-    for key in profilePictures.keys {
-      if players[key] == nil {
-        profilePictures.removeValue(forKey: key)
+    
+    playersDelRefHandle = ref.child(self.gameRoomCode).child("players").observe(.childRemoved) { snapshot in
+      var removeIndex = -1
+      for (index, player) in self.players.enumerated() {
+        if player.uid == snapshot.key {
+          removeIndex = index
+          break
+        }
       }
+      self.players.remove(at: removeIndex)
+      print("Player removed: \(snapshot.key)")
     }
     
-    for (userId, name) in players {
-      // if the user is already in the room doesn't redownload the pic
-      if userId == currentUser?.uid || profilePictures[userId] != nil {
-        continue
-      }
-      downloadProfilePic(userId: userId) { profilePic in
-        if let profilePic = profilePic {
-          self.profilePictures[name] = profilePic
-          print("Successfully added the profile picture to the list")
-        } else {
-          if let placeholderImage = UIImage(named: "x-symbol") {
-            self.profilePictures[name] = placeholderImage.pngData()!
-            print("added placeholder")
+    playersChanRefHandle = ref.child(self.gameRoomCode).child("players").observe(.value) { snapshot in
+      for child in snapshot.children {
+        if let snapshot = child as? DataSnapshot,
+           let playerData = snapshot.value as? [Any],
+           playerData.count == 2,
+           let name = playerData[0] as? String,
+           let lives = playerData[1] as? Int {
+          let uid = snapshot.key
+          let player = PlayerData(uid: uid, name: name, lives: lives, profileImageData: Data())
+          
+          for (index, dataPlayer) in self.players.enumerated() {
+            if dataPlayer == player {
+              self.players[index].lives = player.lives
+            }
           }
+          print("Changed players: \(player)")
         }
       }
     }
@@ -114,29 +165,83 @@ class WordBombHostViewModel: ObservableObject {
     })
   }
   
-  func startGame() {
-    // write letters, word, and current player
-    whoseTurn(setPlayer: "hello")
-    writeLetters(letters: "gg")
-    
-    // Give each player 2 lives
-    ref.child(self.gameRoomCode).child("players").observeSingleEvent(of: .value, with: { snapshot in
-      if var players = snapshot.value as? [String: Any] {
-        for (key, value) in players {
-          players[key] = [value, 2]
-        }
-        self.ref.child(self.gameRoomCode).child("players").setValue(players) { error, _ in
+  func observeStart() {
+    cplayerRefHandle = ref.child(self.gameRoomCode).child("cplayer").observe(.value) { snapshot in
+      if let currentPlayer = snapshot.value as? String {
+        self.cplayer = currentPlayer
+        if currentPlayer == self.currentUser?.uid {
+          self.yourTurn = true
+        } else {
+          self.yourTurn = false
         }
       }
-    })
+    }
+    lettersRefHandle = ref.child(self.gameRoomCode).child("letters").observe(.value) { snapshot in
+      if let letters = snapshot.value as? String {
+        self.letters = letters
+      }
+    }
   }
   
-  // Write code to switch players one by one every 5-10 seconds
-  // if the user doesn't get it by the time you need to switch decrease their lives
-  // if your at zero, your out.
+  func changeTurn(playerIndex: Int) {
+    if self.players.count == 0 {
+      return
+    }
+    self.setTurn(setPlayer: self.players[playerIndex % self.players.count].uid)
+    self.writeLetters(letters: Global.doubleLetters.randomElement()!)
+  }
   
-  private func whoseTurn(setPlayer: String/*, completion: @escaping (Bool) -> Void*/) {
-    print(self.players)
+  func startGame() {
+    if players.count == 1 {
+      return
+    }
+    
+    observeStart()
+    var playerIndex: Int = 0
+    changeTurn(playerIndex: playerIndex)
+    
+    timer = Timer.scheduledTimer(withTimeInterval: 7, repeats: true) { _ in
+      if self.isOnlyOnePlayerAlive() {
+        self.setWinner()
+        self.timer?.invalidate()
+      } else {
+        playerIndex += 1
+        self.changeTurn(playerIndex: playerIndex)
+      }
+    }
+    // if the user doesn't get it by the time you need to switch decrease their lives
+    // if your at zero, your out, aka don't switch to them in switch function
+
+    decrementLife(for: players[0].uid)
+    
+    // Add swiftui code to stop all bullshit, commit this shit
+    // polish up join view, add winner view and done
+  }
+  
+  
+  func isOnlyOnePlayerAlive() -> Bool {
+    let alivePlayers = players.filter { $0.lives > 0 }
+    return alivePlayers.count == 1
+  }
+  
+  func setWinner() {
+    let alivePlayers = players.filter { $0.lives > 0 }
+    if alivePlayers.count == 1 {
+      setTurn(setPlayer: alivePlayers[0].uid)
+    }
+  }
+  
+  private func decrementLife(for playerUID: String) {
+    self.ref.child(self.gameRoomCode).child("players").child(playerUID).child("1").runTransactionBlock { currentData in
+      if var currentValue = currentData.value as? Int {
+        currentValue -= 1
+        currentData.value = currentValue
+      }
+      return TransactionResult.success(withValue: currentData)
+    }
+  }
+  
+  private func setTurn(setPlayer: String) {
     self.ref.child(self.gameRoomCode).child("cplayer").observeSingleEvent(of: .value, with: { snapshot in
       self.ref.child(self.gameRoomCode).child("cplayer").setValue(setPlayer) { error, _ in
         if error != nil {
@@ -146,7 +251,7 @@ class WordBombHostViewModel: ObservableObject {
     })
   }
   
-  private func writeLetters(letters: String/*, completion: @escaping (Bool) -> Void*/) {
+  private func writeLetters(letters: String) {
     self.ref.child(self.gameRoomCode).child("letters").observeSingleEvent(of: .value, with: { snapshot in
       self.ref.child(self.gameRoomCode).child("letters").setValue(letters) { error, _ in
         if error != nil {
@@ -156,10 +261,26 @@ class WordBombHostViewModel: ObservableObject {
     })
   }
   
+  func updateWord(word: String) {
+    ref.child(self.gameRoomCode).child("word").setValue(word)
+  }
+  
   func deleteRoom() {
     if self.gameRoomCode == "" {
       return
     }
+    timer?.invalidate()
+    
+    ref.removeObserver(withHandle: wordRefHandle!)
+    ref.removeObserver(withHandle: playersChanRefHandle!)
+    ref.removeObserver(withHandle: playersDelRefHandle!)
+    ref.removeObserver(withHandle: playersAddedRefHandle!)
+    
+    if cplayer != "" {
+      ref.removeObserver(withHandle: lettersRefHandle!)
+      ref.removeObserver(withHandle: cplayerRefHandle!)
+    }
+    
     ref.child(self.gameRoomCode).removeValue { error, _ in
       if let error = error {
         print("Failed to delete gameRoom node: \(error.localizedDescription)")
@@ -167,12 +288,6 @@ class WordBombHostViewModel: ObservableObject {
         print("gameRoom node deleted successfully.")
       }
     }
-    ref.removeObserver(withHandle: playerRefHandle!)
-    ref.removeObserver(withHandle: refHandle!)
-  }
-  
-  func updateWord(word: String) {
-    ref.child(self.gameRoomCode).child("word").setValue(word)
   }
   
   static private func generateCode() -> String {

@@ -24,8 +24,7 @@ struct WordBombJoinView: View {
         .ignoresSafeArea()
       VStack {
         
-        ProfilePicturesScrollView(profilePictures: $wordBomb.profilePictures)
-        
+        //        ProfilePicturesScrollView(profilePictures: $wordBomb.players)
         Text("Letters: \(wordBomb.letters)")
           .padding()
         

@@ -18,7 +18,17 @@ struct WordBombHostView: View {
       Color.backgroundColor
         .ignoresSafeArea()
       VStack {
-        ProfilePicturesScrollView(profilePictures: $wordBomb.profilePictures)
+        ProfilePicturesScrollView(profilePictures: $wordBomb.players)
+        
+        if wordBomb.yourTurn {
+          Text("YOUR TURN!!")
+        }
+        
+        Button {
+          print(wordBomb.players)
+        } label: {
+          Text("Print")
+        }
         
         Button {
           wordBomb.startGame()
@@ -38,7 +48,7 @@ struct WordBombHostView: View {
           .focused($focusOnTextBox)
           .textFieldStyle(RoundedBorderTextFieldStyle())
           .padding()
-          .onChange(of: typedWord) { newValue in
+          .onChange(of: typedWord) { _, newValue in
             wordBomb.updateWord(word: newValue)
           }
         

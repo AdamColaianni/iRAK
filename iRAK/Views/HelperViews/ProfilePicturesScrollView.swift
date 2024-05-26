@@ -8,20 +8,16 @@
 import SwiftUI
 
 struct ProfilePicturesScrollView: View {
-  @Binding var profilePictures: [String: Data]
+  @Binding var profilePictures: [PlayerData]
   
   var body: some View {
     ScrollView(.horizontal, showsIndicators: false) {
       HStack(spacing: 10) {
-        ForEach(profilePictures.sorted(by: { $0.key < $1.key }), id: \.key) { name, imageData in
-          ProfilePictureView(name: name, imageData: imageData)
+        ForEach(profilePictures.sorted(by: { $0.name < $1.name })) { player in
+          ProfilePictureView(player: player)
         }
       }
       .padding()
     }
   }
-}
-
-#Preview {
-  ProfilePicturesScrollView(profilePictures: .constant(["name": Data()]))
 }

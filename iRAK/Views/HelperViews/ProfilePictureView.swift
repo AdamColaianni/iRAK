@@ -8,21 +8,16 @@
 import SwiftUI
 
 struct ProfilePictureView: View {
-  let name: String
-  let imageData: Data
+  var player: PlayerData
   
   var body: some View {
     VStack {
-      Image(uiImage: UIImage(data: imageData) ?? UIImage())
+      Image(uiImage: UIImage(data: player.profileImageData) ?? UIImage())
         .profileImageStyle(width: 70, height: 70)
       
-      Text(name)
+      Text(player.name)
         .font(.caption)
         .multilineTextAlignment(.center)
     }
   }
-}
-
-#Preview {
-  ProfilePictureView(name: "Name", imageData: Data())
 }

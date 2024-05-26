@@ -138,7 +138,7 @@ class WordBombJoinViewModel: ObservableObject {
         self.ref.child(self.gameRoomCode).child("players").observeSingleEvent(of: .value, with: { snapshot in
           if var players = snapshot.value as? [String: Any] {
             // If there are already players, add the new player to the dictionary
-            players[self.currentUser?.uid ?? ""] = self.userName
+            players[self.currentUser?.uid ?? ""] = [self.userName, 2]
             self.ref.child(self.gameRoomCode).child("players").setValue(players) { error, _ in
               // Call the completion handler with true if the player was added successfully
               completion(error == nil)
