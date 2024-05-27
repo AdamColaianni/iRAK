@@ -30,6 +30,9 @@ class WordBombHostViewModel: ObservableObject {
   private var playersChanRefHandle: DatabaseHandle?
   private var playersAddedRefHandle: DatabaseHandle?
   private var playersDelRefHandle: DatabaseHandle?
+  private var playerIndex: Int = 0
+  @Published var gameFinished = false
+  @Published var gameStarted = false
   @Published var yourTurn: Bool = false
   @Published var gameRoomCode: String = generateCode()
   @AppStorage("userName") var userName = "name"
@@ -77,6 +80,9 @@ class WordBombHostViewModel: ObservableObject {
     wordRefHandle = ref.child(self.gameRoomCode).child("word").observe(.value) { snapshot in
       if let word = snapshot.value as? String {
         self.word = word
+        if word.contains("~") {
+          self.verifyWord(for: word)
+        }
       }
     }
     
@@ -179,11 +185,19 @@ class WordBombHostViewModel: ObservableObject {
     lettersRefHandle = ref.child(self.gameRoomCode).child("letters").observe(.value) { snapshot in
       if let letters = snapshot.value as? String {
         self.letters = letters
+        if letters == "DONE" {
+          self.gameFinished = true
+          if self.yourTurn {
+            // You won
+          } else {
+            // someone else won
+          }
+        }
       }
     }
   }
   
-  func changeTurn(playerIndex: Int) {
+  func changeTurn() {
     if self.players.count == 0 {
       return
     }
@@ -191,33 +205,49 @@ class WordBombHostViewModel: ObservableObject {
     self.writeLetters(letters: Global.doubleLetters.randomElement()!)
   }
   
+  func submit() {
+    ref.child(self.gameRoomCode).child("word").setValue(word + "~")
+  }
+  
+  func startTimer() {
+    timer = Timer.scheduledTimer(withTimeInterval: 8, repeats: true) { _ in
+      self.decrementLife(for: self.players[self.playerIndex % self.players.count].uid) {
+        if self.isOnlyOnePlayerAlive() {
+          self.setWinner()
+          self.writeLetters(letters: "DONE")
+          self.timer?.invalidate()
+        } else {
+          self.playerIndex += 1
+          self.changeTurn()
+        }
+      }
+    }
+  }
+  
+  func resetTimer() {
+    self.timer?.invalidate()
+    self.startTimer()
+  }
+  
   func startGame() {
     if players.count == 1 {
       return
     }
+    gameStarted = true
     
     observeStart()
-    var playerIndex: Int = 0
-    changeTurn(playerIndex: playerIndex)
-    
-    timer = Timer.scheduledTimer(withTimeInterval: 7, repeats: true) { _ in
-      if self.isOnlyOnePlayerAlive() {
-        self.setWinner()
-        self.timer?.invalidate()
-      } else {
-        playerIndex += 1
-        self.changeTurn(playerIndex: playerIndex)
-      }
-    }
-    // if the user doesn't get it by the time you need to switch decrease their lives
-    // if your at zero, your out, aka don't switch to them in switch function
-
-    decrementLife(for: players[0].uid)
-    
-    // Add swiftui code to stop all bullshit, commit this shit
-    // polish up join view, add winner view and done
+    changeTurn()
+    startTimer()
   }
   
+  func verifyWord(for word: String) {
+    let word = String(word.dropLast()).lowercased()
+    if word.contains(self.letters) && UIReferenceLibraryViewController.dictionaryHasDefinition(forTerm: word) {
+      self.playerIndex += 1
+      changeTurn()
+      resetTimer()
+    }
+  }
   
   func isOnlyOnePlayerAlive() -> Bool {
     let alivePlayers = players.filter { $0.lives > 0 }
@@ -231,13 +261,17 @@ class WordBombHostViewModel: ObservableObject {
     }
   }
   
-  private func decrementLife(for playerUID: String) {
+  private func decrementLife(for playerUID: String, completion: @escaping () -> Void) {
     self.ref.child(self.gameRoomCode).child("players").child(playerUID).child("1").runTransactionBlock { currentData in
       if var currentValue = currentData.value as? Int {
         currentValue -= 1
         currentData.value = currentValue
       }
       return TransactionResult.success(withValue: currentData)
+    } andCompletionBlock: { error, committed, snapshot in
+      if committed {
+        completion()
+      }
     }
   }
   

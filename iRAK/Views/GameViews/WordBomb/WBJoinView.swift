@@ -33,6 +33,7 @@ struct WordBombJoinView: View {
         }
         
         Text(wordBomb.gameRoomCode)
+          .font(.system(size: 25))
           .padding()
         
         TextField("Type the word here", text: $typedWord)
@@ -43,7 +44,7 @@ struct WordBombJoinView: View {
             wordBomb.updateWord(word: newValue)
           }
         
-        Text("Word: \(wordBomb.word)")
+        Text("Word: \(wordBomb.word.trimmingCharacters(in: CharacterSet(charactersIn: "~")))")
           .padding()
       }
       .disabled(isJoinPresented || wordBomb.hasRoomEnded)
