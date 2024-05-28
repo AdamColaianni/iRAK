@@ -11,20 +11,24 @@ import FirebaseStorage
 
 class WordBombJoinViewModel: ObservableObject {
   var currentUser = try? AuthenticationManager.shared.getAuthenticatedUser()
+  private let ref = Database.database().reference()
+  private var wordRefHandle: DatabaseHandle?
+  private var letterRefHandle: DatabaseHandle?
+  private var cplayerRefHandle: DatabaseHandle?
+  private var playersChanRefHandle: DatabaseHandle?
+  private var playersAddedRefHandle: DatabaseHandle?
+  private var playersDelRefHandle: DatabaseHandle?
   @AppStorage("userName") var userName = "name"
+  @AppStorage("selectedProfilePhotoData") var selectedProfilePhotoData: Data?
   @Published var gameRoomCode: String = ""
   @Published var hasRoomEnded: Bool = false
-  @Published var isItMyTurn: Bool = false
-  @Published var letters: String = ""
-  private let ref = Database.database().reference()
-  private var refHandle: DatabaseHandle?
-  private var playerRefHandle: DatabaseHandle?
-  private var letterRefHandle: DatabaseHandle?
-  private let storage = Storage.storage()
+  @Published var gameFinished: Bool = false
+  @Published var yourTurn: Bool = false
   // Vars synced with database
+  @Published var letters: String = ""
   @Published var word: String = ""
-  @Published var players: [String: String] = [:]
-  @Published var profilePictures: [String:Data] = [:]
+  @Published var cplayer: String = ""
+  @Published var players: [PlayerData] = []
   
   deinit {
     leaveRoom()
@@ -53,7 +57,7 @@ class WordBombJoinViewModel: ObservableObject {
   }
   
   private func observeRoomChanges() {
-    refHandle = self.ref.child(self.gameRoomCode).child("word").observe(.value) { snapshot in
+    wordRefHandle = self.ref.child(self.gameRoomCode).child("word").observe(.value) { snapshot in
       if let word = snapshot.value as? String {
         self.word = word
       } else {
@@ -61,70 +65,101 @@ class WordBombJoinViewModel: ObservableObject {
         self.hasRoomEnded = true
       }
     }
-    playerRefHandle = self.ref.child(self.gameRoomCode).child("players").observe(.value) { snapshot in
-      if let playersDictionary = snapshot.value as? [String: String] {
-        if self.players != playersDictionary {
-          self.players = playersDictionary
-          self.updateProfilePictues()
-        }
-      } else {
-        // game has begun
-        print("game has begun")
-        self.playerRefHandle = self.ref.child(self.gameRoomCode).child("cplayer").observe(.value) { snapshot in
-          if let currentPlayer = snapshot.value as? String {
-            if currentPlayer == self.currentUser?.uid {
-              self.isItMyTurn = true
+    
+    playersAddedRefHandle = ref.child(self.gameRoomCode).child("players").observe(.childAdded) { snapshot in
+      if let playerData = snapshot.value as? [Any],
+         playerData.count == 2,
+         let name = playerData[0] as? String,
+         let lives = playerData[1] as? Int {
+        
+        // Set profile image
+        var data: Data = Data()
+        if snapshot.key != self.currentUser?.uid {
+          WordBombHostViewModel.downloadProfilePic(userId: snapshot.key) { profilePic in
+            if let profilePic = profilePic {
+              data = profilePic
             } else {
-              self.isItMyTurn = false
+              if let placeholderImage = UIImage(named: "x-symbol") {
+                data = placeholderImage.pngData()!
+              }
             }
+            let player = PlayerData(uid: snapshot.key, name: name, lives: lives, profileImageData: data)
+            self.players.append(player)
+            print("ADDED PLAYER")
+            print(player)
+          }
+        } else {
+          if self.selectedProfilePhotoData != nil {
+            data = self.selectedProfilePhotoData!
+            let player = PlayerData(uid: snapshot.key, name: name, lives: lives, profileImageData: data)
+            self.players.append(player)
+            print("ADDED PLAYER")
+            print(player)
           }
         }
-        self.letterRefHandle = self.ref.child(self.gameRoomCode).child("letters").observe(.value) { snapshot in
-          if let letters = snapshot.value as? String {
-            self.letters = letters
-          }
-        }
-      }
-    }
-  }
-  
-  private func updateProfilePictues() {
-    // If the user is no longer in the room
-    for key in profilePictures.keys {
-      if players[key] == nil {
-        profilePictures.removeValue(forKey: key)
       }
     }
     
-    for (userId, name) in players {
-      // if the user is already in the room doesn't redownload the pic
-      if userId == currentUser?.uid || profilePictures[userId] != nil {
-        continue
+    playersDelRefHandle = ref.child(self.gameRoomCode).child("players").observe(.childRemoved) { snapshot in
+      var removeIndex = -1
+      for (index, player) in self.players.enumerated() {
+        if player.uid == snapshot.key {
+          removeIndex = index
+          break
+        }
       }
-      downloadProfilePic(userId: userId) { profilePic in
-        if let profilePic = profilePic {
-          self.profilePictures[name] = profilePic
-          print("Successfully added the profile picture to the list")
-        } else {
-          if let placeholderImage = UIImage(named: "x-symbol") {
-            self.profilePictures[name] = placeholderImage.pngData()!
-            print("added placeholder")
+      self.players.remove(at: removeIndex)
+      print("Player removed: \(snapshot.key)")
+    }
+    
+    playersChanRefHandle = ref.child(self.gameRoomCode).child("players").observe(.value) { snapshot in
+      for child in snapshot.children {
+        if let snapshot = child as? DataSnapshot,
+           let playerData = snapshot.value as? [Any],
+           playerData.count == 2,
+           let name = playerData[0] as? String,
+           let lives = playerData[1] as? Int {
+          let uid = snapshot.key
+          let player = PlayerData(uid: uid, name: name, lives: lives, profileImageData: Data())
+          
+          for (index, dataPlayer) in self.players.enumerated() {
+            if dataPlayer == player {
+              self.players[index].lives = player.lives
+            }
           }
+          print("Changed players: \(player)")
+        }
+      }
+    }
+    
+    // game has begun
+    cplayerRefHandle = ref.child(self.gameRoomCode).child("cplayer").observe(.value) { snapshot in
+      if let currentPlayer = snapshot.value as? String {
+        self.cplayer = currentPlayer
+        if currentPlayer == self.currentUser?.uid {
+          self.yourTurn = true
+        } else {
+          self.yourTurn = false
+        }
+      }
+    }
+    letterRefHandle = self.ref.child(self.gameRoomCode).child("letters").observe(.value) { snapshot in
+      if let letters = snapshot.value as? String {
+        self.letters = letters
+        if letters == "DONE" {
+          self.gameFinished = true
+          // if self.yourTurn {
+          // You won
+          // } else {
+          // someone else won
+          // }
         }
       }
     }
   }
   
-  func downloadProfilePic(userId: String, completion: @escaping (Data?) -> Void) {
-    let storageRef = storage.reference().child("profile_pics/\(userId).jpg")
-    storageRef.getData(maxSize: 3 * 1024 * 1024) { data, error in
-      if let error = error {
-        print(error)
-        completion(nil)
-      } else {
-        completion(data)
-      }
-    }
+  func submit() {
+    ref.child(self.gameRoomCode).child("word").setValue(word + "~")
   }
   
   private func addUserToRoom(completion: @escaping (Bool) -> Void) {
@@ -149,6 +184,10 @@ class WordBombJoinViewModel: ObservableObject {
     })
   }
   
+  func updateWord(word: String) {
+    ref.child(self.gameRoomCode).child("word").setValue(word)
+  }
+  
   private func gameRoomExists(code: String, completion: @escaping (Bool) -> Void) {
     ref.child(code).observeSingleEvent(of: .value, with: { snapshot in
       completion(snapshot.exists())
@@ -156,7 +195,7 @@ class WordBombJoinViewModel: ObservableObject {
   }
   
   func leaveRoom() {
-    if refHandle != nil {
+    if wordRefHandle != nil {
       ref.child(self.gameRoomCode).child("players").child(self.currentUser?.uid ?? "").removeValue { error, _ in
         if let error = error {
           print("Failed to delete user from room: \(error.localizedDescription)")
@@ -164,15 +203,12 @@ class WordBombJoinViewModel: ObservableObject {
           print("User left room successfully.")
         }
       }
-      ref.removeObserver(withHandle: refHandle!)
-      ref.removeObserver(withHandle: playerRefHandle!)
-      if letterRefHandle != nil {
-        ref.removeObserver(withHandle: letterRefHandle!)
-      }
+      ref.removeObserver(withHandle: wordRefHandle!)
+      ref.removeObserver(withHandle: letterRefHandle!)
+      ref.removeObserver(withHandle: cplayerRefHandle!)
+      ref.removeObserver(withHandle: playersChanRefHandle!)
+      ref.removeObserver(withHandle: playersAddedRefHandle!)
+      ref.removeObserver(withHandle: playersDelRefHandle!)
     }
-  }
-  
-  func updateWord(word: String) {
-    ref.child(self.gameRoomCode).child("word").setValue(word)
   }
 }

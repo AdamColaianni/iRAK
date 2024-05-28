@@ -22,7 +22,6 @@ struct PlayerData: Identifiable, Equatable {
 
 class WordBombHostViewModel: ObservableObject {
   var currentUser = try? AuthenticationManager.shared.getAuthenticatedUser()
-  private let storage = Storage.storage()
   private let ref = Database.database().reference()
   private var wordRefHandle: DatabaseHandle?
   private var lettersRefHandle: DatabaseHandle?
@@ -95,7 +94,7 @@ class WordBombHostViewModel: ObservableObject {
         // Set profile image
         var data: Data = Data()
         if snapshot.key != self.currentUser?.uid {
-          self.downloadProfilePic(userId: snapshot.key) { profilePic in
+          WordBombHostViewModel.downloadProfilePic(userId: snapshot.key) { profilePic in
             if let profilePic = profilePic {
               data = profilePic
             } else {
@@ -153,8 +152,8 @@ class WordBombHostViewModel: ObservableObject {
     }
   }
   
-  func downloadProfilePic(userId: String, completion: @escaping (Data?) -> Void) {
-    let storageRef = storage.reference().child("profile_pics/\(userId).jpg")
+  static func downloadProfilePic(userId: String, completion: @escaping (Data?) -> Void) {
+    let storageRef = Storage.storage().reference().child("profile_pics/\(userId).jpg")
     storageRef.getData(maxSize: 3 * 1024 * 1024) { data, error in
       if let error = error {
         print(error)
@@ -187,11 +186,11 @@ class WordBombHostViewModel: ObservableObject {
         self.letters = letters
         if letters == "DONE" {
           self.gameFinished = true
-          if self.yourTurn {
-            // You won
-          } else {
-            // someone else won
-          }
+          // if self.yourTurn {
+          // You won
+          // } else {
+          // someone else won
+          // }
         }
       }
     }
@@ -241,8 +240,8 @@ class WordBombHostViewModel: ObservableObject {
   }
   
   func verifyWord(for word: String) {
-    let word = String(word.dropLast()).lowercased()
-    if word.contains(self.letters) && UIReferenceLibraryViewController.dictionaryHasDefinition(forTerm: word) {
+    let word = String(word.replacingOccurrences(of: "~", with: "")).lowercased()
+    if word.count > 2 && word.contains(self.letters) && UIReferenceLibraryViewController.dictionaryHasDefinition(forTerm: word) {
       self.playerIndex += 1
       changeTurn()
       resetTimer()

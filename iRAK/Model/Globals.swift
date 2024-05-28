@@ -8,5 +8,5 @@
 import Foundation
 
 enum Global {
-  static let doubleLetters = ["aa", "ab", "ae", "ah", "ai", "al", "am", "an", "ao", "ao", "ar", "as", "at", "av", "aw", "ax", "ay", "ba", "be", "bo", "br", "by", "ce", "da", "de", "do", "ef", "eh", "el", "em", "en", "er", "es", "et", "ew", "ex", "ey", "fa", "ga", "ge", "gi", "go", "ha", "he", "hi", "hm", "hn", "ho", "hu", "id", "if", "in", "io", "is", "it", "jo", "ka", "ki", "la", "li", "lo", "ma", "me", "mi", "mm", "mo", "mu", "my", "na", "né", "no", "nu", "ob", "od", "oe", "of", "oh", "oi", "ok", "om", "on", "oo", "or", "os", "ow", "ox", "oy", "pa", "pe", "pi", "po", "qi", "ra", "re", "ro", "ru", "sh", "si", "so", "ta", "te", "ti", "to", "tu", "ua", "uh", "ul", "um", "un", "up", "us", "ut", "wa", "we", "wi", "wo", "wu", "wy", "xe", "xi", "xu", "ya", "ye", "yi", "yo", "za", "zi", "ze"]
+  static let doubleLetters = ["er", "in", "an", "re", "on", "at", "en", "ti", "es", "or", "ar", "al", "te", "co", "de", "ed", "ma", "it", "st", "nt", "el", "li", "le", "et", "ra", "si", "ne", "ta", "io", "as", "la", "ca", "mi", "mo", "di", "op", "tr", "pa", "po", "ma", "us", "ul", "sp", "bo", "ic", "um", "ro", "fa", "ad", "bu", "em", "ce", "qu", "du", "pl", "mu", "ph", "vi", "sc", "ha", "ni", "nu", "wa", "ba", "ga", "ve", "cl", "bl", "av", "fi", "lu", "ze", "hu", "ig", "za", "jo", "fu", "vu", "gy", "ky", "ny", "xo", "cy", "jy", "uz"]
 }

@@ -13,6 +13,8 @@ struct WordBombJoinView: View {
   @State var gameRoomCode: String = ""
   @State private var isJoinPresented = true
   @State private var isCodeWrong = false
+  @State private var counter: Int = 0
+  @State private var winningPlayerName: String = ""
   @FocusState var focusOnCodeTextBox: Bool
   @FocusState var focusOnMessageTextBox: Bool
   // Vars synced with database
@@ -23,32 +25,62 @@ struct WordBombJoinView: View {
       Color.backgroundColor
         .ignoresSafeArea()
       VStack {
+        ScrollView(.horizontal, showsIndicators: false) {
+          HStack(spacing: 10) {
+            ForEach(0..<wordBomb.players.count, id: \.self) { index in
+              VStack {
+                Image(uiImage: UIImage(data: wordBomb.players[index].profileImageData) ?? UIImage())
+                  .profileImageStyle(width: 70, height: 70)
+                
+                Text("\(wordBomb.players[index].name)")
+                  .font(.system(size: 17))
+                  .multilineTextAlignment(.center)
+                Text("\(String(repeating: "❤️", count: wordBomb.players[index].lives))")
+                  .font(.system(size: 17))
+                .multilineTextAlignment(.center)              }
+              .padding()
+              .background(
+                RoundedRectangle(cornerRadius: 10)
+                  .stroke(wordBomb.players[index].uid == wordBomb.cplayer ? Color.red : Color.primary, lineWidth: 2)
+              )
+            }
+          }
+          .padding()
+        }
         
-        //        ProfilePicturesScrollView(profilePictures: $wordBomb.players)
         Text("Letters: \(wordBomb.letters)")
           .padding()
         
-        if wordBomb.isItMyTurn {
+        if wordBomb.yourTurn {
           Text("IT'S YOUR TURN!!!")
         }
         
-        Text(wordBomb.gameRoomCode)
-          .font(.system(size: 25))
-          .padding()
-        
-        TextField("Type the word here", text: $typedWord)
-          .focused($focusOnMessageTextBox)
-          .textFieldStyle(RoundedBorderTextFieldStyle())
-          .padding()
-          .onChange(of: typedWord) { _, newValue in
-            wordBomb.updateWord(word: newValue)
-          }
-        
-        Text("Word: \(wordBomb.word.trimmingCharacters(in: CharacterSet(charactersIn: "~")))")
-          .padding()
+        VStack {
+          Text(wordBomb.gameRoomCode)
+            .font(.system(size: 25))
+            .padding()
+          
+          Text("Word: \(wordBomb.word.trimmingCharacters(in: CharacterSet(charactersIn: "~")))")
+            .padding()
+        }
+
+        CustomTextField(placeholder: "Type the word here", text: $typedWord) {
+          wordBomb.submit()
+        }
+        .focused($focusOnMessageTextBox)
+        .autocorrectionDisabled()
+        .textFieldStyle(RoundedBorderTextFieldStyle())
+        .padding()
+        .onChange(of: typedWord) { _, newValue in
+          wordBomb.updateWord(word: newValue)
+        }
+        .disabled(!wordBomb.yourTurn)
+        .frame(maxHeight: 44)
       }
       .disabled(isJoinPresented || wordBomb.hasRoomEnded)
       .blur(radius: (isJoinPresented || wordBomb.hasRoomEnded) ? 3 : 0)
+      .disabled(wordBomb.gameFinished)
+      .blur(radius: (wordBomb.gameFinished) ? 3 : 0)
       
       if isJoinPresented {
         ZStack {
@@ -102,12 +134,51 @@ struct WordBombJoinView: View {
         }
       }
       
-      if wordBomb.hasRoomEnded {
+      if wordBomb.gameFinished {
         ZStack {
           Color.black.opacity(0.2)
             .edgesIgnoringSafeArea(.all)
           VStack {
-            Text("Game has ended")
+            if wordBomb.yourTurn {
+              Text("YOU WON!!!")
+                .font(.system(size: 30, weight: .bold, design: .rounded))
+            } else {
+              Text("Game has ended")
+                .font(.system(size: 30, weight: .bold, design: .rounded))
+              Text("\(winningPlayerName) won")
+                .onAppear {
+                  if let index = wordBomb.players.firstIndex(where: { $0.uid == wordBomb.cplayer }) {
+                    winningPlayerName = wordBomb.players[index].name
+                  }
+                }
+            }
+            Button("🎉") {
+              counter += 1
+            }
+            .font(.system(size: 45))
+            .padding()
+            .confettiCannon(counter: $counter)
+            .onAppear {
+              counter += 2
+            }
+          }
+          .padding()
+          .frame(maxWidth: 300, maxHeight: 300)
+          .background(Color.midgroundColor)
+          .foregroundColor(.primary)
+          .clipShape(Rectangle())
+          .cornerRadius(50)
+          .shadow(radius: 3)
+          .padding()
+        }
+      }
+      
+      if !wordBomb.gameFinished && wordBomb.hasRoomEnded {
+        ZStack {
+          Color.black.opacity(0.2)
+            .edgesIgnoringSafeArea(.all)
+          VStack {
+            Text("Game has ended unexpectedly")
               .font(.system(size: 30, weight: .bold, design: .rounded))
             
             Button(action: {
@@ -138,6 +209,12 @@ struct WordBombJoinView: View {
     }
     .onDisappear {
       wordBomb.leaveRoom()
+    }
+    .onChange(of: wordBomb.yourTurn) { _, _ in
+      if wordBomb.yourTurn {
+        typedWord = ""
+        focusOnMessageTextBox = true
+      }
     }
   }
   
