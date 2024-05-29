@@ -73,29 +73,14 @@ class WordBombJoinViewModel: ObservableObject {
          let lives = playerData[1] as? Int {
         
         // Set profile image
-        var data: Data = Data()
         if snapshot.key != self.currentUser?.uid {
           WordBombHostViewModel.downloadProfilePic(userId: snapshot.key) { profilePic in
-            if let profilePic = profilePic {
-              data = profilePic
-            } else {
-              if let placeholderImage = UIImage(named: "x-symbol") {
-                data = placeholderImage.pngData()!
-              }
-            }
-            let player = PlayerData(uid: snapshot.key, name: name, lives: lives, profileImageData: data)
+            let player = PlayerData(uid: snapshot.key, name: name, lives: lives, profileImageData: profilePic)
             self.players.append(player)
-            print("ADDED PLAYER")
-            print(player)
           }
         } else {
-          if self.selectedProfilePhotoData != nil {
-            data = self.selectedProfilePhotoData!
-            let player = PlayerData(uid: snapshot.key, name: name, lives: lives, profileImageData: data)
-            self.players.append(player)
-            print("ADDED PLAYER")
-            print(player)
-          }
+          let player = PlayerData(uid: snapshot.key, name: name, lives: lives, profileImageData: self.selectedProfilePhotoData)
+          self.players.append(player)
         }
       }
     }
@@ -108,8 +93,10 @@ class WordBombJoinViewModel: ObservableObject {
           break
         }
       }
-      self.players.remove(at: removeIndex)
-      print("Player removed: \(snapshot.key)")
+      if removeIndex != -1 {
+        self.players.remove(at: removeIndex)
+        print("Player removed: \(snapshot.key)")
+      }
     }
     
     playersChanRefHandle = ref.child(self.gameRoomCode).child("players").observe(.value) { snapshot in
@@ -117,17 +104,13 @@ class WordBombJoinViewModel: ObservableObject {
         if let snapshot = child as? DataSnapshot,
            let playerData = snapshot.value as? [Any],
            playerData.count == 2,
-           let name = playerData[0] as? String,
            let lives = playerData[1] as? Int {
           let uid = snapshot.key
-          let player = PlayerData(uid: uid, name: name, lives: lives, profileImageData: Data())
-          
           for (index, dataPlayer) in self.players.enumerated() {
-            if dataPlayer == player {
-              self.players[index].lives = player.lives
+            if dataPlayer.uid == uid {
+              self.players[index].lives = lives
             }
           }
-          print("Changed players: \(player)")
         }
       }
     }

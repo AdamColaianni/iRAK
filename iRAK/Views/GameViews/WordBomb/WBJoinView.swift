@@ -29,8 +29,13 @@ struct WordBombJoinView: View {
           HStack(spacing: 10) {
             ForEach(0..<wordBomb.players.count, id: \.self) { index in
               VStack {
-                Image(uiImage: UIImage(data: wordBomb.players[index].profileImageData) ?? UIImage())
-                  .profileImageStyle(width: 70, height: 70)
+                if let imageData = wordBomb.players[index].profileImageData, let uiImage = UIImage(data: imageData) {
+                  Image(uiImage: uiImage)
+                    .profileImageStyle(width: 70, height: 70)
+                } else {
+                  Image(systemName: "person.circle")
+                    .profileImageStyle(width: 70, height: 70)
+                }
                 
                 Text("\(wordBomb.players[index].name)")
                   .font(.system(size: 17))
