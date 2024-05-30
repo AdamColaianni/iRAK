@@ -16,7 +16,7 @@ struct WordBombJoinView: View {
   @State private var counter: Int = 0
   @State private var winningPlayerName: String = ""
   @FocusState var focusOnCodeTextBox: Bool
-  @FocusState var focusOnMessageTextBox: Bool
+  @FocusState var focusOnTextBox: Bool
   // Vars synced with database
   @State var typedWord: String = ""
 
@@ -25,6 +25,24 @@ struct WordBombJoinView: View {
       Color.backgroundColor
         .ignoresSafeArea()
       VStack {
+        VStack {
+          Text("Code: ***\(wordBomb.gameRoomCode)***")
+            .font(.system(size: 25))
+          Text(wordBomb.letters.isEmpty ? "--" : wordBomb.letters)
+            .font(.system(size: 45))
+        }
+        .padding()
+        .padding(.horizontal, 40)
+        .background(Color.midgroundColor)
+        .foregroundColor(.primary)
+        .cornerRadius(10)
+        .shadow(radius: 5)
+        .overlay(
+          RoundedRectangle(cornerRadius: 10)
+            .stroke(Color.primary, lineWidth: 2)
+        )
+        .padding()
+        
         ScrollView(.horizontal, showsIndicators: false) {
           HStack(spacing: 10) {
             ForEach(0..<wordBomb.players.count, id: \.self) { index in
@@ -42,37 +60,24 @@ struct WordBombJoinView: View {
                   .multilineTextAlignment(.center)
                 Text("\(String(repeating: "❤️", count: wordBomb.players[index].lives))")
                   .font(.system(size: 17))
-                .multilineTextAlignment(.center)              }
+                  .multilineTextAlignment(.center)
+              }
               .padding()
+              .padding(.horizontal, 5)
               .background(
                 RoundedRectangle(cornerRadius: 10)
                   .stroke(wordBomb.players[index].uid == wordBomb.cplayer ? Color.red : Color.primary, lineWidth: 2)
               )
+              .background(Color.midgroundColor)
             }
           }
           .padding()
         }
         
-        Text("Letters: \(wordBomb.letters)")
-          .padding()
-        
-        if wordBomb.yourTurn {
-          Text("IT'S YOUR TURN!!!")
-        }
-        
-        VStack {
-          Text(wordBomb.gameRoomCode)
-            .font(.system(size: 25))
-            .padding()
-          
-          Text("Word: \(wordBomb.word.trimmingCharacters(in: CharacterSet(charactersIn: "~")))")
-            .padding()
-        }
-
-        CustomTextField(placeholder: "Type the word here", text: $typedWord) {
+        CustomTextField(placeholder: "Type the word here", text: $typedWord, isYourTurn: $wordBomb.yourTurn, word: wordBomb.word.trimmingCharacters(in: CharacterSet(charactersIn: "~"))) {
           wordBomb.submit()
         }
-        .focused($focusOnMessageTextBox)
+        .focused($focusOnTextBox)
         .autocorrectionDisabled()
         .textFieldStyle(RoundedBorderTextFieldStyle())
         .padding()
@@ -81,6 +86,16 @@ struct WordBombJoinView: View {
         }
         .disabled(!wordBomb.yourTurn)
         .frame(maxHeight: 44)
+        .padding(.vertical, 10)
+        .padding(.horizontal, 30)
+        .overlay(
+          RoundedRectangle(cornerRadius: 10)
+            .stroke(Color.primary, lineWidth: 2)
+        )
+        .background(Color.midgroundColor)
+        .padding()
+        
+        Spacer()
       }
       .disabled(isJoinPresented || wordBomb.hasRoomEnded)
       .blur(radius: (isJoinPresented || wordBomb.hasRoomEnded) ? 3 : 0)
@@ -218,7 +233,7 @@ struct WordBombJoinView: View {
     .onChange(of: wordBomb.yourTurn) { _, _ in
       if wordBomb.yourTurn {
         typedWord = ""
-        focusOnMessageTextBox = true
+        focusOnTextBox = true
       }
     }
   }
@@ -230,7 +245,7 @@ struct WordBombJoinView: View {
           withAnimation {
             // Game room exists, perform further actions
             self.isJoinPresented = false
-            focusOnMessageTextBox = true
+            focusOnTextBox = true
           }
         } else {
           withAnimation {

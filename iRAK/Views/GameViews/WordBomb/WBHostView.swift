@@ -8,6 +8,13 @@
 import SwiftUI
 import ConfettiSwiftUI
 
+extension ZStack {
+  func style() -> some View {
+    self
+    
+  }
+}
+
 struct WordBombHostView: View {
   @Environment(\.dismiss) var dismiss
   @StateObject private var wordBomb = WordBombHostViewModel()
@@ -21,25 +28,37 @@ struct WordBombHostView: View {
       Color.backgroundColor
         .ignoresSafeArea()
       VStack {
-        if !wordBomb.gameStarted {
-          HStack {
+        VStack {
+          Text("Code: ***\(wordBomb.gameRoomCode)***")
+            .font(.system(size: 25))
+          if !wordBomb.gameStarted {
             Button {
               wordBomb.startGame()
             } label: {
-              Text("Start Game")
+              Text("Start")
                 .padding()
-                .background(Color.midgroundColor)
+                .background(Color.foregroundColor)
                 .foregroundColor(.primary)
                 .cornerRadius(15)
                 .shadow(radius: 3)
-                .font(.system(size: 25))
-                .padding()
+                .font(.system(size: 30))
             }
-            
-            Text(wordBomb.gameRoomCode)
-              .font(.system(size: 35))
+          } else {
+            Text(wordBomb.letters.isEmpty ? "--" : wordBomb.letters)
+              .font(.system(size: 45))
           }
         }
+        .padding()
+        .padding(.horizontal, 40)
+        .background(Color.midgroundColor)
+        .foregroundColor(.primary)
+        .cornerRadius(10)
+        .shadow(radius: 5)
+        .overlay(
+          RoundedRectangle(cornerRadius: 10)
+            .stroke(Color.primary, lineWidth: 2)
+        )
+        .padding()
         
         ScrollView(.horizontal, showsIndicators: false) {
           HStack(spacing: 10) {
@@ -58,38 +77,21 @@ struct WordBombHostView: View {
                   .multilineTextAlignment(.center)
                 Text("\(String(repeating: "❤️", count: wordBomb.players[index].lives))")
                   .font(.system(size: 17))
-                .multilineTextAlignment(.center)              }
+                  .multilineTextAlignment(.center)
+              }
               .padding()
+              .padding(.horizontal, 5)
               .background(
                 RoundedRectangle(cornerRadius: 10)
                   .stroke(wordBomb.players[index].uid == wordBomb.cplayer ? Color.red : Color.primary, lineWidth: 2)
               )
+              .background(Color.midgroundColor)
             }
           }
           .padding()
         }
         
-        HStack {
-          Text("Guess: \(wordBomb.word.trimmingCharacters(in: CharacterSet(charactersIn: "~")))")
-            .padding()
-            .font(.system(size: 25))
-            .background(
-              RoundedRectangle(cornerRadius: 2)
-                .stroke(Color.primary, lineWidth: 2)
-            )
-            .padding()
-          
-          Text("\(wordBomb.letters)")
-            .padding()
-            .font(.system(size: 25))
-            .background(
-              RoundedRectangle(cornerRadius: 2)
-                .stroke(Color.primary, lineWidth: 2)
-            )
-            .padding()
-        }
-        
-        CustomTextField(placeholder: "Type the word here", text: $typedWord) {
+        CustomTextField(placeholder: "Type the word here", text: $typedWord, isYourTurn: $wordBomb.yourTurn, word: wordBomb.word.trimmingCharacters(in: CharacterSet(charactersIn: "~"))) {
           wordBomb.submit()
         }
         .focused($focusOnTextBox)
@@ -101,6 +103,16 @@ struct WordBombHostView: View {
         }
         .disabled(!wordBomb.yourTurn)
         .frame(maxHeight: 44)
+        .padding(.vertical, 10)
+        .padding(.horizontal, 30)
+        .overlay(
+          RoundedRectangle(cornerRadius: 10)
+            .stroke(Color.primary, lineWidth: 2)
+        )
+        .background(Color.midgroundColor)
+        .padding()
+        
+        Spacer()
       }
       .disabled(wordBomb.gameFinished)
       .blur(radius: (wordBomb.gameFinished) ? 3 : 0)

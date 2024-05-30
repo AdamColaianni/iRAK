@@ -1,15 +1,11 @@
-//
-//  CustomTextField.swift
-//  iRAK
-//
-//  Created by 90310013 on 5/26/24.
-//
-
 import SwiftUI
+import UIKit
 
 struct CustomTextField: UIViewRepresentable {
   var placeholder: String
   @Binding var text: String
+  @Binding var isYourTurn: Bool
+  var word: String
   var onCommit: () -> Void
   
   class Coordinator: NSObject, UITextFieldDelegate {
@@ -35,15 +31,45 @@ struct CustomTextField: UIViewRepresentable {
   
   func makeUIView(context: Context) -> UITextField {
     let textField = UITextField(frame: .zero)
+    
+    // Setting the left view with the ">" symbol
+    let leftLabel = UILabel()
+    leftLabel.text = ">"
+    leftLabel.sizeToFit()
+    
+    textField.leftView = leftLabel
+    textField.leftViewMode = .always
+    
     textField.placeholder = placeholder
     textField.delegate = context.coordinator
     textField.addTarget(context.coordinator, action: #selector(Coordinator.textChanged(_:)), for: .editingChanged)
     textField.autocorrectionType = .no
-    textField.borderStyle = .roundedRect
+    textField.borderStyle = .none
+    
+    // Adding an underline to simulate the "_" characters
+    let underline = UIView()
+    underline.translatesAutoresizingMaskIntoConstraints = false
+    underline.backgroundColor = UIColor(Color.primary)
+    textField.addSubview(underline)
+    
+    NSLayoutConstraint.activate([
+      underline.leadingAnchor.constraint(equalTo: textField.leadingAnchor, constant: leftLabel.frame.width + 5),
+      underline.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
+      underline.bottomAnchor.constraint(equalTo: textField.bottomAnchor),
+      underline.heightAnchor.constraint(equalToConstant: 1)
+    ])
+    
     return textField
   }
   
   func updateUIView(_ uiView: UITextField, context: Context) {
-    uiView.text = text
+    if isYourTurn {
+      uiView.isEnabled = true
+      uiView.text = text
+      uiView.placeholder = placeholder
+    } else {
+      uiView.isEnabled = false
+      uiView.text = word
+    }
   }
 }
